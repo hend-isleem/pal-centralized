@@ -1,4 +1,13 @@
-const { test1, func2 } = require("unit.js");
+const test1 = (name) => {
+    return "haha " + name;
+}
+const func1 = function(num1, num2) {
+    return num1 + num2;
+}
+const func2 = function(num1, num2, num3) {
+    var x = func1(num1, num2);
+    return x * num3;
+}
 
 describe("Sample Test", () => {
   it("should test that true === true", () => {
