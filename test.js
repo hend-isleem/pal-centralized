@@ -1,4 +1,4 @@
-const { test1, func2 } = require("./unit.js");
+const { test1, func2 } = require("unit.js");
 
 describe("Sample Test", () => {
   it("should test that true === true", () => {
