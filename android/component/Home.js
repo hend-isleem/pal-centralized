@@ -1,40 +1,29 @@
 import * as React from "react";
-import {
-  Text,
-  View,
-  StyleSheet,
-  Button,
-  Image,
-  TouchableHighlight
-} from "react-native";
+import { Text, View, StyleSheet, Button } from "react-native";
 import Constants from "expo-constants";
 import { createAppContainer } from "react-navigation";
 import { createStackNavigator } from "react-navigation-stack";
 import Header from "./navigation/Header";
-// You can import from local files
-
-// or any pure javascript modules available in npm
-// import { Card } from "react-native-paper";
-// import "react-native-gesture-handler";
+import Footer from "./general/footer";
 
 export default class Home extends React.Component {
-  // static navigationOptions = {
-  //   headerTitle: () => {
-  //     return (
-  //       <TouchableHighlight
-  //         onPress={() => this.props.navigation.navigate("AboutUs")}
-  //       >
-  //         <Image
-  //           source={{
-  //             uri: "http://simpleicon.com/wp-content/uploads/cute.png"
-  //           }}
-  //           style={{ width: 30, height: 30 }}
-  //         />
-  //       </TouchableHighlight>
-  //     );
-  //   },
-  //   headerRight: () => <Button onPress={() => {}} title="SignIn" />
-  // };
+  static navigationOptions = {
+    headerTitle: () => {
+      return (
+        <TouchableHighlight
+          onPress={() => this.props.navigation.navigate("AboutUs")}
+        >
+          <Image
+            source={{
+              uri: "http://simpleicon.com/wp-content/uploads/cute.png"
+            }}
+            style={{ width: 30, height: 30 }}
+          />
+        </TouchableHighlight>
+      );
+    },
+    headerRight: () => <Button onPress={() => {}} title="SignIn" />
+  };
   render() {
     return (
       <React.Fragment>
@@ -63,6 +52,7 @@ export default class Home extends React.Component {
             }}
           />
         </View>
+        <Footer />
       </React.Fragment>
     );
   }

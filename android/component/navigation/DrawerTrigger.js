@@ -17,7 +17,12 @@ class DrawerTrigger extends React.Component {
           this.props.navigation.dispatch(DrawerActions.openDrawer());
         }}
       >
-        <Ionicons name={"account-details"} size={30} color={"grey"} />
+        <Image
+          source={{
+            uri: "../../assets/menu.png"
+          }}
+          style={{ width: 30, height: 30 }}
+        />
       </TouchableOpacity>
     );
   }

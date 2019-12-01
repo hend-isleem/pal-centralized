@@ -10,6 +10,8 @@
     "grunt": "^1.0.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "react-native-paper": "^3.2.1",
+    "react-navigation-material-bottom-tabs": "^2.1.5",
     "react-navigation-stack": "^1.10.3",
     "react-scripts": "3.2.0",
     "typescript": "^3.7.2"

@@ -4,7 +4,7 @@ import { createDrawerNavigator } from "react-navigation-drawer";
 
 import Home from "../Home";
 import AboutUs from "../About";
-import ContactUs from "../ContactUs";
+import ContactUs from "../ContactUS";
 
 const DrawerNavigator = createDrawerNavigator(
   {
@@ -14,7 +14,7 @@ const DrawerNavigator = createDrawerNavigator(
   },
   {
     drawerPosition: "left",
-    drawerBackgroundColor: "orange",
+    drawerBackgroundColor: "white",
     drawerType: "slide"
   }
 );
