@@ -15,22 +15,6 @@ export default class SignUp extends Component {
   render() {
     return (
       <div>
-        {/* <Form className="center-form">
-          <Header as="h1" style={{ fontSize: "40px", marginTop: "4rem" }}>
-            SIGN UP
-          </Header>
-
-          <Button.Group style={{ marginTop: "7rem" }}>
-            <Link to="/signupuser">
-              <Button className="button-signup-login-g">User</Button>
-            </Link>
-
-            <Button.Or />
-            <Link to="/signupcompany">
-              <Button className="button-signup-login-g">Company</Button>
-            </Link>
-          </Button.Group>
-        </Form> */}
         <Grid
           textAlign="center"
           style={{ height: "75vh" }}
