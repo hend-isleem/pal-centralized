@@ -1,25 +1,64 @@
 import React, { Component } from "react";
-import { Button, Form, Header, Icon } from "semantic-ui-react";
-
+import {
+  Button,
+  Form,
+  Grid,
+  Header,
+  Message,
+  Segment,
+  Icon
+} from "semantic-ui-react";
+import { Link } from "react-router-dom";
 import "../../style.css/form.css";
 export default class signUpCompany extends Component {
   render() {
     return (
       <div>
-        <Form className="center-form">
-          <Header as="h1" style={{ fontSize: "35px" }}>
-            SIGN UP
-          </Header>
-          <Button color="google plus" style={{ marginBottom: "3rem" }}>
-            <Icon name="google" /> Sign Up with Google
-          </Button>
-          <Form.Input label="User name" placeholder="User name" />
-          <Form.Input label="Email" placeholder="joe@schmoe.com" />
-          <Form.Input label="Password" placeholder="Password" type="password" />
-          <Button type="submit" style={{ marginTop: "2rem" }}>
-            sign up
-          </Button>
-        </Form>{" "}
+        <Grid
+          textAlign="center"
+          style={{ height: "75vh" }}
+          verticalAlign="middle"
+        >
+          <Grid.Column style={{ maxWidth: 550 }}>
+            <Header as="h2" color="teal" textAlign="center">
+              Create an account
+            </Header>
+            <Form size="large">
+              <Segment stacked>
+                <Form.Input
+                  fluid
+                  icon="user"
+                  iconPosition="left"
+                  placeholder="User Name"
+                />
+                <Form.Input
+                  fluid
+                  icon="mail"
+                  iconPosition="left"
+                  placeholder="joe@schmoe.com"
+                  type="mail"
+                />
+                <Form.Input
+                  fluid
+                  icon="lock"
+                  iconPosition="left"
+                  placeholder="Password"
+                  type="password"
+                />
+
+                <Button color="teal" fluid size="large">
+                  Sign Up
+                </Button>
+              </Segment>
+            </Form>
+            <Message>
+              Do you have an account ?
+              <Link to="login">
+                <a href="#">Login</a>
+              </Link>
+            </Message>
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }
