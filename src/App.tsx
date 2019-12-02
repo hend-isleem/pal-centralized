@@ -2,13 +2,24 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import "semantic-ui-css/semantic.min.css";
-import SignUp from "./components/general/Sign-up";
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+import SignUpGeneral from "./components/general/Sign-up-general";
+import SignUpCompany from "./components/company/Sign-up-company";
 
 const App: React.FC = () => {
   return (
-    <div className="App">
-      <SignUp />
-    </div>
+    <Router>
+      <div className="App">
+        <h2>
+          <Link to="/signup">Main Sign up</Link>
+        </h2>
+
+        <Switch>
+          <Route path="/signup" exact component={SignUpGeneral} />
+          <Route path="/signupcompany" component={SignUpCompany} />
+        </Switch>
+      </div>
+    </Router>
   );
 };
 
