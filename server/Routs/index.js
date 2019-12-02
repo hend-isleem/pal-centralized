@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-router.get("/test", (req, res, next) => {
+router.get("/user/signIn", (req, res, next) => {
   res.send("im inside the router");
 });
 
