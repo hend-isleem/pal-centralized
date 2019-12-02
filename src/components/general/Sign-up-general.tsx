@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Button, Header, Checkbox, Form } from "semantic-ui-react";
+import { Button, Header, Form } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "../../style.css/form.css";
 import "./Sign-up-general.css";
