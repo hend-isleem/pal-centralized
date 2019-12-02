@@ -13,7 +13,10 @@ export default class SignUp extends Component {
           </Header>
 
           <Button.Group style={{ marginTop: "7rem" }}>
-            <Button className="button-signup-login-g">User</Button>
+            <Link to="/signupuser">
+              <Button className="button-signup-login-g">User</Button>
+            </Link>
+
             <Button.Or />
             <Link to="/signupcompany">
               <Button className="button-signup-login-g">Company</Button>
