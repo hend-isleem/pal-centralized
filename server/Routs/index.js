@@ -9,6 +9,8 @@ router.post(
   "/user/signUp",
   [check("email").isEmail(), check("password").isLength({ min: 6 })],
   async (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
     const errors = validationResult(req);
 
     //------------------------------------------------------//
@@ -62,6 +64,9 @@ router.post(
 );
 
 router.post("/user/signIn", async (req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+
   console.log("insde the post");
 
   // -----------------------------------------//
@@ -101,13 +106,18 @@ router.post("/user/signIn", async (req, res, next) => {
       //--- the is Password Matching ---//
       //--------------------------------//
       console.log("insi the compar");
-      res.status(201).send("Success");
+      // res.status(201).send("Success");
 
-      //--------------------------------//
-      //--------create a Token for user----//
-      //------------------------------//
+      //-------------------------------------//
+      //--------create a Token for user------//
+      //------------- if the user match------//
       const acsessToken = Auth.generateAccessToken(DataBaseUser);
       res.json({ acsessToken });
+
+      //-----------------------------------------------------------------------------------------//
+      //--------- in the user inteface tavk the token to local storage as shown below -----------//
+      //---------localStorage.setItem("ValiedTOKEN",accesstoken) --------------------------------//
+      //-----------------------------------------------------------------------------------------//
     } else {
       //--------------------------------//
       //-- the is not Password Matching-//
