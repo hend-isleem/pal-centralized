@@ -3,13 +3,62 @@ const router = express.Router();
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const Auth = require("../Auth/Auth");
-const cookieParser = require("cookie-parser");
 const { check, validationResult } = require("express-validator");
 
 router.post(
   "/user/signUp",
   [check("email").isEmail(), check("password").isLength({ min: 6 })],
-  async (req, res, next) => {}
+  async (req, res, next) => {
+    const errors = validationResult(req);
+
+    //------------------------------------------------------//
+    //------if the email or password is as we want this-----//
+    //------is the error that will be shown-----------------//
+    //----------- --------{---------------------------------//
+    //---------------------- "errors": [{-------------------//
+    //---------------------- "location": "body",------------//
+    //------------------------ "msg": "Invalid value",------//
+    //-------------------------  "param": "username"--------//
+    //---------------------- }]-----------------------------//
+    //---------------------}--------------------------------//
+
+    if (!errors.isEmpty()) {
+      return res.status(422).json({ errors: errors.array() });
+    }
+
+    try {
+      //-------------------------------//
+      //----- hashing Password---------//
+      //--------------------------------//
+      const hashpassword = await bcryptjs.hash(req.body.passowrd, 10);
+    } catch {
+      //--------------------------------//
+      //-An Error Accurede while cheking-//
+      //--------------------------------//
+      console.log(req.body.data, "passsword");
+      res.status(500).send();
+    }
+
+    //--------------------------------------------------//
+    //--saving User To DataBase with Hashed Password ---//
+    //--------------------------------------------------//
+
+    var DataBaseUser;
+    //-|------------------------------------------------//
+    //-|--> do the saving Function and send result -----//
+    //------------if user is saved generate a token ----//
+    //--------------------------------------------------//
+
+    //------------------------------------//
+    //--------create a Token for user-----//
+    //------------------------------------//
+    const acsessToken = Auth.generateAccessToken(DataBaseUser);
+    res.json({ acsessToken });
+
+    //-------------------------------------------//
+    //-------------if user is not saved ---------//
+    //------------return a 500 to server --------//
+  }
 );
 
 router.post("/user/signIn", async (req, res, next) => {
