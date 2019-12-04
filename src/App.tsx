@@ -1,5 +1,4 @@
 import React from "react";
-import "./App.css";
 import "semantic-ui-css/semantic.min.css";
 import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import SignUpGeneral from "./components/general/Sign-up-general";
