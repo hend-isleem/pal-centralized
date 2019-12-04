@@ -5,7 +5,7 @@ import "./General.css";
 export default class HomePagePosts extends Component {
   render() {
     return (
-      <div style={{ margin: "5rem auto", width: "70%" }}>
+      <div style={{ margin: "4rem auto", width: "75%" }}>
         <Grid columns={3}>
           <Grid.Row>
             <Grid.Column>

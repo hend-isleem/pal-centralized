@@ -9,6 +9,7 @@ import Login from "./components/general/Login";
 import MainPageHeader from "./components/general/Home-page-header";
 import MainPageFooter from "./components/general/Home-page-footer";
 import MainPagePosts from "./components/general/Home-page-posts";
+import Search from "./components/general/Search";
 
 const App: React.FC = () => {
   return (
@@ -16,23 +17,16 @@ const App: React.FC = () => {
       <div className="App">
         <MainPageHeader />
 
-        <h2 style={{ marginTop: "5rem" }}>
-          <Link to="/signup">Main Sign up</Link>
-        </h2>
-
-        <h2 style={{ marginTop: "2rem" }}>
-          <Link to="/login">Login</Link>
-        </h2>
-
         <Switch>
+          <Route path="/" exact>
+            <Search />
+            <MainPagePosts />
+          </Route>
           <Route path="/signup" exact component={SignUpGeneral} />
           <Route path="/signupcompany" component={SignUpCompany} />
           <Route path="/signupuser" component={SignUpUser} />{" "}
           <Route path="/login" component={Login} />
         </Switch>
-
-        <MainPagePosts />
-
         <MainPageFooter />
       </div>
     </Router>
