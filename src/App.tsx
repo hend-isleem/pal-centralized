@@ -9,6 +9,7 @@ import MainPageHeader from "./components/general/Home-page-header";
 import MainPageFooter from "./components/general/Home-page-footer";
 import MainPagePosts from "./components/general/Home-page-posts";
 import Search from "./components/general/Search";
+import UserPageHeader from "./components/user/User-page-header";
 
 const App: React.FC = () => {
   return (
