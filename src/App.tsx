@@ -6,12 +6,17 @@ import SignUpGeneral from "./components/general/Sign-up-general";
 import SignUpCompany from "./components/company/Sign-up-company";
 import SignUpUser from "./components/user/Sign-up-user";
 import Login from "./components/general/Login";
+import MainPageHeader from "./components/general/Home-page-header";
+import MainPageFooter from "./components/general/Home-page-footer";
+import MainPagePosts from "./components/general/Home-page-posts";
 
 const App: React.FC = () => {
   return (
     <Router>
       <div className="App">
-        <h2 style={{ marginTop: "2rem" }}>
+        <MainPageHeader />
+
+        <h2 style={{ marginTop: "5rem" }}>
           <Link to="/signup">Main Sign up</Link>
         </h2>
 
@@ -25,6 +30,10 @@ const App: React.FC = () => {
           <Route path="/signupuser" component={SignUpUser} />{" "}
           <Route path="/login" component={Login} />
         </Switch>
+
+        <MainPagePosts />
+
+        <MainPageFooter />
       </div>
     </Router>
   );
