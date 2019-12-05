@@ -148,12 +148,7 @@ router.post("/user/signIn", async (req, res) => {
       //--------create a Token for user------//
       //------------- if the user match------//
       const acsessToken = Auth.generateAccessToken(DataBaseUser);
-      res.json({ acsessToken });
-
-      //-----------------------------------------------------------------------------------------//
-      //--------- in the user inteface take the token to local storage as shown below -----------//
-      //---------localStorage.setItem("ValiedTOKEN",res.accesstoken) --------------------------------//
-      //-----------------------------------------------------------------------------------------//
+      res.status(201).json({ acsessToken });
     } else {
       //--------------------------------//
       //-- the is not Password Matching-//
