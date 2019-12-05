@@ -89,7 +89,8 @@ const General = mongoose.model("general", GeneralSchema);
 const UserSchema = Schema({
   id: {
     type: Number,
-    required: true
+    required: true,
+    unique: true
   },
   gender: Boolean,
   birthDay: Date,
@@ -112,7 +113,8 @@ const User = mongoose.model("user", UserSchema);
 const CompanySchema = Schema({
   id: {
     type: Number,
-    required: true
+    required: true,
+    unique: true
   },
 
   description: String,
@@ -133,7 +135,8 @@ const Company = mongoose.model("company", CompanySchema);
 const PostSchema = Schema({
   id: {
     type: Number,
-    required: true
+    required: true,
+    unique: true
   },
   comId: Number,
   title: String,
@@ -180,6 +183,23 @@ const selectP = function(id, callback) {
   });
 };
 
+const selectFer = function(id) {
+  selectAll(Company, (err, comps) => {
+    // let obj = {};
+    let ls = [];
+    console.log("haha ", comps);
+    for (let i = 0; i < comps.length; i++) {
+      // console.log('haha ', comps[i].id);
+      // if (comps[i].followersList.includes(id)) {
+      //   ls.push(comps[i].id);
+      // }
+    }
+    // callback(ls);
+  });
+};
+// selectFer(1);
+// console.log('callback ', selectFer(4, (list) => {console.log(list)}));    , callback
+
 const random = function(arr) {
   var result = [];
   while (result.length < 3) {
@@ -193,7 +213,7 @@ const random = function(arr) {
 
 const random2 = function(arr) {
   let result = [];
-  let randNum = Math.random() * 22 + 3;
+  let randNum = Math.random() * 12 + 3;
   while (result.length < randNum) {
     var randomnum = Math.floor(Math.random() * arr.length);
     if (!result.includes(arr[randomnum].id)) {
@@ -220,44 +240,97 @@ const random2 = function(arr) {
 // save();
 
 // -------------------------------------save Users---------------------------------
-const save = function() {
-  // let posts = Post.find({});
-  // let comps = Company.find({});
-  for (var i = 1; i <= 50; i++) {
-    // let rtags = [];
-    // for (var j = 1; j<=3; j++) {
-    //   rtags.push(majors[Math.floor(Math.random() * majors.length)]);
-    // }
-    // let rfavoriteList = [];
-    // for (var i = 1; i<=3; i++) {
-    //   rfavoriteList.push(posts[Math.floor(Math.random() * posts.length)]);
-    // }
-    // let rfollowingList = [];
-    // for (var i = 1; i<=3; i++) {
-    //   rfollowingList.push(comps[Math.floor(Math.random() * comps.length)]);
-    // }
-    // let rnotificationList = [];
-    // for (var i = 1; i<=3; i++) {
-    //   rnotificationList.push(posts[Math.floor(Math.random() * posts.length)]);
-    // }
-    var item = new User({
-      id: i,
-      gender: faker.random.boolean(),
-      birthDay: faker.date.past(),
-      address: addresses[Math.floor(Math.random() * addresses.length)],
-      mobileNumber: faker.phone.phoneNumber(),
-      major: majors[Math.floor(Math.random() * majors.length)],
-      educationLevel: eduLevels[Math.floor(Math.random() * eduLevels.length)],
-      avatar: faker.image.avatar(),
-      tags: random(majors),
-      cv: faker.system.filePath(),
-      favoriteList: [],
-      followingList: [],
-      notificationList: []
-    });
-    item.save();
-  }
-  console.log("saved?");
+// const save = function() {
+//   // let posts = Post.find({});
+//   // let comps = Company.find({});
+//   for (var i = 1; i <= 50; i++) {
+//     // let rtags = [];
+//     // for (var j = 1; j<=3; j++) {
+//     //   rtags.push(majors[Math.floor(Math.random() * majors.length)]);
+//     // }
+//     // let rfavoriteList = [];
+//     // for (var i = 1; i<=3; i++) {
+//     //   rfavoriteList.push(posts[Math.floor(Math.random() * posts.length)]);
+//     // }
+//     // let rfollowingList = [];
+//     // for (var i = 1; i<=3; i++) {
+//     //   rfollowingList.push(comps[Math.floor(Math.random() * comps.length)]);
+//     // }
+//     // let rnotificationList = [];
+//     // for (var i = 1; i<=3; i++) {
+//     //   rnotificationList.push(posts[Math.floor(Math.random() * posts.length)]);
+//     // }
+//     var item = new User({
+//       id: i,
+//       gender: faker.random.boolean(),
+//       birthDay: faker.date.past(),
+//       address: addresses[Math.floor(Math.random() * addresses.length)],
+//       mobileNumber: faker.phone.phoneNumber(),
+//       major: majors[Math.floor(Math.random() * majors.length)],
+//       educationLevel: eduLevels[Math.floor(Math.random() * eduLevels.length)],
+//       avatar: faker.image.avatar(),
+//       tags: random(majors),
+//       cv: faker.system.filePath(),
+//       favoriteList: [],
+//       followingList: [],
+//       notificationList: []
+//     });
+//     item.save();
+//   }
+//   console.log("saved?");
+// };
+// save();
+
+// if (comps[i-1].followersList.includes(i)) {
+//   if (obj[i]) {
+//     obj[i].push(comps[i-1].id);
+//   } else {
+//     obj[i] = [comps[i-1].id];
+//   }
+// }
+
+const save = async function() {
+  selectAll(Company, (err, comps) => {
+    async function x() {
+      let obj = {};
+      // console.log("comps length is: ", comps.length);
+      for (let i = 1; i <= 50; i++) {
+        let list = comps[i - 1].followersList;
+        for (let j = 0; j < list.length; j++) {
+          // console.log("ha? ", list);
+          if (obj[list[j]]) {
+            obj[list[j]].push(comps[i - 1].id);
+          } else {
+            obj[list[j]] = [comps[i - 1].id];
+          }
+        }
+        // console.log('folowers list ia: ', list);
+      }
+      selectAll(Post, (err, posts) => {
+        for (var i = 1; i <= 50; i++) {
+          var item = new User({
+            id: i,
+            gender: faker.random.boolean(),
+            birthDay: faker.date.past(),
+            address: addresses[Math.floor(Math.random() * addresses.length)],
+            mobileNumber: faker.phone.phoneNumber(),
+            major: majors[Math.floor(Math.random() * majors.length)],
+            educationLevel: eduLevels[Math.floor(Math.random() * eduLevels.length)],
+            avatar: faker.image.avatar(),
+            tags: random(majors),
+            cv: faker.system.filePath(),
+            favoriteList: random2(posts),
+            followingList: obj[i],
+            notificationList: []
+          });
+          item.save();
+        }
+
+        console.log("comps length is: ", obj);
+      });
+    }
+    x();
+  });
 };
 save();
 
@@ -284,33 +357,43 @@ save();
 // };
 // save();
 
-// const savecomp = function(i, users, ps) {
-//   var item = new Company({
-//     id: i,
-//     description: faker.lorem.paragraph(),
-//     logo: faker.image.business(),
-//     twitterLink: faker.system.filePath(),
-//     linkedinLink: faker.system.filePath(),
-//     otherLink: faker.system.filePath(),
-//     mobileNumber: faker.phone.phoneNumber(),
-//     archiveList: [],
-//     followersList: random2(users),
-//     postsList: ps
-//   });
-//   item.save();
-// };
-
-// const save = function() {
-//   selectAll(User, (err, users) => {
-//     for (var i = 1; i <= 50; i++) {
-//       let ps = [];
-//       selectP(i, (err, posts) => {
-//         for (let j = 0; j < posts.length; j++) {
-//           ps.push(posts[j].id);
-//           savecomp(i, users, ps);
-//         }
-//       });
+// const save = async function() {
+//   await User.find({}, function(err, users) {
+//     if (err) {
+//       console.log("error user");
 //     }
+//   }).then(users => {
+//     async function x() {
+//       for (var i = 1; i <= 50; i++) {
+//         await Post.find({ comId: i }, (err, posts) => {
+//           if (err) {
+//             console.log("error post");
+//           }
+//           // console.log('first i is: ', i);
+//         }).then(posts => {
+//           // console.log('last i is: ', i);
+//           let ps = [];
+//           for (let j = 0; j < posts.length; j++) {
+//             ps.push(posts[j].id);
+//           }
+//           console.log("ps is: ", ps);
+//           var item = new Company({
+//             id: i,
+//             description: faker.lorem.paragraph(),
+//             logo: faker.image.business(),
+//             twitterLink: faker.system.filePath(),
+//             linkedinLink: faker.system.filePath(),
+//             otherLink: faker.system.filePath(),
+//             mobileNumber: faker.phone.phoneNumber(),
+//             archiveList: [],
+//             followersList: random2(users),
+//             postsList: ps
+//           });
+//           item.save();
+//         });
+//       }
+//     }
+//     x();
 //   });
 // };
 // save();
