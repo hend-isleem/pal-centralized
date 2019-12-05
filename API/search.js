@@ -43,3 +43,8 @@ const seatchTitle = function(str, cb) {
   })
 }
 // seatchTitle("sect", (posts) => {console.log('hahahahaha:  ', posts.length, 'like: ', posts[0].id)});
+
+
+module.exports.searchType = searchType;
+module.exports.searchMajor = searchMajor;
+module.exports.seatchTitle = seatchTitle;
