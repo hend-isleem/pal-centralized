@@ -1,16 +1,17 @@
-const faker = require("faker");// dummy Data
-const mongoose = require("mongoose");  
+const faker = require("faker"); // dummy Data
+const mongoose = require("mongoose");
 var Schema = mongoose.Schema;
 const config = require("./config/keys.js");
 
-
-
 const uri = process.env.mongoURI || config.mongoURI;
-mongoose.connect(uri, {useNewUrlParser: true,useCreateIndex: true,useUnifiedTopology: true})
+mongoose
+  .connect(uri, {
+    useNewUrlParser: true,
+    useCreateIndex: true,
+    useUnifiedTopology: true
+  })
   // .then(() => console.log('MongoDB Connected...'))
   .catch(error => console.log("error"));
-
-
 
 const { connection } = mongoose;
 
@@ -20,98 +21,85 @@ connection.once("open", () => {
 
 //--------------General schema -----------
 
-const GeneralSchema  = Schema({
+const GeneralSchema = Schema({
   id: {
-       type: Number,
-       required: true
-   },
-   Name :String,
-   password: String,
-   email : String,
-   type: Boolean
-  })
+    type: Number,
+    required: true
+  },
+  Name: String,
+  password: String,
+  email: String,
+  type: Boolean
+});
 
 //---------------Creating a model for General schema----------------
-const General = mongoose.model('general', GeneralSchema);
+const General = mongoose.model("general", GeneralSchema);
 
 //--------------User schema -----------
 
-const UserSchema  = Schema({
- id: {
-      type: Number,
-      required: true
+const UserSchema = Schema({
+  id: {
+    type: Number,
+    required: true
   },
-  gender : Boolean,
-  birthDay : Date,
-  address : String,
-  mobileNumber :String,
-  major : String,
-  educationLevel :String,
+  gender: Boolean,
+  birthDay: Date,
+  address: String,
+  mobileNumber: String,
+  major: String,
+  educationLevel: String,
   avatar: String,
-  tags : String,
+  tags: String,
   cv: String,
   favoriteList: String,
-  followingList : String,
-  notificationList : String
-  
+  followingList: String,
+  notificationList: String
 });
 
-
 //---------------Creating a model for user schema----------------
-const User = mongoose.model('user', UserSchema);
-
-
-
-
-
+const User = mongoose.model("user", UserSchema);
 
 //--------------Company schema-----------
 
-
-const CompanySchema  = Schema({
- id: {
-      type: Number,
-      required: true
+const CompanySchema = Schema({
+  id: {
+    type: Number,
+    required: true
   },
-  
-  description : String,
-  logo : String,
-  twitterLink :String,
-  linkedinLink :String,
-  otherLink :String,
-  mobileNumber :String,
+
+  description: String,
+  logo: String,
+  twitterLink: String,
+  linkedinLink: String,
+  otherLink: String,
+  mobileNumber: String,
   archiveList: String,
-  followersList : String,
-  postsList : String
-  
+  followersList: String,
+  postsList: String
 });
 
-
 //---------------Creating a model for company schema----------------
-const Company = mongoose.model('company', CompanySchema);
-
+const Company = mongoose.model("company", CompanySchema);
 
 //--------------Post schema-------------
 
-   const PostSchema  = Schema({
-   id: {
-      type: Number,
-      required: true
+const PostSchema = Schema({
+  id: {
+    type: Number,
+    required: true
   },
-  title:String,
+  title: String,
   description: String,
   deadLine: String,
   link: String,
-  tags:  String,
-  logo : String,
-  archived:Boolean,//true or false
-  read:Boolean // true or false
-  
+  tags: String,
+  logo: String,
+  archived: Boolean, //true or false
+  read: Boolean // true or false
 });
 
 //---------------Creating a model for post schema----------------
-const Post = mongoose.model('post', PostSchema);
-
+const Post = mongoose.model("post", PostSchema);
 
 // -------------------------------------save General---------------------------------
 // const save = function () {
@@ -122,14 +110,13 @@ const Post = mongoose.model('post', PostSchema);
 //       password: faker.internet.password(),
 //       email: faker.internet.email(),
 //       type : faker.random.boolean()
-     
+
 //     });
 //     // console.log(item);
 //     item.save();
 //   }
 //   };
 // save();
-  
 
 // -------------------------------------save Users---------------------------------
 // const save = function () {
@@ -148,7 +135,7 @@ const Post = mongoose.model('post', PostSchema);
 //       favoriteList: faker.lorem.lines(),
 //       followingList :faker.lorem.lines(),
 //       notificationList : faker.lorem.lines()
-    
+
 //     });
 //     item.save();
 //   }
@@ -173,43 +160,28 @@ const Post = mongoose.model('post', PostSchema);
 //         // console.log(item)
 //         item.save();
 //     }
-   
+
 // };
 // save();
 
-
-
-
 // ------------------------------------- save Posts ---------------------------------
 const save = function() {
-  for (let i = 1; i <20; i++) {
-      var item = new Post({
-          id: faker.random.number(),
-          title:faker.lorem.sentence(),
-          description: faker.lorem.paragraph(),
-          deadLine: faker.date.future(),
-          link: faker.system.filePath(),
-          tags:  faker.lorem.words(),
-          logo :faker.image.business(),
-          archived:faker.random.boolean(),
-          read:faker.random.boolean()
-      });
-        item.save();
+  for (let i = 1; i < 20; i++) {
+    var item = new Post({
+      id: faker.random.number(),
+      title: faker.lorem.sentence(),
+      description: faker.lorem.paragraph(),
+      deadLine: faker.date.future(),
+      link: faker.system.filePath(),
+      tags: faker.lorem.words(),
+      logo: faker.image.business(),
+      archived: faker.random.boolean(),
+      read: faker.random.boolean()
+    });
+    item.save();
   }
- 
 };
-save();
-
-
-
-
-
-
-
-
-
-
-
+//save();
 
 module.exports.save = save;
 module.exports.User = User;
