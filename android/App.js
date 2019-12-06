@@ -7,6 +7,7 @@ export default class App extends React.Component {
     return (
       <React.Fragment>
         <LogIn></LogIn>
+        {/* <AppNavigator></AppNavigator> */}
       </React.Fragment>
     );
   }

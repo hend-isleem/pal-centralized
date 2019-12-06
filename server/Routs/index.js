@@ -179,7 +179,7 @@ router.post(
 //------------------------------------------##### signIn Section #####------------------------------------------------//
 
 router.post("/user/signIn", async (req, res) => {
-  console.log(req.body, "jjjjj");
+  console.log(req.body.email, "email", req.body.passowrd, "password");
 
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
