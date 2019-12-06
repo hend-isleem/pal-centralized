@@ -127,7 +127,6 @@ const CompanySchema = Schema({
   followersList: [Number],
   postsList: [Number]
 });
-
 //---------------Creating a model for company schema----------------
 const Company = mongoose.model("company", CompanySchema);
 
@@ -149,7 +148,6 @@ const PostSchema = Schema({
   archived: Boolean, //true or false
   read: Boolean // true or false
 });
-
 // ---------------Creating a model for post schema----------------
 const Post = mongoose.model("post", PostSchema);
 
@@ -206,6 +204,7 @@ const random2 = function(arr) {
   return result;
 };
 
+
 // -------------------------------------save General---------------------------------
 // const save = function() {
 //   for (var i = 1; i <= 50; i++) {
@@ -215,6 +214,7 @@ const random2 = function(arr) {
 //       password: faker.internet.password(),
 //       email: faker.internet.email(),
 //       type: faker.random.boolean()
+
 //     });
 //     item.save();
 //   }
