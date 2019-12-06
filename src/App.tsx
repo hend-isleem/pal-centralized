@@ -15,7 +15,7 @@ const App: React.FC = () => {
   return (
     <Router>
       <div className="App">
-        <MainPageHeader />
+        <UserPageHeader />
 
         <Switch>
           <Route path="/" exact>
@@ -34,3 +34,34 @@ const App: React.FC = () => {
 };
 
 export default App;
+
+// import { stat } from "fs";
+
+// // Store
+
+// //Action
+// const increment = () => {
+//   return {
+//     type: "INCREMENT"
+//   };
+// };
+// //Reduce
+// const counter = (state = 0, action: any) => {
+//   switch (action.type) {
+//     case "INCREMENT":
+//       return state + 1;
+
+//     default:
+//       return state;
+//   }
+// };
+
+// let store = createStore(counter);
+
+// //Dispaly it in the console
+// store.subscribe(() => console.log(store.getState()));
+
+// //Dispatch
+// store.dispatch(increment());
+// store.dispatch(increment());
+// store.dispatch(increment());
