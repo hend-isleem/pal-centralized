@@ -52,7 +52,10 @@ export default class LogIn extends React.Component {
       // $("#TV").text = "this is not a Valied Email";
       this.setState({ validat: false });
     } else {
-      this.setState({ validat: true });
+      this.setState({
+        validat: true,
+        email: e
+      });
     }
   }
   render() {
