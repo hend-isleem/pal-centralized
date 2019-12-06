@@ -179,7 +179,7 @@ router.post(
 //------------------------------------------##### signIn Section #####------------------------------------------------//
 
 router.post("/user/signIn", async (req, res) => {
-  console.log(req.body.email, "email", req.body.passowrd, "password");
+  console.log("email", req.body.email, req.body.passowrd, "password");
 
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
@@ -187,77 +187,91 @@ router.post("/user/signIn", async (req, res) => {
   // -----------------------------------------//
   // ----here we get the user from database ----//
   //------------------------------------------//
-  const DataBaseUser = {
-    email: "",
-    passowrd: ""
-  };
-  db.General.find(
-    { email: req.body.email, passowrd: req.body.password },
-    (error, user) => {
-      if (error) {
-        console.log("error");
-      }
+  var user = {};
+  await db.General.findOne({ email: req.body.email }, (error, user) => {
+    if (error) {
+      res
+        .status(500)
+        .send("an Error Accured While Proccessing Data,  Try Again Later");
     }
-  ).then(user => {
-    DataBaseUser = {
-      email: user.email,
-      passowrd: user.password
-    };
+  }).then(async user2 => {
+    // console.log(user, "user");
+    user = user2;
   });
-
-  console.log(DataBaseUser);
-
-  //--------------------------------//
-  //--- this is the request user----//
-  //--------------------------------//
-
-  const user2 = {
-    email: req.body.email,
-    passowrd: req.body.password
-  };
 
   //--------------------------------//
   //--- check if the user Exist ----//
   //--------------------------------//
-  if (DataBaseUser === null) {
-    console.log("inside the finde method from data base if he did not find it");
-    res.status(400).send("cannot find the user");
-  }
+  console.log(user, "the use");
+  if (user === null) {
+    console.log("User Is not Registered");
+    return res.status(400).send("cannot find the user");
+  } else {
+    //--------------------------------//
+    //--- check Password Matching ----//
+    //--------------------------------//
 
-  //--------------------------------//
-  //--- check Password Matching ----//
-  //--------------------------------//
+    try {
+      // await bcryptjs.compare(
+      //   req.body.passowrd,
+      //   await bcryptjs.hash(req.body.passowrd, 10),
+      //   function(err, isMatch) {
+      //     if (err) {
+      //       console.log("err");
+      //     } else {
+      //       console.log(isMatch, "form first one");
+      //     }
+      //   }
+      // );
+      console.log(await bcryptjs.hash(req.body.passowrd, 10));
+      await bcryptjs.compare(req.body.passowrd, user.password, function(
+        err,
+        isMatch
+      ) {
+        if (err) {
+          console.log("err");
+        } else {
+          console.log(isMatch, "isMatch");
+          //--------------------------------//
+          //--- the is Password Matching ---//
+          //--------------------------------//
+          // res.status(201).send("Success")//
 
-  try {
-    const hashpassword = await bcryptjs.hash(req.body.passowrd, 10);
-    console.log(hashpassword);
-    if (await bcryptjs.compare(DataBaseUser.passowrd, hashpassword)) {
-      //--------------------------------//
-      //--- the is Password Matching ---//
-      //--------------------------------//
-      // res.status(201).send("Success")//
+          console.log("insi the compar");
 
-      console.log("insi the compar");
+          //-------------------------------------//
+          //--------create a Token for user------//
+          //------------- if the user match------//
+          if (isMatch) {
+            console.log(user.Name, "name");
+            console.log(user.email, "email");
 
-      //-------------------------------------//
-      //--------create a Token for user------//
-      //------------- if the user match------//
-      const acsessToken = Auth.generateAccessToken(DataBaseUser);
-      res.status(201).json({ acsessToken });
-    } else {
+            const acsessToken = Auth.generateAccessToken({
+              email: user.email,
+              name: user.Name
+            });
+            res.status(201).send({ acsessToken: acsessToken, user: user });
+          } else {
+            //--------------------------------//
+            //-- the is not Password Matching-//
+            //--------------------------------//
+            console.log("inside the compar2");
+            res.status(401).send("check you passwors or user name");
+          }
+        }
+      });
+    } catch {
       //--------------------------------//
-      //-- the is not Password Matching-//
+      //-An Error Accurede while cheking-//
       //--------------------------------//
-      console.log("inside the compar2");
-      res.status(401).send("check you passwors or user name");
+      console.log("catch");
     }
-  } catch {
-    //--------------------------------//
-    //-An Error Accurede while cheking-//
-    //--------------------------------//
-    console.log(req.body.data, "passsword");
-    res.status(500).send();
   }
+  // console.log(DataBaseUser);
+
+  //--------------------------------//
+  //--- this is the request user----//
+  //--------------------------------//
 });
 
 module.exports = router;
