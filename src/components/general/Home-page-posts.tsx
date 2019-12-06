@@ -9,20 +9,11 @@ const HomePagePosts = (props: any) => {
   const posts: any = useSelector((state: any) => state.posts);
   const dispatch = useDispatch();
 
-  // const postItems = posts.map((post: any) => {
-  //   return (
-  //     <div key="post.id">
-  //       <h3>{post.title}</h3>
-  //     </div>
-  //   );
-  // });
-  // dispatch(fetchPost());
-
   useEffect(() => {
     dispatch(fetchPost());
   }, []);
 
-  const postItems = posts.items[2] ? posts.items[1].title : "";
+  const postItems = posts.items[0] ? posts.items[1].title : "";
 
   console.log("HELOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
   console.log(postItems);
