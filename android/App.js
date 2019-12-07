@@ -1,13 +1,49 @@
 import React from "react";
+import { AsyncStorage } from "react-native";
+
 import LogIn from "./component/general/LogIn";
 // import Footer from "./component/general/footer";
 import AppNavigator from "./component/navigation/AppNavigator";
 export default class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      signedIn: false
+    };
+    this.isSignedIn = this.isSignedIn.bind(this);
+  }
+  isSignedIn(user = 0) {
+    this.setState({
+      signedIn: !this.state.signedIn,
+      UserID: user
+    });
+
+    console.log(this.state.UserID);
+  }
+  componentDidMount() {
+    var that = this;
+
+    AsyncStorage.getItem("acsessToken").then(val => {
+      if (val) {
+        that.setState({
+          signedIn: true,
+          accessToken: val
+        });
+      } else {
+        that.setState({
+          signedIn: false
+        });
+      }
+    });
+  }
   render() {
     return (
       <React.Fragment>
-        <LogIn></LogIn>
-        {/* <AppNavigator></AppNavigator> */}
+        {this.state.signedIn ? (
+          <AppNavigator sigOut={this.isSignedIn.bind(this)}></AppNavigator>
+        ) : (
+          <LogIn signIn={this.isSignedIn.bind(this)}></LogIn>
+        )}
       </React.Fragment>
     );
   }

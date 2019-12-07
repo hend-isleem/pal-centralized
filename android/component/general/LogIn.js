@@ -13,6 +13,7 @@ import {
   TouchableHighlight
 } from "react-native";
 import { SocialIcon, Card, Input } from "react-native-elements";
+import { AsyncStorage } from "react-native";
 
 export default class LogIn extends React.Component {
   constructor(props) {
@@ -20,12 +21,15 @@ export default class LogIn extends React.Component {
     this.state = {
       email: "",
       password: "",
-      validat: true
+      validat: true,
+      signedIn: false,
+      accessToken: ""
     };
-    // HandelLoginByEmail = this.HandelLoginByEmail.bind(this);
+  }
+  doSignIn(userid) {
+    this.props.signIn(userid);
   }
   HandelLoginByEmail(e) {
-    // console.log("username", this.state.username, "password"),
     this.state.password;
     if (this.state.validat) {
       var that = this;
@@ -34,8 +38,18 @@ export default class LogIn extends React.Component {
           email: this.state.email,
           passowrd: this.state.password
         })
-        .then(function(response) {
+        .then(async function(response) {
           console.log(response.data, "axios");
+          that.setState({
+            signedIn: true
+          });
+          try {
+            await AsyncStorage.setItem("acsessToken", response.acsessToken);
+          } catch {
+            console.log("error");
+          }
+          console.log(response.data.user, "iam user");
+          that.doSignIn(response.data.user["id"]);
         })
         .catch(function(error) {
           console.log(error, "axios");
@@ -49,7 +63,6 @@ export default class LogIn extends React.Component {
 
   HandelEmailChang(e) {
     if (!EValidator.validate(e)) {
-      // $("#TV").text = "this is not a Valied Email";
       this.setState({ validat: false });
     } else {
       this.setState({

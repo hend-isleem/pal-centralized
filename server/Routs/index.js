@@ -202,7 +202,6 @@ router.post("/user/signIn", async (req, res) => {
   //--------------------------------//
   //--- check if the user Exist ----//
   //--------------------------------//
-  console.log(user, "the use");
   if (user === null) {
     console.log("User Is not Registered");
     return res.status(400).send("cannot find the user");

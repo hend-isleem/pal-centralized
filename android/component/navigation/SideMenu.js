@@ -4,6 +4,8 @@ import { Avatar, Card, Button } from "react-native-elements";
 import { NavigationActions } from "react-navigation";
 import axios from "axios";
 import { ScrollView, Text, View, StyleSheet } from "react-native";
+import { AsyncStorage } from "react-native";
+
 // const db = require("../../DataBase/db");
 
 class SideMenu extends Component {
@@ -12,6 +14,7 @@ class SideMenu extends Component {
     this.state = {
       user: {}
     };
+    this.Loggingout = this.Loggingout.bind(this);
   }
   navigateToScreen = route => () => {
     const navigateAction = NavigationActions.navigate({
@@ -20,6 +23,13 @@ class SideMenu extends Component {
     this.props.navigation.dispatch(navigateAction);
   };
 
+  Loggingout() {
+    AsyncStorage.removeItem("acsessToken");
+
+    // this.navigateToScreen("AboutUs");
+    console.log(this.props);
+    // this.props.signIn(userid);
+  }
   componentDidMount() {
     var that = this;
     axios
@@ -86,7 +96,7 @@ class SideMenu extends Component {
           <Button
             title="Logout"
             type="solid"
-            onPress={this.navigateToScreen("Home")}
+            onPress={this.Loggingout.bind(this)}
           >
             Logout
           </Button>
