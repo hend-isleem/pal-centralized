@@ -14,29 +14,42 @@ import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../actions";
 
 const Login = () => {
-  const posts: any = useSelector((state: any) => state.posts);
+  const userInfo: any = useSelector((state: any) => state.user);
   const dispatch = useDispatch();
 
-  const [userName, setUserName] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setemail] = useState({ email: "" });
+  const [password, setpassword] = useState({ password: "" });
+  const [USERNAME, setUSERNAME] = useState("");
 
   useEffect(() => {
     // dispatch(login());
   }, []);
 
-  const onChange = (e: any) => {
+  const onChangeEmail = (e: any) => {
     console.log(e.target.value);
+    setemail({ email: e.target.value });
   };
 
-  const onSubmit = (e: any) => {
-    e.preventDefault();
-    console.log("inside on submite");
+  const onChangePass = (e: any) => {
+    console.log(e.target.value);
+    setpassword({ password: e.target.value });
+  };
 
-    dispatch(login({ email: "Destany_Ruecker@yahoo.com", password: "sleepy" }));
+  const onSubmit = async (e: any) => {
+    e.preventDefault();
+    dispatch(
+      login({ email: email, password: password }, (token: any) => {
+        console.log(token.data.user.Name);
+        setUSERNAME(token.data.user.Name);
+      })
+    );
+
+    // console.log(userInfo.data);
   };
 
   return (
     <div>
+      <h1>{USERNAME}</h1>
       <Grid
         textAlign="center"
         style={{ height: "75vh" }}
@@ -56,7 +69,8 @@ const Login = () => {
                 icon="user"
                 iconPosition="left"
                 placeholder="User Name"
-                onChange={onChange}
+                onChange={onChangeEmail}
+                name="email"
               />
               <Form.Input
                 fluid
@@ -64,7 +78,8 @@ const Login = () => {
                 iconPosition="left"
                 placeholder="Password"
                 type="password"
-                onChange={onChange}
+                onChange={onChangePass}
+                name="password"
               />
               <Button color="teal" fluid size="large">
                 Login

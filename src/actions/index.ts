@@ -11,7 +11,7 @@ export const fetchPost = () => (dispatch: any) => {
   });
 };
 
-export const login = (userInfo: any) => (dispatch: any) => {
+export const login = (userInfo: any, callback: any) => (dispatch: any) => {
   // console.log(userInfo);
 
   axios
@@ -22,11 +22,11 @@ export const login = (userInfo: any) => (dispatch: any) => {
     .then(userToken => {
       console.log("inside then");
 
-      console.log(userToken);
       dispatch({
         type: SIGN_IN,
         payload: userToken.data
       });
+      callback(userToken);
     })
     .catch(err => console.log(err));
 };
