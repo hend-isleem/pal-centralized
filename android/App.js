@@ -8,7 +8,8 @@ export default class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      signedIn: false
+      signedIn: false,
+      loggedOut: true
     };
     this.isSignedIn = this.isSignedIn.bind(this);
   }
@@ -17,8 +18,13 @@ export default class App extends React.Component {
       signedIn: !this.state.signedIn,
       UserID: user
     });
-
+    this.props.navigation.setParams({ userid: this.state.UserID });
     console.log(this.state.UserID);
+  }
+  isLoggedOut() {
+    this.setState({
+      isLoggedOut: true
+    });
   }
   componentDidMount() {
     var that = this;
@@ -40,7 +46,9 @@ export default class App extends React.Component {
     return (
       <React.Fragment>
         {this.state.signedIn ? (
-          <AppNavigator sigOut={this.isSignedIn.bind(this)}></AppNavigator>
+          <AppNavigator
+            screenProps={{ userId: this.state.UserID }}
+          ></AppNavigator>
         ) : (
           <LogIn signIn={this.isSignedIn.bind(this)}></LogIn>
         )}

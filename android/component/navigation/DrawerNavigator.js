@@ -6,14 +6,15 @@ import Home from "../Home";
 import AboutUs from "../About";
 import ContactUs from "../ContactUS";
 import SideMenu from "../navigation/SideMenu";
-import LogIn from "../general/LogIn";
+import LogOut from "../LogOut";
 
 const DrawerNavigator = createDrawerNavigator(
   {
-    // Main: Main,
+    // Main: App,
     Home: Home,
     ContactUs: ContactUs,
-    AboutUs: AboutUs
+    AboutUs: AboutUs,
+    LogOut: LogOut
   },
   {
     contentComponent: SideMenu,

@@ -102,80 +102,6 @@ router.get("/user", (req, res) => {
   });
 });
 
-//------------------------------------------##### SignUp Section #####------------------------------------------------//
-router.post(
-  "/user/signUp",
-  [check("email").isEmail(), check("password").isLength({ min: 6 })],
-  async (req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "*");
-    const errors = validationResult(req);
-
-    //------------------------------------------------------//
-    //------if the email or password is as we want this-----//
-    //------is the error that will be shown-----------------//
-    //----------- --------{---------------------------------//
-    //---------------------- "errors": [{-------------------//
-    //---------------------- "location": "body",------------//
-    //------------------------ "msg": "Invalid value",------//
-    //-------------------------  "param": "username"--------//
-    //---------------------- }]-----------------------------//
-    //---------------------}--------------------------------//
-
-    if (!errors.isEmpty()) {
-      return res.status(422).json({ errors: errors.array() });
-    }
-
-    const hashpassword = "";
-    try {
-      //-------------------------------//
-      //----- hashing Password---------//
-      //-------------------------------//
-      hashpassword = await bcryptjs.hash(req.body.passowrd, 10);
-    } catch {
-      //--------------------------------//
-      //-An Error Accurede while cheking-//
-      //--------------------------------//
-      console.log(req.body.data, "passsword");
-      res.status(500).send();
-    }
-
-    //--------------------------------------------------//
-    //--saving User To DataBase with Hashed Password ---//
-    //--------------------------------------------------//
-
-    var DataBaseUser;
-    db.User.find({ password: req.body.passowrd }, (error, user) => {
-      if (error) {
-        res.status(500).send();
-      }
-    }).then(user => {
-      DataBaseUser = user;
-      //-----------------------------------------------------//
-      //--------if the user email exist ---------------------//
-      //--------then tell it to sing up wit another mail-----//
-      if (DataBaseUser !== null) {
-        res.status(404).send("user email is already exist ");
-      }
-    });
-    db.save(DataBaseUser);
-    //-|------------------------------------------------//
-    //-|--> do the saving Function and send result -----//
-    //------------if user is saved generate a token ----//
-    //--------------------------------------------------//
-
-    //------------------------------------//
-    //--------create a Token for user-----//
-    //------------------------------------//
-    const acsessToken = Auth.generateAccessToken(DataBaseUser);
-    res.json({ acsessToken });
-
-    //-------------------------------------------//
-    //-------------if user is not saved ---------//
-    //------------return a 500 to server --------//
-  }
-);
-
 //------------------------------------------##### signIn Section #####------------------------------------------------//
 
 router.post("/user/signIn", async (req, res) => {
@@ -211,17 +137,6 @@ router.post("/user/signIn", async (req, res) => {
     //--------------------------------//
 
     try {
-      // await bcryptjs.compare(
-      //   req.body.passowrd,
-      //   await bcryptjs.hash(req.body.passowrd, 10),
-      //   function(err, isMatch) {
-      //     if (err) {
-      //       console.log("err");
-      //     } else {
-      //       console.log(isMatch, "form first one");
-      //     }
-      //   }
-      // );
       console.log(await bcryptjs.hash(req.body.passowrd, 10));
       await bcryptjs.compare(req.body.passowrd, user.password, function(
         err,
@@ -236,7 +151,7 @@ router.post("/user/signIn", async (req, res) => {
           //--------------------------------//
           // res.status(201).send("Success")//
 
-          console.log("insi the compar");
+          console.log("insid the compar");
 
           //-------------------------------------//
           //--------create a Token for user------//
@@ -272,5 +187,165 @@ router.post("/user/signIn", async (req, res) => {
   //--- this is the request user----//
   //--------------------------------//
 });
+
+//------------------------------------------##### SignUp Section #####------------------------------------------------//
+router.post(
+  "/user/signUp",
+  [check("email").isEmail(), check("password").isLength({ min: 6 })],
+  async (req, res, next) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
+    const errors = validationResult(req);
+
+    //------------------------------------------------------//
+    //------if the email or password is as we want this-----//
+    //------is the error that will be shown-----------------//
+    //----------- --------{---------------------------------//
+    //---------------------- "errors": [{-------------------//
+    //---------------------- "location": "body",------------//
+    //------------------------ "msg": "Invalid value",------//
+    //-------------------------  "param": "username"--------//
+    //---------------------- }]-----------------------------//
+    //---------------------}--------------------------------//
+
+    if (!errors.isEmpty()) {
+      return res
+        .status(422)
+        .json({ errors: errors.array() })
+        .end();
+    }
+
+    const hashpassword = "";
+    const id = Date().now();
+    console.log(id, hashpassword);
+    try {
+      //-------------------------------//
+      //----- hashing Password---------//
+      //-------------------------------//
+      hashpassword = await bcryptjs.hash(req.body.passowrd, 10);
+      console.log(id, hashpassword);
+      //// after Hasing we will Insert A new User to Users///////
+    } catch {
+      //--------------------------------//
+      //-An Error Accurede while cheking-//
+      //--------------------------------//
+      console.log(req.body.data, "passsword");
+      res
+        .status(500)
+        .send("An Error has Accured While Saving Data Plz Try Again")
+        .end();
+    }
+
+    //--------------------------------------------------//
+    //--saving User To DataBase with Hashed Password ---//
+    //--------------------------------------------------//
+
+    db.User.find({ email: req.body.email }, (error, user) => {
+      if (error) {
+        res.status(500).send();
+      }
+    }).then(user => {
+      //-----------------------------------------------------//
+      //--------if the user email exist ---------------------//
+      //--------then tell it to sing up wit another mail-----//
+      if (user !== null) {
+        res.status(404).send("user email is already exist ");
+      } else {
+        db.General.save({
+          Name: req.body.name,
+          id: id,
+          type: req.body.type,
+          email: req.body.email,
+          passowrd: hashpassword
+        }).then(result => {
+          //------------------------------------------//
+          //--------- we need to  send the type ------//
+          //--------- in the requet by choosing ------//
+          //------------------------------------------//
+          if (req.body.type === false) {
+            db.User.save({
+              email: req.body.email,
+              Name: req.body.body.ame,
+              id: id,
+              gender: req.body.gender,
+              birthDay: req.body.birthDay,
+              address: req.body.address,
+              mobileNumber: req.body.mobileNumber,
+              major: req.body.major,
+              educationLevel: req.body.educationLevel,
+              avatar: req.body.ImageUrl
+            }).then(result => {
+              //-|------------------------------------------------//
+              //-|--> do the saving Function and send result -----//
+              //------------if user is saved generate a token ----//
+              //--------------------------------------------------//
+
+              //------------------------------------//
+              //--------create a Token for user-----//
+              //------------------------------------//
+              const acsessToken = Auth.generateAccessToken({
+                email: req.body.email,
+                name: req.body.name
+              });
+              res.status(201).send({
+                acsessToken: { email: req.body.email, Name: req.body.Name },
+                user: {
+                  name: req.name.Name,
+                  id: id,
+                  type: req.type,
+                  email: req.body.email
+                }
+              });
+              //-------------------------------------------//
+              //-------------if user is not saved ---------//
+              //------------return a 500 to server --------//
+            });
+          } else {
+            //------------------------------------------//
+            //---------if type is company (true) -------//
+            //------------------------------------------//
+            db.Company.save({
+              email: req.body.email,
+              Name: req.body.body.ame,
+              id: id,
+              description: req.body.description,
+              logo: req.body.logo,
+              twitterLink: req.body.twitterLink,
+              linkedinLink: req.body.linkedinLink,
+              otherLink: req.body.otherLink,
+              mobileNumber: req.body.mobileNumber
+            }).then(result => {
+              //-|------------------------------------------------//
+              //-|--> do the saving Function and send result -----//
+              //------------if user is saved generate a token ----//
+              //--------------------------------------------------//
+
+              //------------------------------------//
+              //--------create a Token for user-----//
+              //------------------------------------//
+              const acsessToken = Auth.generateAccessToken({
+                email: req.body.email,
+                name: req.body.name
+              });
+              res.status(201).send({
+                acsessToken: { email: req.body.email, Name: req.body.Name },
+                user: {
+                  name: req.name.Name,
+                  id: id,
+                  type: req.type,
+                  email: req.body.email
+                }
+              });
+              //-------------------------------------------//
+              //-------------if user is not saved ---------//
+              //------------return a 500 to server --------//
+              //-------------------------------------------//
+            });
+          }
+        });
+      }
+    });
+  }
+);
 
 module.exports = router;

@@ -9,13 +9,8 @@ import {
 } from "react-native";
 import Constants from "expo-constants";
 import Header from "./navigation/Header";
-// You can import from local files
 
-// or any pure javascript modules available in npm
-// import { Card } from "react-native-paper";
-// import "react-native-gesture-handler";
-
-export default class Contact extends React.Component {
+export default class logOut extends React.Component {
   static navigationOptions = {
     title: "Contact Us"
   };
