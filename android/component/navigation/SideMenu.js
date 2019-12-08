@@ -26,32 +26,16 @@ class SideMenu extends Component {
   Loggingout() {}
   async getData() {
     try {
-      this.setState({
-        user: await AsyncStorage.getItem("user")
+      var that = this;
+      await AsyncStorage.getItem("user").then(user => {
+        that.setState({ user: JSON.parse(user) });
       });
-      console.log(
-        this.state.user,
-        "nav User ................................................"
-      );
     } catch {
       console.log("error");
     }
   }
   componentDidMount() {
-    // var that = this;
-    // axios
-    //   .get("http://127.0.0.1:3004/user/?id=1")
-    //   .then(function(response) {
-    //     console.log(response.data.user[0]);
-    //     that.setState({
-    //       user: response.data.user[0]
-    //     });
-    //     console.log(that.state.user);
-    //   })
-    //   .catch(function(error) {
-    //     console.log(error);
-    //   });
-    // console.log(this.state.user);
+    this.getData();
   }
 
   render() {
@@ -66,7 +50,7 @@ class SideMenu extends Component {
               source={{
                 uri:
                   this.state.user.logo ||
-                  "https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg"
+                  "https://bim-and-beyond.eu/wp-content/uploads/2018/08/unknown.png"
               }}
               showEditButton
             />

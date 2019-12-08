@@ -15,6 +15,7 @@ export default class logOut extends React.Component {
   constructor(props) {
     super(props);
     AsyncStorage.removeItem("acsessToken");
+    AsyncStorage.removeItem("user");
   }
   static navigationOptions = {
     title: "Log Out"

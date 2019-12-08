@@ -1,9 +1,8 @@
 import React from "react";
 import { AsyncStorage } from "react-native";
+import EditProfile from "./component/general/EditProfil";
+import Imguploader from "./component/general/UploadPhoto";
 
-import LogIn from "./component/general/LogIn";
-// import Footer from "./component/general/footer";
-import AppNavigator from "./component/navigation/AppNavigator";
 export default class App extends React.Component {
   constructor(props) {
     super(props);
@@ -45,13 +44,15 @@ export default class App extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {this.state.signedIn ? (
+        {/* {this.state.signedIn ? (
           <AppNavigator
             screenProps={{ userId: this.state.UserID }}
           ></AppNavigator>
         ) : (
           <LogIn signIn={this.isSignedIn.bind(this)}></LogIn>
-        )}
+        )} */}
+        {/* <EditProfile /> */}
+        <Imguploader />
       </React.Fragment>
     );
   }

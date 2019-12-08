@@ -8,57 +8,110 @@ import {
   TouchableHighlight
 } from "react-native";
 import { AsyncStorage } from "react-native";
-import { Card, Input, CheckBox } from "react-native-elements";
+import { Card, Input } from "react-native-elements";
+// import * as ImagePicker from "expo-image-picker";
+import Icon from "react-native-vector-icons/FontAwesome";
+// import Constants from "expo-constants";
+// import * as Permissions from "expo-permissions";
 
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      user: {}
+    };
   }
 
   componentDidMount() {
-    var user = getData();
+    this.getData();
+    // this.getPermissionAsync();
+    console.log("hi");
   }
+
+  // getPermissionAsync = async () => {
+  //   if (Constants.platform.ios) {
+  //     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
+  //     if (status !== "granted") {
+  //       alert("Sorry, we need camera roll permissions to make this work!");
+  //     }
+  //   }
+  // };
+  // _pickImage = async () => {
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 3],
+  //     quality: 1
+  //   });
+
+  //   console.log(result);
+
+  //   if (!result.cancelled) {
+  //     this.setState({ image: result.uri });
+  //   }
+  // };
+
+  HandleSkip() {}
+  HandleSubmit() {}
   async getData() {
     try {
-      return await AsyncStorage.getItem("User");
+      var that = this;
+      await AsyncStorage.getItem("user").then(user => {
+        that.setState({ user: JSON.parse(user) });
+      });
     } catch {
-      console.log("no user data");
+      console.log("error");
     }
   }
   render() {
     return (
       <View>
+        {/* <View
+          style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+        >
+          <Button
+            title="Pick an image from camera roll"
+            onPress={this._pickImage}
+          />
+          {image && (
+            <Image
+              source={{ uri: image }}
+              style={{ width: 200, height: 200 }}
+            />
+          )}
+        </View> */}
+
         <Card containerStyle={styles.container} title="LogIn Page">
           <Input
-            onChangeText={this.HandelUserNme.bind(this)}
+            nativeID={"description"}
             numberOfLines={1}
-            placeholder="User Name ..."
+            placeholder="description."
             leftIcon={<Icon name="user" size={24} color="#cf3c1f" />}
           />
 
           <Input
-            onChangeText={this.HandelEmailChang.bind(this)}
             placeholder="  Email..."
             leftIcon={<Icon name="user" size={24} color="#cf3c1f" />}
           />
           <Text nativeID="VT"></Text>
           <Input
-            onChangeText={this.PasswordChang.bind(this)}
             secureTextEntry
             numberOfLines={1}
             placeholder="Password ..."
             leftIcon={<Icon name="lock" size={24} color="#cf3c1f" />}
           />
-          <CheckBox
-            title="Is a Company"
-            checked={this.state.company}
-            onPress={() => this.setState({ company: !this.state.company })}
-          />
-          <Button
-            title="Next"
-            type="outline"
-            onPress={this.HandelSignUp.bind(this)}
-          />
+          <View>
+            <Button
+              title="Skip"
+              type="outline"
+              onPress={this.HandleSkip.bind(this)}
+            />
+            <Button
+              title="Sumbit"
+              type="outline"
+              onPress={this.HandleSubmit.bind(this)}
+            />
+          </View>
         </Card>
       </View>
     );

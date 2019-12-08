@@ -57,9 +57,12 @@ export default class LogIn extends React.Component {
           try {
             await AsyncStorage.setItem(
               "acsessToken",
-              response.data.acsessToken
+              JSON.stringify(response.data.acsessToken)
             );
-            await AsyncStorage.setItem("user", response.data.user);
+            await AsyncStorage.setItem(
+              "user",
+              JSON.stringify(response.data.user)
+            );
           } catch {
             console.log("error");
           }
