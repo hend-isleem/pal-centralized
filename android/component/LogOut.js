@@ -8,16 +8,20 @@ import {
   TouchableHighlight
 } from "react-native";
 import Constants from "expo-constants";
-import Header from "./navigation/Header";
+// import Header from "./navigation/Header";
+import { AsyncStorage } from "react-native";
 
 export default class logOut extends React.Component {
+  constructor(props) {
+    super(props);
+    AsyncStorage.removeItem("acsessToken");
+  }
   static navigationOptions = {
-    title: "Contact Us"
+    title: "Log Out"
   };
   render() {
     return (
       <React.Fragment>
-        <Header />
         <View style={styles.container}>
           <Text style={styles.paragraph}>Contat us</Text>
         </View>
@@ -28,6 +32,7 @@ export default class logOut extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: "#3232a8",
     flex: 1,
     justifyContent: "center",
     paddingTop: Constants.statusBarHeight,

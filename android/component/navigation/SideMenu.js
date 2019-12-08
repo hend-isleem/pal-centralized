@@ -4,6 +4,7 @@ import { Avatar, Card, Button } from "react-native-elements";
 import { NavigationActions } from "react-navigation";
 import axios from "axios";
 import { Text, View, StyleSheet } from "react-native";
+import { AsyncStorage } from "react-native";
 
 // const db = require("../../DataBase/db");
 
@@ -23,21 +24,34 @@ class SideMenu extends Component {
   };
 
   Loggingout() {}
-  componentDidMount() {
-    var that = this;
-    axios
-      .get("http://127.0.0.1:3004/user/?id=1")
-      .then(function(response) {
-        console.log(response.data.user[0]);
-        that.setState({
-          user: response.data.user[0]
-        });
-        console.log(that.state.user);
-      })
-      .catch(function(error) {
-        console.log(error);
+  async getData() {
+    try {
+      this.setState({
+        user: await AsyncStorage.getItem("user")
       });
-    console.log(this.state.user);
+      console.log(
+        this.state.user,
+        "nav User ................................................"
+      );
+    } catch {
+      console.log("error");
+    }
+  }
+  componentDidMount() {
+    // var that = this;
+    // axios
+    //   .get("http://127.0.0.1:3004/user/?id=1")
+    //   .then(function(response) {
+    //     console.log(response.data.user[0]);
+    //     that.setState({
+    //       user: response.data.user[0]
+    //     });
+    //     console.log(that.state.user);
+    //   })
+    //   .catch(function(error) {
+    //     console.log(error);
+    //   });
+    // console.log(this.state.user);
   }
 
   render() {
@@ -66,13 +80,13 @@ class SideMenu extends Component {
         </Card>
 
         <View style={styles.container}>
-          <Button
+          {/* <Button
             title="Home"
             type="clear"
             onPress={this.navigateToScreen("ContactUs")}
           >
             Home
-          </Button>
+          </Button> */}
 
           <Button
             title="AboutUs"
