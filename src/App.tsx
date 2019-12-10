@@ -19,14 +19,17 @@ import Search from "./components/general/Search";
 import UserPageHeader from "./components/user/User-page-header";
 
 import { logout } from "./actions/index";
+import { signup } from "./actions/index";
 
 const App: React.FC = () => {
   // let isLogged: any = useSelector((state: any) => state.user);
   // const dispatch = useDispatch();
   let isLogged: any = localStorage.getItem("token");
+  const dispatch = useDispatch();
 
   useEffect(() => {
     isLogged = localStorage.getItem("token");
+    dispatch(signup());
   }, []);
 
   {
