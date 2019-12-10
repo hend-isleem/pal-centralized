@@ -8,48 +8,47 @@ import {
   Segment,
   Icon
 } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import "../../style.css/form.css";
 import { useSelector, useDispatch } from "react-redux";
 import { login } from "../../actions";
 
-const Login = () => {
-  const userInfo: any = useSelector((state: any) => state.user);
+const Login = (props: any) => {
   const dispatch = useDispatch();
+  let isLogged: any = useSelector((state: any) => state.user.isLogged);
+  // console.log(isLogged);
+  let userName: any = useSelector((state: any) => state.user.userName);
+  // console.log(userName);
 
   const [email, setemail] = useState({ email: "" });
   const [password, setpassword] = useState({ password: "" });
-  const [USERNAME, setUSERNAME] = useState("");
 
   useEffect(() => {
     // dispatch(login());
   }, []);
 
   const onChangeEmail = (e: any) => {
-    console.log(e.target.value);
     setemail({ email: e.target.value });
   };
 
   const onChangePass = (e: any) => {
-    console.log(e.target.value);
     setpassword({ password: e.target.value });
   };
 
-  const onSubmit = async (e: any) => {
+  const onSubmit = (e: any) => {
     e.preventDefault();
     dispatch(
-      login({ email: email, password: password }, (token: any) => {
-        console.log(token.data.user.Name);
-        setUSERNAME(token.data.user.Name);
+      login({ email: email, password: password }, (userInfo: any) => {
+        console.log(userInfo);
+        props.history.push("/");
       })
     );
-
-    // console.log(userInfo.data);
   };
+
+  if (isLogged) return <Redirect to="/" />;
 
   return (
     <div>
-      <h1>{USERNAME}</h1>
       <Grid
         textAlign="center"
         style={{ height: "75vh" }}

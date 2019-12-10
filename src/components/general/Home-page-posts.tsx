@@ -15,7 +15,7 @@ const HomePagePosts = (props: any) => {
 
   const postItems = posts.items ? posts.items : "";
 
-  console.log(postItems);
+  // console.log(postItems);
 
   const Element = (post: any) => {
     return (

@@ -1,4 +1,4 @@
-import { FETCH_POSTS, SIGN_IN } from "./types";
+import { FETCH_POSTS, SIGN_IN, LOGOUT_SUCCESS, IS_LOGGED } from "./types";
 import axios from "axios";
 
 export const fetchPost = () => (dispatch: any) => {
@@ -12,21 +12,29 @@ export const fetchPost = () => (dispatch: any) => {
 };
 
 export const login = (userInfo: any, callback: any) => (dispatch: any) => {
-  // console.log(userInfo);
-
   axios
     .post("http://127.0.0.1:3004/user/signIn", {
-      email: "Maria_Turner40@yahoo.com",
-      passowrd: "sleepy"
+      email: userInfo.email.email,
+      passowrd: userInfo.password.password
     })
     .then(userToken => {
-      console.log("inside then");
-
       dispatch({
         type: SIGN_IN,
         payload: userToken.data
       });
-      callback(userToken);
+      callback(userToken.data);
     })
     .catch(err => console.log(err));
+};
+
+export const logout = () => {
+  return {
+    type: LOGOUT_SUCCESS
+  };
+};
+
+export const isLogged = () => {
+  return {
+    type: IS_LOGGED
+  };
 };
