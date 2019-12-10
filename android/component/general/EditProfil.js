@@ -9,50 +9,36 @@ import {
 } from "react-native";
 import { AsyncStorage } from "react-native";
 import { Card, Input } from "react-native-elements";
-// import * as ImagePicker from "expo-image-picker";
 import Icon from "react-native-vector-icons/FontAwesome";
-// import Constants from "expo-constants";
-// import * as Permissions from "expo-permissions";
+import Imguploader from "../general/UploadPhoto";
+import axios from "axios";
+// import FormData from "formdata-node";
+// import ImagePicker from "react-native-image-picker";
 
 export default class Profile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {}
+      user: {},
+      image: null
     };
+    this.HandelImage = this.HandelImage.bind(this);
   }
 
   componentDidMount() {
     this.getData();
-    // this.getPermissionAsync();
-    console.log("hi");
   }
 
-  // getPermissionAsync = async () => {
-  //   if (Constants.platform.ios) {
-  //     const { status } = await Permissions.askAsync(Permissions.CAMERA_ROLL);
-  //     if (status !== "granted") {
-  //       alert("Sorry, we need camera roll permissions to make this work!");
-  //     }
-  //   }
-  // };
-  // _pickImage = async () => {
-  //   let result = await ImagePicker.launchImageLibraryAsync({
-  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
-  //     allowsEditing: true,
-  //     aspect: [4, 3],
-  //     quality: 1
-  //   });
-
-  //   console.log(result);
-
-  //   if (!result.cancelled) {
-  //     this.setState({ image: result.uri });
-  //   }
-  // };
-
-  HandleSkip() {}
+  HandleSkip(e) {
+    // console.log(e.target);
+  }
   HandleSubmit() {}
+  HandelImage(uri) {
+    this.setState({
+      image: uri
+    });
+    console.log(this.state.image, "from Parent");
+  }
   async getData() {
     try {
       var that = this;
@@ -63,31 +49,59 @@ export default class Profile extends React.Component {
       console.log("error");
     }
   }
+
+  async postPicture() {
+    const apiUrl = `http://127.0.0.1:3004/user/upload`;
+    const uri = this.state.image.uri;
+    const uriParts = uri.split(".");
+    const fileType = uriParts[uriParts.length - 1];
+    const formData = new FormData();
+
+    await formData.append(
+      "file",
+      JSON.stringify({
+        uri: this.state
+      })
+    );
+
+    // formData.append("authToken", "secret");
+    // formData.append("photo", JSON.stringify(formData));
+
+    try {
+      // console.log(formData.getAll("file"), "file");
+      await axios
+        .post(`http://127.0.0.1:3004/user/upload`, formData, {
+          headers: {
+            Accept: "application/json"
+            // "Content-Type": "multipart/form-data"
+          }
+        })
+        .then(function(response) {
+          //handle success
+          console.log(response, "response");
+        })
+        .catch(function(response) {
+          //handle error
+          console.log(response, "respose");
+        });
+    } catch {
+      console.log("catch");
+    }
+  }
   render() {
     return (
       <View>
-        {/* <View
+        <Card
           style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+          title="Edit Profile"
         >
-          <Button
-            title="Pick an image from camera roll"
-            onPress={this._pickImage}
-          />
-          {image && (
-            <Image
-              source={{ uri: image }}
-              style={{ width: 200, height: 200 }}
-            />
-          )}
-        </View> */}
-
-        <Card containerStyle={styles.container} title="LogIn Page">
           <Input
             nativeID={"description"}
             numberOfLines={1}
             placeholder="description."
             leftIcon={<Icon name="user" size={24} color="#cf3c1f" />}
           />
+          {/* <input type="file" onChange={this.HandleSkip} /> */}
 
           <Input
             placeholder="  Email..."
@@ -100,6 +114,13 @@ export default class Profile extends React.Component {
             placeholder="Password ..."
             leftIcon={<Icon name="lock" size={24} color="#cf3c1f" />}
           />
+          <View>
+            <Imguploader getUrl={this.HandelImage.bind(this)} />
+            <Button
+              title="Uploade"
+              onPress={this.postPicture.bind(this)}
+            ></Button>
+          </View>
           <View>
             <Button
               title="Skip"

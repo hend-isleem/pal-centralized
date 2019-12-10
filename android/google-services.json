@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "92581612306",
+    "firebase_url": "https://schoolerships-1574860882091.firebaseio.com",
+    "project_id": "schoolerships-1574860882091",
+    "storage_bucket": "schoolerships-1574860882091.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92581612306:android:934286dafec9a31f0501cb",
+        "android_client_info": {
+          "package_name": "com.helloworld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92581612306-8mmrbq63blcbvd3n5fsnftf65vekcqs5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBdQW9pH1a-7es8DgUL1ujNmVb5DrTnU64"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92581612306-8mmrbq63blcbvd3n5fsnftf65vekcqs5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

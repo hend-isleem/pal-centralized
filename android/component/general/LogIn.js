@@ -1,6 +1,6 @@
 import * as React from "react";
 import Icon from "react-native-vector-icons/FontAwesome";
-
+import config from "../configGoogle";
 import axios from "axios";
 import EValidator from "email-validator";
 import $ from "jquery";
@@ -8,7 +8,11 @@ import { Text, View, StyleSheet, Button } from "react-native";
 import { SocialIcon, Card, Input } from "react-native-elements";
 import { AsyncStorage } from "react-native";
 import SignUp from "../general/SignUp";
+// import * as Google from "expo-google-app-auth";
 
+import { GoogleSignIn } from "expo";
+
+// await GoogleSignIn.initAsync();
 export default class LogIn extends React.Component {
   static navigationOptions = {
     title: "Welcome"
@@ -16,6 +20,10 @@ export default class LogIn extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
+      signedIn: false,
+      name: "",
+      photoUrl: "",
+
       goToSigUp: false,
       email: "",
       password: "",
@@ -78,6 +86,39 @@ export default class LogIn extends React.Component {
     this.setState({ password: e });
     console.log(this.state.password);
   }
+  signInGoogle = async () => {
+    await Google.logInAsync({
+      androidClientId:
+        "92581612306-5kdci6e42th8t8dgaqj8k3ciaiesrnou.apps.googleusercontent.com"
+    }).then(result => {
+      console.log(result, "result");
+      // if (type === "success") {
+      //   // Then you can use the Google REST API
+      //   let userInfoResponse = await fetch(
+      //     "https://www.googleapis.com/userinfo/v2/me",
+      //     {
+      //       headers: { Authorization: `Bearer ${accessToken}` }
+      //     }
+      //   );
+      // }
+    });
+    console.log("user");
+
+    // if (type === "success") {
+    //   // Then you can use the Google REST API
+    //   let userInfoResponse = await fetch(
+    //     "https://www.googleapis.com/userinfo/v2/me",
+    //     {
+    //       headers: { Authorization: `Bearer ${accessToken}` }
+    //     }
+    //   );
+    // }
+  };
+
+  signUpwithGoogle(e) {
+    this.signInGoogle();
+    console.log(config.clientID);
+  }
 
   HandelEmailChang(e) {
     if (!EValidator.validate(e)) {
@@ -116,6 +157,7 @@ export default class LogIn extends React.Component {
               />
               <Text style={styles.paragraph}> OR</Text>
               <SocialIcon
+                onPress={this.signUpwithGoogle.bind(this)}
                 style={styles.cardCnt}
                 title="Sign In With google"
                 button

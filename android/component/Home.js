@@ -4,28 +4,27 @@ import Constants from "expo-constants";
 
 import Header from "./navigation/Header";
 import InfoBlock from "./general/infoBlock";
+import { SearchBar } from "react-native-elements";
+
 export default class Home extends React.Component {
-  // static navigationOptions = {
-  //   headerTitle: () => {
-  //     return (
-  //       <TouchableHighlight
-  //         onPress={() => this.props.navigation.navigate("AboutUs")}
-  //       >
-  //         <Image
-  //           source={{
-  //             uri: "http://simpleicon.com/wp-content/uploads/cute.png"
-  //           }}
-  //           style={{ width: 30, height: 30 }}
-  //         />
-  //       </TouchableHighlight>
-  //     );
-  //   },
-  //   headerRight: () => <Button onPress={() => {}} title="SignIn" />
-  // };
+  state = {
+    search: ""
+  };
+
+  updateSearch = search => {
+    this.setState({ search });
+  };
   render() {
+    const { search } = this.state;
+
     return (
       <React.Fragment>
         <Header />
+        <SearchBar
+          placeholder="Type Here..."
+          onChangeText={this.updateSearch}
+          value={search}
+        />
         <InfoBlock />
         <InfoBlock />
         <InfoBlock />

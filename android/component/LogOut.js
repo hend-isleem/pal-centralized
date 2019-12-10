@@ -25,6 +25,7 @@ export default class logOut extends React.Component {
       <React.Fragment>
         <View style={styles.container}>
           <Text style={styles.paragraph}>Contat us</Text>
+          {/* {this.props.navigation.navigate("Home")} */}
         </View>
       </React.Fragment>
     );

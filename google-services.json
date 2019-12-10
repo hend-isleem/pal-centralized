@@ -1,0 +1,98 @@
+{
+  "project_info": {
+    "project_number": "92581612306",
+    "firebase_url": "https://schoolerships-1574860882091.firebaseio.com",
+    "project_id": "schoolerships-1574860882091",
+    "storage_bucket": "schoolerships-1574860882091.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92581612306:android:934286dafec9a31f0501cb",
+        "android_client_info": {
+          "package_name": "com.helloworld"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92581612306-8mmrbq63blcbvd3n5fsnftf65vekcqs5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFJmNDKurrGSYTVqLjST6Mcz1Nx2yXb1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92581612306-8mmrbq63blcbvd3n5fsnftf65vekcqs5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92581612306:android:5769313972d690800501cb",
+        "android_client_info": {
+          "package_name": "com.helloworld.seekps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92581612306-8mmrbq63blcbvd3n5fsnftf65vekcqs5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFJmNDKurrGSYTVqLjST6Mcz1Nx2yXb1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92581612306-8mmrbq63blcbvd3n5fsnftf65vekcqs5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:92581612306:android:9d14e53175cb12e40501cb",
+        "android_client_info": {
+          "package_name": "com.nuhla.seek.ps"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "92581612306-8mmrbq63blcbvd3n5fsnftf65vekcqs5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDFJmNDKurrGSYTVqLjST6Mcz1Nx2yXb1k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "92581612306-8mmrbq63blcbvd3n5fsnftf65vekcqs5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

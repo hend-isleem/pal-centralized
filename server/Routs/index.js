@@ -3,6 +3,8 @@ const router = express.Router();
 const bcryptjs = require("bcryptjs");
 const db = require("../../DataBase/db");
 const bodyParser = require("body-parser");
+const multer = require("multer");
+const path = require("path");
 
 const jwt = require("jsonwebtoken");
 const Auth = require("../Auth/Auth");
@@ -10,6 +12,41 @@ const { check, validationResult } = require("express-validator");
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
+//----------------------------------######3 Processing file and picture #####-----------------------------------------------//
+router.post("/user/upload", (req, res) => {
+  console.log("here am i ");
+
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  if (req.body) {
+    console.log(req.body.file);
+    var d = req.body;
+
+    var base64Data = req.body.file.replace(/^data:image\/png;base64,/, "");
+
+    require("fs").writeFile("out.jpeg", base64Data, "base64", function(err) {
+      console.log(err);
+    });
+    console.log("no file Uploaded");
+    console.log(req.body.fileType, "hiiii");
+  } else {
+    console.logo("we have a file");
+  }
+});
+
+//-------------------------------------#### get filtered Articals ## -------------------------------------------------
+router.get("/articles/filtered", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  console.log("req", req.query);
+  db.Post.find(req.query, (error, post) => {
+    if (error) {
+      res.status(500).send("an error accured while connecting to data");
+    }
+  }).then(post => {
+    res.status(201).send(post);
+  });
+});
 //-------------------------------------------##### get all Post Rout Nativ #####------------------------------------------------------------//
 router.get("/articles", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
