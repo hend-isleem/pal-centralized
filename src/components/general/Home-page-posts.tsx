@@ -1,21 +1,48 @@
-import React, { useEffect } from "react";
-import { Grid, Item, Header } from "semantic-ui-react";
+import React, { useEffect, useState } from "react";
+import { Grid, Item, Header, Message } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "./General.css";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPost } from "../../actions";
+import WarningMessage from "../messages/warning-message";
 
 const HomePagePosts = () => {
   const posts: any = useSelector((state: any) => state.posts);
   const dispatch = useDispatch();
-
+  let isLogged: any = localStorage.getItem("token");
   let counter = 0;
+
+  const [showDesc, setShowDesc] = useState(false);
+  let flag = false;
+  // const AdditionalInfo = (data: any) => {
+  //   <p></p>;
+  // };
 
   useEffect(() => {
     dispatch(fetchPost());
+    isLogged = localStorage.getItem("token");
   }, []);
 
   const postItems = posts.items ? posts.items : "";
+
+  // ----------------------------------------- Start Helper Functions----------------------------------------- //
+  const resetCounter = () => {
+    counter = 0;
+  };
+
+  const checkToken = (isLogged: any) => {
+    return isLogged ? true : false;
+  };
+
+  const showDescreptipn = () => {
+    if (!isLogged) {
+      console.log("log in please");
+      setShowDesc(!showDesc);
+    }
+  };
+
+  // ----------------------------------------- End Helper Functions----------------------------------------- //
+
   const Element = (post: any) => {
     if (counter < 3) {
       counter++;
@@ -28,11 +55,17 @@ const HomePagePosts = () => {
               <Item.Content>
                 <Item.Header>{post.title}</Item.Header>
                 <Item.Meta>by RBK</Item.Meta>
-                <Item.Description>
-                  <p>{post.description}</p>
-                </Item.Description>
-                <Item.Extra as="a">
-                  <Link to="#">Additional Details</Link>
+                {checkToken(isLogged) ? (
+                  <Item.Description>
+                    <p>{post.description}</p>
+                  </Item.Description>
+                ) : (
+                  <Item.Description></Item.Description>
+                )}
+
+                <Item.Extra as="a" onClick={showDescreptipn}>
+                  Additional Information
+                  {showDesc ? <WarningMessage /> : null}
                 </Item.Extra>
               </Item.Content>
             </Item>
@@ -40,10 +73,6 @@ const HomePagePosts = () => {
         </Grid.Column>
       );
     }
-  };
-
-  const resetCounter = () => {
-    counter = 0;
   };
 
   return (
