@@ -8,8 +8,9 @@ import WarningMessage from "../messages/warning-message";
 const HomePagePosts = () => {
   const posts: any = useSelector((state: any) => state.posts);
   const dispatch = useDispatch();
-  let isLogged: any = localStorage.getItem("token");
+  // let isLogged: any = localStorage.getItem("token");
   let counter = 0;
+  const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
 
   const [showDesc, setShowDesc] = useState(false);
   // let flag = false;
@@ -19,7 +20,7 @@ const HomePagePosts = () => {
 
   useEffect(() => {
     dispatch(fetchPost());
-    isLogged = localStorage.getItem("token");
+    setIsLogged(localStorage.getItem("token"));
   }, []);
 
   const postItems = posts.items ? posts.items : "";
