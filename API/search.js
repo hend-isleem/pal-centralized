@@ -137,6 +137,22 @@ const search = function(type, major, cb, str) {
 //   }
 // });
 
+// const haha = async function() {
+//   for (let i = 1 ; i <= 50; i++) {
+//     await db.Post.findOneAndUpdate(
+//       {id: i},  //filter
+//       {link: "https://www.google.com/"}, //data to update
+//       { //options
+//         returnNewDocument: true,
+//         new: true,
+//         strict: false
+//       }
+//     )
+//     console.log("hoho ", i)
+//   }
+// }
+// haha();
+
 module.exports.searchType = searchType;
 module.exports.searchMajor = searchMajor;
 module.exports.seatchTitle = seatchTitle;
