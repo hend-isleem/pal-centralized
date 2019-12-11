@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Button, Menu, Dropdown, Icon, Grid, Input } from "semantic-ui-react";
 
-import { useSelector, useDispatch } from "react-redux";
+// import { useSelector, useDispatch } from "react-redux";
 
 // Majors : Media
 

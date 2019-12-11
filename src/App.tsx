@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "semantic-ui-css/semantic.min.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 // import { useSelector, useDispatch } from "react-redux";
@@ -17,11 +17,11 @@ import UserPageHeader from "./components/user/User-page-header";
 // import { signup } from "./actions/index";
 
 const App: React.FC = () => {
-  let isLogged: any = localStorage.getItem("token");
+  const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
 
   // check if there is a user logged or not
   useEffect(() => {
-    isLogged = localStorage.getItem("token");
+    setIsLogged(localStorage.getItem("token"));
   }, []);
 
   if (isLogged)
