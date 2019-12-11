@@ -7,13 +7,14 @@ import WarningMessage from "../messages/warning-message";
 
 const HomePagePosts = () => {
   const posts: any = useSelector((state: any) => state.posts);
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   let counter = 0;
   const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
 
   const [showDesc, setShowDesc] = useState(false);
 
   useEffect(() => {
+    const dispatch = useDispatch();
     dispatch(fetchPost());
     setIsLogged(localStorage.getItem("token"));
   }, []);
