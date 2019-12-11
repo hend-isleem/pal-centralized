@@ -18,12 +18,12 @@ const HomePagePosts = () => {
   //   <p></p>;
   // };
 
-  const fetchPostBusinesses = () => {
+  useEffect(() => {
+    // fetchPostBusinesses();
     dispatch(fetchPost());
-  };
+  }, [localStorage.getItem("token")]);
 
   useEffect(() => {
-    fetchPostBusinesses();
     setIsLogged(localStorage.getItem("token"));
   }, []);
 

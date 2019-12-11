@@ -8,46 +8,46 @@ import { Button, Menu, Dropdown, Icon, Grid, Input } from "semantic-ui-react";
 // this the Option for Major
 const majorOptions = [
   { key: "a1", value: "m1", text: "Achitecture" },
-  { key: "a2", value: "m1", text: "Art" },
-  { key: "a3", value: "m1", text: "Business" },
-  { key: "a4", value: "m1", text: "Media" },
-  { key: "a5", value: "m1", text: "Computer" },
-  { key: "a6", value: "m1", text: "Science" },
-  { key: "a7", value: "m1", text: "Medicine" },
-  { key: "a8", value: "m1", text: "Languages" },
-  { key: "a9", value: "m1", text: "Law" },
-  { key: "a10", value: "m1", text: "Philosophy" },
-  { key: "a11", value: "m1", text: "Political" },
-  { key: "a12", value: "m1", text: "Tourisim" },
-  { key: "a13", value: "m1", text: "Sports" },
-  { key: "a14", value: "m1", text: "History" },
-  { key: "a15", value: "m1", text: "Engineerong" },
-  { key: "a16", value: "m1", text: "IT" },
-  { key: "a17", value: "m1", text: "Education" },
-  { key: "a18", value: "m1", text: "Literature" }
+  { key: "a2", value: "m2", text: "Art" },
+  { key: "a3", value: "m3", text: "Business" },
+  { key: "a4", value: "m4", text: "Media" },
+  { key: "a5", value: "m5", text: "Computer" },
+  { key: "a6", value: "m6", text: "Science" },
+  { key: "a7", value: "m7", text: "Medicine" },
+  { key: "a8", value: "m8", text: "Languages" },
+  { key: "a9", value: "m9", text: "Law" },
+  { key: "a10", value: "m10", text: "Philosophy" },
+  { key: "a11", value: "m11", text: "Political" },
+  { key: "a12", value: "m12", text: "Tourisim" },
+  { key: "a13", value: "m13", text: "Sports" },
+  { key: "a14", value: "m14", text: "History" },
+  { key: "a15", value: "m15", text: "Engineerong" },
+  { key: "a16", value: "m16", text: "IT" },
+  { key: "a17", value: "m17", text: "Education" },
+  { key: "a18", value: "m18", text: "Literature" }
 ];
 
 // this the Option for Type
 const typesOptions = [
   { key: "a1", value: "t1", text: "Jerusalem" },
-  { key: "a2", value: "t1", text: "Safed" },
-  { key: "a3", value: "t1", text: "Haifa" },
-  { key: "a4", value: "t1", text: "Bisan" },
-  { key: "a5", value: "t1", text: "Akka" },
-  { key: "a6", value: "t1", text: "Nablus" },
-  { key: "a7", value: "t1", text: "Tulkarm" },
-  { key: "a8", value: "t1", text: "Qalqilya" },
-  { key: "a9", value: "t1", text: "Caesarea" },
-  { key: "a10", value: "t1", text: "Ramallah" },
-  { key: "a11", value: "t1", text: "Al-Bireh" },
-  { key: "a12", value: "t1", text: "Al-Roll" },
-  { key: "a13", value: "t1", text: "Jaffa" },
-  { key: "a14", value: "t1", text: "Jericho" },
-  { key: "a15", value: "t1", text: "Bethlehem" },
-  { key: "a16", value: "t1", text: "Hebron" },
-  { key: "a17", value: "t1", text: "Khan" },
-  { key: "a18", value: "t1", text: "Rafah" },
-  { key: "a19", value: "t1", text: "Beersheba" }
+  { key: "a2", value: "t2", text: "Safed" },
+  { key: "a3", value: "t3", text: "Haifa" },
+  { key: "a4", value: "t4", text: "Bisan" },
+  { key: "a5", value: "t5", text: "Akka" },
+  { key: "a6", value: "t6", text: "Nablus" },
+  { key: "a7", value: "t7", text: "Tulkarm" },
+  { key: "a8", value: "t8", text: "Qalqilya" },
+  { key: "a9", value: "t9", text: "Caesarea" },
+  { key: "a10", value: "t10", text: "Ramallah" },
+  { key: "a11", value: "t11", text: "Al-Bireh" },
+  { key: "a12", value: "t12", text: "Al-Roll" },
+  { key: "a13", value: "t13", text: "Jaffa" },
+  { key: "a14", value: "t14", text: "Jericho" },
+  { key: "a15", value: "t15", text: "Bethlehem" },
+  { key: "a16", value: "t16", text: "Hebron" },
+  { key: "a17", value: "t17", text: "Khan" },
+  { key: "a18", value: "t18", text: "Rafah" },
+  { key: "a19", value: "t19", text: "Beersheba" }
 ];
 
 const Search = () => {
@@ -58,7 +58,7 @@ const Search = () => {
 
   // to take the value of dropdowns search by Type --------------------
   const hundleDropDownChangeByMajor = (e: any) => {
-    setMajorQuerySearch(e.target.inn);
+    setMajorQuerySearch(e.target.textContent);
   };
 
   // to take the value of dropdowns search by Type -----------------
