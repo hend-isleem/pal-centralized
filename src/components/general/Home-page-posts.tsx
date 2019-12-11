@@ -18,14 +18,15 @@ const HomePagePosts = () => {
   //   <p></p>;
   // };
 
-  const fetchPostBusinesses = () => {
-    dispatch(fetchPost());
-  };
+  // const fetchPostBusinesses = () => {
+  //   dispatch(fetchPost());
+  // };
 
   useEffect(() => {
-    fetchPostBusinesses();
+    // fetchPostBusinesses();
+    dispatch(fetchPost());
     setIsLogged(localStorage.getItem("token"));
-  }, []);
+  }, [localStorage.getItem("token")]);
 
   const postItems = posts.items ? posts.items : "";
 
