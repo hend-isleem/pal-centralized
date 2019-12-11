@@ -22,7 +22,7 @@ const HomePagePosts = () => {
     // fetchPostBusinesses();
     dispatch(fetchPost());
     setIsLogged(localStorage.getItem("token"));
-  }, [localStorage.getItem("token")]);
+  }, []);
 
   const postItems = posts.items ? posts.items : "";
 
