@@ -21,11 +21,8 @@ const HomePagePosts = () => {
   useEffect(() => {
     // fetchPostBusinesses();
     dispatch(fetchPost());
-  }, [localStorage.getItem("token")]);
-
-  useEffect(() => {
     setIsLogged(localStorage.getItem("token"));
-  }, []);
+  }, [localStorage.getItem("token")]);
 
   const postItems = posts.items ? posts.items : "";
 
