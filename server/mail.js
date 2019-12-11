@@ -39,7 +39,7 @@ function sendMail(compID, post) {
       if (err) {
         console.log("err in sending email >>>>>>>>>>> ", err);
       } else {
-        console.log("email is sent !!!!!");
+        console.log("email is sent wow !!!!!");
       }
     });
   });
