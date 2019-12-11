@@ -1,18 +1,12 @@
-import React, { Component } from "react";
+import React from "react";
 import { Container, Dropdown, Image, Menu, MenuItem } from "semantic-ui-react";
 import { Link, Redirect } from "react-router-dom";
 import "../../style.css/form.css";
 import UserFavoriteList from "./Favorite-user-list";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { logout } from "../../actions";
 
-// const options = [
-//   { key: "user", text: "Account", icon: "user" },
-//   { key: "favorite", text: "Favorite", icon: "heart" },
-//   { key: "edit", text: "Edit Account", icon: "edit" },
-//   { key: "sign-out", text: "Sign Out", icon: "sign out" }
-// ];
-const UserPageHeader = (props: any) => {
+const UserPageHeader = () => {
   // const userName: any = useSelector((state: any) => state.user.userName);
   let userName: any = localStorage.getItem("userName");
   const dispatch = useDispatch();

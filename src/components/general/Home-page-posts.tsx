@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Grid, Item, Header, Message } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import { Grid, Item, Header } from "semantic-ui-react";
 import "./General.css";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPost } from "../../actions";
@@ -81,6 +80,7 @@ const HomePagePosts = () => {
       <Grid columns={3}>
         <Grid.Row>{postItems.map((post: any) => Element(post))}</Grid.Row>
       </Grid>
+
       {resetCounter()}
       <Header as="h1">Jobs</Header>
       <Grid columns={3}>

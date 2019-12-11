@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React /*, { useState } */ from "react";
 import {
   Button,
   Form,
@@ -10,8 +10,10 @@ import {
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "../../style.css/form.css";
-import { useDispatch } from "react-redux";
-import { signup } from "../../actions";
+// import { useDispatch } from "react-redux";
+// import { signup } from "../../actions";
+
+// ----------------------------------------- This component not ready yet ---------------------------
 
 const signUpCompany = (props: any) => {
   // const [userName, setUserName] = useState({ userName: "" });

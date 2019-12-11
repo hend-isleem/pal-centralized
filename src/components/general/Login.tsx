@@ -16,16 +16,10 @@ import { login } from "../../actions";
 const Login = (props: any) => {
   const dispatch = useDispatch();
   let isLogged: any = useSelector((state: any) => state.user.isLogged);
-  // console.log(isLogged);
-  let userName: any = useSelector((state: any) => state.user.userName);
-  // console.log(userName);
 
+  // let userName: any = useSelector((state: any) => state.user.userName);
   const [email, setemail] = useState({ email: "" });
   const [password, setpassword] = useState({ password: "" });
-
-  useEffect(() => {
-    // dispatch(login());
-  }, []);
 
   const onChangeEmail = (e: any) => {
     setemail({ email: e.target.value });

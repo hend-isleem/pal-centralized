@@ -1,12 +1,7 @@
 import React, { useEffect } from "react";
 import "semantic-ui-css/semantic.min.css";
-import {
-  BrowserRouter as Router,
-  Route,
-  Switch,
-  Redirect
-} from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+// import { useSelector, useDispatch } from "react-redux";
 
 import SignUpGeneral from "./components/general/Sign-up-general";
 import SignUpCompany from "./components/company/Sign-up-company";
@@ -18,22 +13,17 @@ import MainPagePosts from "./components/general/Home-page-posts";
 import Search from "./components/general/Search";
 import UserPageHeader from "./components/user/User-page-header";
 
-import { logout } from "./actions/index";
-import { signup } from "./actions/index";
+// import { logout } from "./actions/index";
+// import { signup } from "./actions/index";
 
 const App: React.FC = () => {
-  // let isLogged: any = useSelector((state: any) => state.user);
-  // const dispatch = useDispatch();
   let isLogged: any = localStorage.getItem("token");
-  const dispatch = useDispatch();
 
+  // check if there is a user logged or not
   useEffect(() => {
     isLogged = localStorage.getItem("token");
   }, []);
 
-  {
-    console.log(localStorage.getItem("token"));
-  }
   if (isLogged)
     return (
       <Router>

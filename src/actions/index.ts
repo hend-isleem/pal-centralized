@@ -7,6 +7,7 @@ import {
 } from "./types";
 import axios from "axios";
 
+// FETCH THE POSTS
 export const fetchPost = () => (dispatch: any) => {
   axios.get(`http://localhost:3004/articles`).then(posts => {
     console.log(posts);
@@ -17,6 +18,7 @@ export const fetchPost = () => (dispatch: any) => {
   });
 };
 
+//LOGIN USER REQUEST
 export const login = (userInfo: any, callback: any) => (dispatch: any) => {
   axios
     .post("http://127.0.0.1:3004/user/signIn", {
@@ -33,6 +35,7 @@ export const login = (userInfo: any, callback: any) => (dispatch: any) => {
     .catch(err => console.log(err));
 };
 
+//SIGNUP USER REQUEST
 export const signup = (/*userInfo: any, callback: any */) => (
   dispatch: any
 ) => {
@@ -59,12 +62,14 @@ export const signup = (/*userInfo: any, callback: any */) => (
     .catch(err => console.log(err));
 };
 
+//LOGOUT USER
 export const logout = () => {
   return {
     type: LOGOUT_SUCCESS
   };
 };
 
+// TO CHECK ID THE USER LOGIN OR NOT
 export const isLogged = () => {
   return {
     type: IS_LOGGED
