@@ -1,7 +1,8 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { Button, Menu, Dropdown, Icon, Grid, Input } from "semantic-ui-react";
-
-// import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
+import { search } from "../../actions";
 
 // Majors : Media
 
@@ -51,29 +52,36 @@ const typesOptions = [
 ];
 
 const Search = () => {
-  // should rename this state
   let [majorQuerySearch, setMajorQuerySearch] = useState("");
   let [typeQuerySearch, setTypeQuerySearch] = useState("");
   let [enteredQuerySearch, setenteredQuerySearch] = useState("");
 
-  // to take the value of dropdowns search by Type --------------------
+  const dispatch = useDispatch();
+
+  // to take the value of dropdowns search by Type ----------------------
   const hundleDropDownChangeByMajor = (e: any) => {
     setMajorQuerySearch(e.target.textContent);
   };
 
-  // to take the value of dropdowns search by Type -----------------
+  // to take the value of dropdowns search by Type ----------------------
   const hundleDropDownChangeByType = (e: any) => {
     setTypeQuerySearch(e.target.textContent);
   };
 
-  // to take the value from input search field
+  // to take the value from input search field --------------------------
   const hundleChange = (e: any) => {
     setenteredQuerySearch(e.target.value);
   };
 
-  // Hundle the search button
+  // Hundle the search button -------------------------------------------
   const onSearch = () => {
     console.log(majorQuerySearch, typeQuerySearch, enteredQuerySearch);
+    let querySearch = {
+      major: majorQuerySearch,
+      type: typeQuerySearch,
+      enterQuery: enteredQuerySearch
+    };
+    dispatch(search(querySearch));
   };
 
   return (
@@ -114,14 +122,16 @@ const Search = () => {
           {/* ------------------------------------ Search Button--------------------------------- */}
           <Menu.Menu position="right">
             <Menu.Item>
-              <Button primary onClick={onSearch}>
-                <Grid columns={2} divided>
-                  <Grid.Column>Search</Grid.Column>
-                  <Grid.Column>
-                    <Icon inverted name="search" />
-                  </Grid.Column>
-                </Grid>
-              </Button>
+              <Link to="searchresult">
+                <Button primary onClick={onSearch}>
+                  <Grid columns={2} divided>
+                    <Grid.Column>Search</Grid.Column>
+                    <Grid.Column>
+                      <Icon inverted name="search" />
+                    </Grid.Column>
+                  </Grid>
+                </Button>
+              </Link>
             </Menu.Item>
           </Menu.Menu>
         </Menu>

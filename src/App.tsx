@@ -12,6 +12,7 @@ import MainPageFooter from "./components/general/Home-page-footer";
 import MainPagePosts from "./components/general/Home-page-posts";
 import Search from "./components/general/Search";
 import UserPageHeader from "./components/user/User-page-header";
+import SearchResult from "./components/general/Seacrh-result";
 
 // import { logout } from "./actions/index";
 // import { signup } from "./actions/index";
@@ -29,10 +30,15 @@ const App: React.FC = () => {
       <Router>
         <div className="App">
           <UserPageHeader />
+
           <Switch>
             <Route path="/" exact>
               <Search />
               <MainPagePosts />
+            </Route>
+            <Route path="/searchresult">
+              <Search />
+              <SearchResult />
             </Route>
             <Route path="/signup" exact component={SignUpGeneral} />
             <Route path="/signupcompany" component={SignUpCompany} />

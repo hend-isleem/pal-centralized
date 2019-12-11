@@ -2,7 +2,8 @@ import {
   FETCH_POSTS,
   SIGN_IN,
   LOGOUT_SUCCESS,
-  IS_LOGGED
+  IS_LOGGED,
+  SEARCH_START
 } from "./types";
 import axios from "axios";
 
@@ -73,4 +74,18 @@ export const isLogged = () => {
   return {
     type: IS_LOGGED
   };
+};
+
+// To get the search result
+export const search = (searchInfo: any) => (dispatch: any) => {
+  console.log(searchInfo);
+  axios
+    .get("http://127.0.0.1:3004/user/articles")
+    .then(userToken => {
+      dispatch({
+        type: SEARCH_START,
+        payload: userToken.data
+      });
+    })
+    .catch(err => console.log(err));
 };
