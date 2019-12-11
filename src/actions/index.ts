@@ -2,8 +2,7 @@ import {
   FETCH_POSTS,
   SIGN_IN,
   LOGOUT_SUCCESS,
-  IS_LOGGED,
-  SIGN_UP
+  IS_LOGGED
 } from "./types";
 import axios from "axios";
 

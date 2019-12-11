@@ -12,7 +12,7 @@ const HomePagePosts = () => {
   let counter = 0;
 
   const [showDesc, setShowDesc] = useState(false);
-  let flag = false;
+  // let flag = false;
   // const AdditionalInfo = (data: any) => {
   //   <p></p>;
   // };

@@ -3,13 +3,13 @@ import { Container, Image, Menu, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "../../style.css/form.css";
 
-const LogoImg = () => (
-  <Image
-    src="https://react.semantic-ui.com/images/wireframe/square-image.png"
-    size="medium"
-    circular
-  />
-);
+// const LogoImg = () => (
+//   <Image
+//     src="https://react.semantic-ui.com/images/wireframe/square-image.png"
+//     size="medium"
+//     circular
+//   />
+// );
 const HomePageHeader = () => {
   return (
     <div>
