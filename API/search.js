@@ -211,6 +211,8 @@ module.exports.searchMajor = searchMajor;
 module.exports.seatchTitle = seatchTitle;
 module.exports.getFollowersE = getFollowersE;
 module.exports.search = search;
+module.exports.seatchTitleArr = seatchTitleArr;
+
 
 // x("BairWInkwHp46TI");
 // x("JULLGEGHtzF70F0");
