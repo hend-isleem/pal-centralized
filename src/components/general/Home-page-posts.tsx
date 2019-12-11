@@ -13,7 +13,7 @@ const HomePagePosts = () => {
   const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
 
   const [showDesc, setShowDesc] = useState(false);
-  let flag = false;
+  // let flag = false;
   // const AdditionalInfo = (data: any) => {
   //   <p></p>;
   // };

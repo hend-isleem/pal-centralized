@@ -11,6 +11,7 @@ const isLoggedReducer = (state = initialState, action: any) => {
           ...state,
           isLogged: false
         };
+      break;
     default:
       return state;
   }
