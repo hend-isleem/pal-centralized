@@ -58,7 +58,7 @@ const Search = () => {
 
   // to take the value of dropdowns search by Type --------------------
   const hundleDropDownChangeByMajor = (e: any) => {
-    setMajorQuerySearch(e.target.textContent);
+    setMajorQuerySearch(e.target.inn);
   };
 
   // to take the value of dropdowns search by Type -----------------
