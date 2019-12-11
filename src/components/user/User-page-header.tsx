@@ -26,7 +26,7 @@ const UserPageHeader = () => {
 
   const handleClick = (e: any) => {
     console.log(e.target.id);
-    if (e.target.id == "sign-out") {
+    if (e.target.id === "sign-out") {
       dispatch(logout());
       return <Redirect to="/" />;
     }
