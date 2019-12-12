@@ -1,26 +1,25 @@
 {
   "files": {
-    "main.css": "/pal-centralized/static/css/main.0fff913c.chunk.css",
-    "main.js": "/pal-centralized/static/js/main.92537cb0.chunk.js",
-    "main.js.map": "/pal-centralized/static/js/main.92537cb0.chunk.js.map",
-    "runtime-main.js": "/pal-centralized/static/js/runtime-main.fdea3163.js",
-    "runtime-main.js.map": "/pal-centralized/static/js/runtime-main.fdea3163.js.map",
+    "main.css": "/pal-centralized/static/css/main.8574f058.chunk.css",
+    "main.js": "/pal-centralized/static/js/main.ca580660.chunk.js",
+    "main.js.map": "/pal-centralized/static/js/main.ca580660.chunk.js.map",
+    "runtime-main.js": "/pal-centralized/static/js/runtime-main.0f13b6b1.js",
+    "runtime-main.js.map": "/pal-centralized/static/js/runtime-main.0f13b6b1.js.map",
     "static/css/2.4f292196.chunk.css": "/pal-centralized/static/css/2.4f292196.chunk.css",
-    "static/js/2.9931efba.chunk.js": "/pal-centralized/static/js/2.9931efba.chunk.js",
-    "static/js/2.9931efba.chunk.js.map": "/pal-centralized/static/js/2.9931efba.chunk.js.map",
+    "static/js/2.3e9ed62d.chunk.js": "/pal-centralized/static/js/2.3e9ed62d.chunk.js",
+    "static/js/2.3e9ed62d.chunk.js.map": "/pal-centralized/static/js/2.3e9ed62d.chunk.js.map",
     "index.html": "/pal-centralized/index.html",
-    "precache-manifest.e6820b9f690eade1eeb5fa695820556c.js": "/pal-centralized/precache-manifest.e6820b9f690eade1eeb5fa695820556c.js",
+    "precache-manifest.caa3de4151a1f66e40e86fde7c3f9c55.js": "/pal-centralized/precache-manifest.caa3de4151a1f66e40e86fde7c3f9c55.js",
     "service-worker.js": "/pal-centralized/service-worker.js",
     "static/css/2.4f292196.chunk.css.map": "/pal-centralized/static/css/2.4f292196.chunk.css.map",
-    "static/css/main.0fff913c.chunk.css.map": "/pal-centralized/static/css/main.0fff913c.chunk.css.map",
-    "static/js/2.9931efba.chunk.js.LICENSE": "/pal-centralized/static/js/2.9931efba.chunk.js.LICENSE",
+    "static/css/main.8574f058.chunk.css.map": "/pal-centralized/static/css/main.8574f058.chunk.css.map",
     "static/media/semantic.min.css": "/pal-centralized/static/media/outline-icons.ef60a4f6.woff"
   },
   "entrypoints": [
-    "static/js/runtime-main.fdea3163.js",
+    "static/js/runtime-main.0f13b6b1.js",
     "static/css/2.4f292196.chunk.css",
-    "static/js/2.9931efba.chunk.js",
-    "static/css/main.0fff913c.chunk.css",
-    "static/js/main.92537cb0.chunk.js"
+    "static/js/2.3e9ed62d.chunk.js",
+    "static/css/main.8574f058.chunk.css",
+    "static/js/main.ca580660.chunk.js"
   ]
 }
