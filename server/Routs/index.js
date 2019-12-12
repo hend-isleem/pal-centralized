@@ -47,15 +47,14 @@ router.get("/articles/search", (req, res) => {
   //---------------------------------------- Search using all avaliable options---------------------------//
 
   if (keys.includes("enterQuery") && keys.length == 3) {
-    console.log("3 objrcts");
-
+    console.log(req.query, "query");
     searchApi.search(
       req.query.type,
       req.query.major,
       result => {
         console.log("firt! ", result);
         res
-          .status(401)
+          .status(201)
           .send(result)
           .end();
       },
@@ -63,41 +62,27 @@ router.get("/articles/search", (req, res) => {
     );
   } else if (keys.length == 2 && keys.includes("enterQuery")) {
     if (keys.includes("major")) {
-      searchApi.searchMajor(req.query.major, (error, result) => {
-        if (error) {
-          res
-            .status(500)
-            .send("An Erorr Accured During Processing")
-            .end();
-        } else {
+      searchApi.searchMajor(req.query.major, result => {
+        var SearchResult = searchApi.seatchTitleArr(
+          result,
+          req.query.enterQuery
+        );
+        res
+          .status(201)
+          .send(SearchResult)
+          .end();
+      });
+    } else {
+      if (keys.includes("type")) {
+        searchApi.searchType(req.query.type, result => {
           var SearchResult = searchApi.seatchTitleArr(
             result,
             req.query.enterQuery
           );
           res
-            .status(401)
+            .status(201)
             .send(SearchResult)
             .end();
-        }
-      });
-    } else {
-      if (keys.includes("type")) {
-        searchApi.searchMajor(req.query.type, (error, result) => {
-          if (error) {
-            res
-              .status(500)
-              .send("An Erorr Accured During Processing")
-              .end();
-          } else {
-            var SearchResult = searchApi.seatchTitleArr(
-              result,
-              req.query.enterQuery
-            );
-            res
-              .status(401)
-              .send(SearchResult)
-              .end();
-          }
         });
       }
     }
@@ -115,49 +100,25 @@ router.get("/articles/search", (req, res) => {
     });
   } else if (keys.length === 1) {
     if (keys[0] === "major") {
-      searchApi.searchMajor(
-        req.query.hasOwnProperty("major"),
-        (error, result) => {
-          if (error) {
-            res
-              .status(500)
-              .send("An Erorr Accured During Processing")
-              .end();
-          } else {
-            res
-              .status(401)
-              .send(result)
-              .end();
-          }
-        }
-      );
+      searchApi.searchMajor(req.query.major, result => {
+        res
+          .status(201)
+          .send(result)
+          .end();
+      });
     } else if (keys[0] === "enterQuery") {
-      searchApi.seatchTitle(req.query.enterQuery, (error, result) => {
-        if (error) {
-          res
-            .status(500)
-            .send("An Erorr Accured During Processing")
-            .end();
-        } else {
-          res
-            .status(401)
-            .send(result)
-            .end();
-        }
+      searchApi.seatchTitle(req.query.enterQuery, result => {
+        res
+          .status(201)
+          .send(result)
+          .end();
       });
     } else if (keys[0] === "type") {
-      searchApi.searchType(req.query.type, (error, result) => {
-        if (error) {
-          res
-            .status(500)
-            .send("An Erorr Accured During Processing")
-            .end();
-        } else {
-          res
-            .status(401)
-            .send(result)
-            .end();
-        }
+      searchApi.searchType(req.query.type, result => {
+        res
+          .status(201)
+          .send(result)
+          .end();
       });
     }
   }
@@ -272,7 +233,7 @@ router.get("/user", (req, res) => {
 
 router.post("/user/signIn", async (req, res) => {
   console.log("email", req.body.email, req.body.passowrd, "password");
-
+  console.log("n the rout ", req.body.mail, req.body.passowrd);
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
 
@@ -284,7 +245,8 @@ router.post("/user/signIn", async (req, res) => {
     if (error) {
       res
         .status(500)
-        .send("an Error Accured While Proccessing Data,  Try Again Later");
+        .send("an Error Accured While Proccessing Data,  Try Again Later")
+        .end();
     }
   }).then(async user2 => {
     // console.log(user, "user");
@@ -296,20 +258,19 @@ router.post("/user/signIn", async (req, res) => {
   //--------------------------------//
   if (user === null) {
     console.log("User Is not Registered");
-    return res.status(400).send("cannot find the user");
+    return res.status(400).send("User Is not Found Please Register");
   } else {
     //--------------------------------//
     //--- check Password Matching ----//
     //--------------------------------//
 
     try {
-      console.log(await bcryptjs.hash(req.body.passowrd, 10));
       await bcryptjs.compare(req.body.passowrd, user.password, function(
         err,
         isMatch
       ) {
         if (err) {
-          console.log("err");
+          console.log("err", err);
         } else {
           console.log(isMatch, "isMatch");
           //--------------------------------//
@@ -325,7 +286,15 @@ router.post("/user/signIn", async (req, res) => {
           if (isMatch) {
             console.log(user.Name, "name");
             console.log(user.email, "email");
-
+            if (user.type === false) {
+              db.User.create({ id: id }, (error, result) => {
+                if (error) {
+                  console.log(error);
+                } else {
+                  console.log(result);
+                }
+              });
+            }
             const acsessToken = Auth.generateAccessToken({
               email: user.email,
               name: user.Name
@@ -335,6 +304,7 @@ router.post("/user/signIn", async (req, res) => {
             //--------------------------------//
             //-- the is not Password Matching-//
             //--------------------------------//
+
             console.log("inside the compar2");
             res.status(401).send("check you passwors or user name");
           }
