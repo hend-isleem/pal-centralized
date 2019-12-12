@@ -75,5 +75,5 @@
     "gh-pages": "^2.1.1",
     "jest": "^24.9.0"
   },
-  "proxy": "http://localhost:3004"
+  "start": "concurrently \"cd server npm run server\" \"react-scripts start\""
 }
