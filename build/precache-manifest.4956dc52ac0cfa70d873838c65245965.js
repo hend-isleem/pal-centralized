@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1e8336e7e4ab97c9bfed4eed825775c0",
+    "revision": "fde1860e78bf269b60da2b66a0ec646e",
     "url": "/pal-centralized/index.html"
   },
   {
@@ -8,15 +8,15 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/pal-centralized/static/css/2.4f292196.chunk.css"
   },
   {
-    "revision": "233e576018e0d267a098",
-    "url": "/pal-centralized/static/css/main.8574f058.chunk.css"
+    "revision": "c5c8ce18d35cbf48d243",
+    "url": "/pal-centralized/static/css/main.8f3c78f6.chunk.css"
   },
   {
     "revision": "272150cdcebe41cca109",
     "url": "/pal-centralized/static/js/2.3e9ed62d.chunk.js"
   },
   {
-    "revision": "233e576018e0d267a098",
+    "revision": "c5c8ce18d35cbf48d243",
     "url": "/pal-centralized/static/js/main.ca580660.chunk.js"
   },
   {
