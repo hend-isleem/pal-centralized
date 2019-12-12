@@ -2,7 +2,11 @@
   "name": "pal-central",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://hend-isleem.github.io/pal-centralized",
+  "homepage": "https://hend-isleem.github.io/pal-centralized/",
+  "engines": {
+    "node": "12.13.1",
+    "npm": "6.12.1"
+  },
   "dependencies": {
     "@primer/components": "^15.1.2",
     "@types/jest": "24.0.23",
@@ -30,7 +34,7 @@
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-native-vector-icons": "^6.6.0",
-    "react-scripts": "3.2.0",
+    "react-scripts": "^3.3.0",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.1",
     "ts-node": "^8.5.4",
