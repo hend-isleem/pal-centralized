@@ -10,7 +10,6 @@ import axios from "axios";
 // FETCH THE POSTS
 export const fetchPost = () => (dispatch: any) => {
   axios.get(`http://localhost:3004/articles`).then(posts => {
-    console.log(posts);
     dispatch({
       type: FETCH_POSTS,
       payload: posts.data
@@ -79,12 +78,16 @@ export const isLogged = () => {
 // To get the search result
 export const search = (searchInfo: any) => (dispatch: any) => {
   console.log(searchInfo);
+  console.log("inside search action");
+
   axios
-    .get("http://127.0.0.1:3004/user/articles")
-    .then(userToken => {
+    .get("http://127.0.0.1:3004/user/articles/search")
+    .then(searchResult => {
+      console.log("inside then search action");
+      console.log(searchResult);
       dispatch({
         type: SEARCH_START,
-        payload: userToken.data
+        payload: searchResult.data
       });
     })
     .catch(err => console.log(err));

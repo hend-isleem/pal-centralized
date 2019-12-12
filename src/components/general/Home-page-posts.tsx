@@ -14,6 +14,7 @@ const HomePagePosts = () => {
   const [showDesc, setShowDesc] = useState(false);
 
   useEffect(() => {
+    // const dispatch = useDispatch();
     dispatch(fetchPost());
     setIsLogged(localStorage.getItem("token"));
   }, []);

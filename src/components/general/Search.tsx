@@ -75,7 +75,7 @@ const Search = () => {
 
   // Hundle the search button -------------------------------------------
   const onSearch = () => {
-    console.log(majorQuerySearch, typeQuerySearch, enteredQuerySearch);
+    // console.log(majorQuerySearch, typeQuerySearch, enteredQuerySearch);
     let querySearch = {
       major: majorQuerySearch,
       type: typeQuerySearch,
