@@ -163,16 +163,37 @@ router.get("/articles/filtered", (req, res) => {
   });
 });
 //-------------------------------------------##### get all Post Rout Nativ #####------------------------------------------------------------//
+
+//-------------------------------------------##### get all Post in specific type  #####------------------------------------------------------------//
+// router.get("/articles/filter/:type", (req, res) => {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "*");
+//   console.log("inside arcticles type api");
+//   db.Post.find({ type: req.params.type }, (error, post) => {
+//     if (error) {
+//       res.status(500).send("an error accured while connecting to data");
+//     }
+//   })
+//     .limit(9)
+//     .then(post => {
+//       res.status(201).send(post);
+//     });
+// });
+// //-------------------------------------------##### get all Post Rout Nativ #####------------------------------------------------------------//
+
 router.get("/articles", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
+
   db.Post.find({}, (error, post) => {
     if (error) {
       res.status(500).send("an error accured while connecting to data");
     }
-  }).then(post => {
-    res.status(201).send(post);
-  });
+  })
+    .limit(9)
+    .then(post => {
+      res.status(201).send(post);
+    });
 });
 
 //--------------------------------------------#### get User Rout forNative #####------------------------------------------------------------//

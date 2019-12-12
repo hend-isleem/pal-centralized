@@ -43,6 +43,8 @@ const seatchTitleArr = function(posts, str) {
   }
   return result;
 };
+// searchType("scholarShip", (posts) => {console.log(posts.length)});
+
 
 // --------------------- searching by majors --------------------- \\
 
@@ -88,6 +90,25 @@ const getFollowersE = function(compId, cb) {
     cb(result.slice(0, -2));
   });
 };
+
+// getFollowersE(5, (emails) => {console.log('hahahahaha:  ', emails)});
+
+// const getFollowersE = function(compId, cb) {
+//   db.User.find({}, (err, users) => {
+//     // let result = '';
+//     for (let i = 0; i < users.length; i++) {
+//       if (users[i].followingList.includes(compId)) {
+//         db.General.find({id: users[i].id}, (err, data) => {
+//           console.log('mail: ',data[0].email);
+//           // cb(data[0].email);
+//         });
+//       }
+//     }
+//     // cb(result);
+//   });
+// };
+// getFollowersE(5, (emails) => {console.log('hahahahaha:  ', emails)});
+
 
 // --------------------- searching byAll --------------------- \\
 
