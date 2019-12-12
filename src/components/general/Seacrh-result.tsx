@@ -61,7 +61,7 @@ const SearchResult = () => {
 
   return (
     <div style={{ margin: "4rem auto", width: "75%" }}>
-      <Header as="h1">Search Result</Header>
+      <Header as="h1">Search Results</Header>
       <Grid columns={3}>
         <Grid.Row>{postItems.map((post: any) => Element(post))}</Grid.Row>
       </Grid>

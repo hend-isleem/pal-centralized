@@ -59,6 +59,10 @@ const App: React.FC = () => {
               <Search />
               <MainPagePosts />
             </Route>
+            <Route path="/searchresult">
+              <Search />
+              <SearchResult />
+            </Route>
             <Route path="/signup" exact component={SignUpGeneral} />
             <Route path="/signupcompany" component={SignUpCompany} />
             <Route path="/signupuser" component={SignUpUser} />{" "}
