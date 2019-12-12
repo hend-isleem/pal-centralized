@@ -1,27 +1,31 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1e8336e7e4ab97c9bfed4eed825775c0",
+    "revision": "38477cd1ba9b6ba232ad41fa0140a9d3",
     "url": "/pal-centralized/index.html"
   },
   {
-    "revision": "272150cdcebe41cca109",
+    "revision": "a288876cf78cd3990eed",
     "url": "/pal-centralized/static/css/2.4f292196.chunk.css"
   },
   {
-    "revision": "233e576018e0d267a098",
-    "url": "/pal-centralized/static/css/main.8574f058.chunk.css"
+    "revision": "385af3cf4107ef452e4f",
+    "url": "/pal-centralized/static/css/main.0fff913c.chunk.css"
   },
   {
-    "revision": "272150cdcebe41cca109",
-    "url": "/pal-centralized/static/js/2.3e9ed62d.chunk.js"
+    "revision": "a288876cf78cd3990eed",
+    "url": "/pal-centralized/static/js/2.9931efba.chunk.js"
   },
   {
-    "revision": "233e576018e0d267a098",
-    "url": "/pal-centralized/static/js/main.ca580660.chunk.js"
+    "revision": "0d93e77bfe30b662623a4c7229c08be0",
+    "url": "/pal-centralized/static/js/2.9931efba.chunk.js.LICENSE"
   },
   {
-    "revision": "03032c42c2bc03d5ad22",
-    "url": "/pal-centralized/static/js/runtime-main.0f13b6b1.js"
+    "revision": "385af3cf4107ef452e4f",
+    "url": "/pal-centralized/static/js/main.92537cb0.chunk.js"
+  },
+  {
+    "revision": "27f74f998b413af74db7",
+    "url": "/pal-centralized/static/js/runtime-main.fdea3163.js"
   },
   {
     "revision": "13db00b7a34fee4d819ab7f9838cc428",
