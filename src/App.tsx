@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "semantic-ui-css/semantic.min.css";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { HashRouter as Router, Route, Switch } from "react-router-dom";
 // import { useSelector, useDispatch } from "react-redux";
 
 import SignUpGeneral from "./components/general/Sign-up-general";

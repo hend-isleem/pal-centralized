@@ -30,25 +30,9 @@ const majorOptions = [
 
 // this the Option for Type
 const typesOptions = [
-  { key: "a1", value: "t1", text: "Jerusalem" },
-  { key: "a2", value: "t2", text: "Safed" },
-  { key: "a3", value: "t3", text: "Haifa" },
-  { key: "a4", value: "t4", text: "Bisan" },
-  { key: "a5", value: "t5", text: "Akka" },
-  { key: "a6", value: "t6", text: "Nablus" },
-  { key: "a7", value: "t7", text: "Tulkarm" },
-  { key: "a8", value: "t8", text: "Qalqilya" },
-  { key: "a9", value: "t9", text: "Caesarea" },
-  { key: "a10", value: "t10", text: "Ramallah" },
-  { key: "a11", value: "t11", text: "Al-Bireh" },
-  { key: "a12", value: "t12", text: "Al-Roll" },
-  { key: "a13", value: "t13", text: "Jaffa" },
-  { key: "a14", value: "t14", text: "Jericho" },
-  { key: "a15", value: "t15", text: "Bethlehem" },
-  { key: "a16", value: "t16", text: "Hebron" },
-  { key: "a17", value: "t17", text: "Khan" },
-  { key: "a18", value: "t18", text: "Rafah" },
-  { key: "a19", value: "t19", text: "Beersheba" }
+  { key: "a1", value: "t1", text: "scholarShip" },
+  { key: "a2", value: "t2", text: "jop" },
+  { key: "a3", value: "t3", text: "training" }
 ];
 
 const Search = () => {
