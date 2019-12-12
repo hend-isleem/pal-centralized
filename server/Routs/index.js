@@ -5,6 +5,7 @@ const db = require("../../DataBase/db");
 const bodyParser = require("body-parser");
 const multer = require("multer");
 const path = require("path");
+const searchApi = require("../../API/search");
 
 const jwt = require("jsonwebtoken");
 const Auth = require("../Auth/Auth");
@@ -14,8 +15,6 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 //----------------------------------######3 Processing file and picture #####-----------------------------------------------//
 router.post("/user/upload", (req, res) => {
-  console.log("here am i ");
-
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
   if (req.body) {
@@ -31,6 +30,136 @@ router.post("/user/upload", (req, res) => {
     console.log(req.body.fileType, "hiiii");
   } else {
     console.logo("we have a file");
+  }
+});
+//---------------------------Get API Values ----------------------------------------------------------------------//
+router.get("/articles/API", (req, res) => {
+  res
+    .send({ Major: searchApi.majors, Types: searchApi.types })
+    .status(2001)
+    .end();
+});
+
+//--------------------------------### getting Info by Search #####------------------------------------------------//
+router.get("/articles/search", (req, res) => {
+  var param = req.query;
+  var keys = Object.keys(param);
+  //---------------------------------------- Search using all avaliable options---------------------------//
+
+  if (keys.includes("enterQuery") && keys.length == 3) {
+    console.log("3 objrcts");
+
+    searchApi.search(
+      req.query.type,
+      req.query.major,
+      result => {
+        console.log("firt! ", result);
+        res
+          .status(401)
+          .send(result)
+          .end();
+      },
+      req.query.enterQuery
+    );
+  } else if (keys.length == 2 && keys.includes("enterQuery")) {
+    if (keys.includes("major")) {
+      searchApi.searchMajor(req.query.major, (error, result) => {
+        if (error) {
+          res
+            .status(500)
+            .send("An Erorr Accured During Processing")
+            .end();
+        } else {
+          var SearchResult = searchApi.seatchTitleArr(
+            result,
+            req.query.enterQuery
+          );
+          res
+            .status(401)
+            .send(SearchResult)
+            .end();
+        }
+      });
+    } else {
+      if (keys.includes("type")) {
+        searchApi.searchMajor(req.query.type, (error, result) => {
+          if (error) {
+            res
+              .status(500)
+              .send("An Erorr Accured During Processing")
+              .end();
+          } else {
+            var SearchResult = searchApi.seatchTitleArr(
+              result,
+              req.query.enterQuery
+            );
+            res
+              .status(401)
+              .send(SearchResult)
+              .end();
+          }
+        });
+      }
+    }
+  } else if (
+    keys.length === 2 &&
+    req.query.hasOwnProperty("major") &&
+    req.query.hasOwnProperty("type")
+  ) {
+    // console.log("string  ", typeof req.query, req.query.major);
+    searchApi.search(req.query.type, req.query.major, result => {
+      res
+        .status(201)
+        .send(result)
+        .end();
+    });
+  } else if (keys.length === 1) {
+    if (keys[0] === "major") {
+      searchApi.searchMajor(
+        req.query.hasOwnProperty("major"),
+        (error, result) => {
+          if (error) {
+            res
+              .status(500)
+              .send("An Erorr Accured During Processing")
+              .end();
+          } else {
+            res
+              .status(401)
+              .send(result)
+              .end();
+          }
+        }
+      );
+    } else if (keys[0] === "enterQuery") {
+      searchApi.seatchTitle(req.query.enterQuery, (error, result) => {
+        if (error) {
+          res
+            .status(500)
+            .send("An Erorr Accured During Processing")
+            .end();
+        } else {
+          res
+            .status(401)
+            .send(result)
+            .end();
+        }
+      });
+    } else if (keys[0] === "type") {
+      searchApi.searchType(req.query.type, (error, result) => {
+        if (error) {
+          res
+            .status(500)
+            .send("An Erorr Accured During Processing")
+            .end();
+        } else {
+          res
+            .status(401)
+            .send(result)
+            .end();
+        }
+      });
+    }
   }
 });
 
