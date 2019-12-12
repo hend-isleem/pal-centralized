@@ -134,19 +134,11 @@ const search = function(type, major, cb, str) {
   });
 };
 
-const seatchTitleArr = function(posts, str) {
-  let result = [];
-  for (let i = 0; i < posts.length; i++) {
-    if (posts[i].title.includes(str)) {
-      result.push(posts[i]);
-    }
-  }
-  return result;
-};
 
 module.exports.searchType = searchType;
 module.exports.searchMajor = searchMajor;
 module.exports.seatchTitle = seatchTitle;
+module.exports.seatchTitleArr = seatchTitleArr;
 module.exports.getFollowersE = getFollowersE;
 module.exports.search = search;
 module.exports.majors = majors;
