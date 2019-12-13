@@ -45,7 +45,6 @@ function sendMail(compID, post) {
   });
 }
 
-
 let pst = {
   id: 1,
   comId: 39,
@@ -54,7 +53,7 @@ let pst = {
     "Ea eligendi maxime illo sed voluptatem rerum ut nulla tempore. Molesti...",
   deadLine: "2020-08-18T05:44:12.355+00:00",
   major: "Medicine",
-  logo: "http://lorempixel.com/640/480/business",
+  logo: "https://lorempixel.com/640/480/business",
   type: "jop",
   archived: false,
   read: true,
