@@ -4,7 +4,8 @@ import {
   LOGOUT_SUCCESS,
   IS_LOGGED,
   SEARCH_START,
-  SIGN_UP
+  SIGN_UP,
+  FETCH_FAVORITE
 } from "./types";
 import axios from "axios";
 
@@ -82,6 +83,22 @@ export const search = (searchInfo: any) => (dispatch: any) => {
       dispatch({
         type: SEARCH_START,
         payload: searchResult.data
+      });
+    })
+    .catch(err => console.log(err));
+};
+
+// Get the favorite list for the user
+export const fetchFavorite = () => (dispatch: any) => {
+  console.log("ID user from local storage", localStorage.getItem("userId"));
+  const userId = localStorage.getItem("userId");
+  axios
+    .get(`http://localhost:3004/articles/favoriteList?id=${userId}`)
+    .then(posts => {
+      console.log("inside then fav action", posts);
+      dispatch({
+        type: FETCH_FAVORITE,
+        payload: posts.data
       });
     })
     .catch(err => console.log(err));

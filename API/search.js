@@ -43,7 +43,6 @@ const seatchTitleArr = function(posts, str) {
   }
   return result;
 };
-// searchType("scholarShip", (posts) => {console.log(posts.length)});
 
 // --------------------- searching by majors --------------------- \\
 
@@ -90,24 +89,6 @@ const getFollowersE = function(compId, cb) {
   });
 };
 
-// getFollowersE(5, (emails) => {console.log('hahahahaha:  ', emails)});
-
-// const getFollowersE = function(compId, cb) {
-//   db.User.find({}, (err, users) => {
-//     // let result = '';
-//     for (let i = 0; i < users.length; i++) {
-//       if (users[i].followingList.includes(compId)) {
-//         db.General.find({id: users[i].id}, (err, data) => {
-//           console.log('mail: ',data[0].email);
-//           // cb(data[0].email);
-//         });
-//       }
-//     }
-//     // cb(result);
-//   });
-// };
-// getFollowersE(5, (emails) => {console.log('hahahahaha:  ', emails)});
-
 // --------------------- searching byAll --------------------- \\
 
 // if(keys.)
@@ -115,7 +96,7 @@ const getFollowersE = function(compId, cb) {
 const search = function(type, major, cb, str) {
   db.Post.find({ major: major, type: type }, function(err, posts) {
     if (err) {
-      console.log("error in finding posts.");
+      console.log("error in finding posts. >> ", err);
     } else {
       if (str) {
         let result = [];
@@ -133,6 +114,8 @@ const search = function(type, major, cb, str) {
 };
 
 module.exports.searchType = searchType;
+module.exports.seatchTitleArr = seatchTitleArr;
+
 module.exports.searchMajor = searchMajor;
 module.exports.seatchTitle = seatchTitle;
 module.exports.getFollowersE = getFollowersE;

@@ -4,6 +4,7 @@ import logoutReducer from "./logoutReducer";
 import isLoggedReducer from "./isLogged";
 import searchReducer from "./searchReducer";
 import signupReducer from "./signupReducer";
+import favoriteReducer from "./favoriteReducer";
 
 import { combineReducers } from "redux";
 
@@ -13,7 +14,8 @@ const rootReducer = combineReducers({
   logout: logoutReducer,
   isLogged: isLoggedReducer,
   search: searchReducer,
-  signup: signupReducer
+  signup: signupReducer,
+  favorite: favoriteReducer
 });
 
 export default rootReducer;
