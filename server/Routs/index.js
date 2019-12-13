@@ -32,6 +32,24 @@ router.post("/user/upload", (req, res) => {
     console.logo("we have a file");
   }
 });
+
+//---------------------------------Update Favorit List to User-----------------------------------------------------//
+router.post("/user/favoriteList", (req, res) => {
+  var usrtid = req.body.userID;
+  var postid = req.body.postID;
+
+  db.User.updateOne(
+    { id: usrtid },
+    { $push: { favoriteList: postid } },
+    (error, result) => {
+      if (error) {
+        console.log("error");
+      } else {
+        console.log(result);
+      }
+    }
+  );
+});
 //------------------------------------ get Favorite -------------------------------------------------------------//
 
 router.get("/articles/favoriteList", (req, res) => {
@@ -73,7 +91,7 @@ router.get("/articles/favoriteList", (req, res) => {
               .end();
           }
         }
-      );
+      ).select("id link deadLine title logo  major");
       // db.Post.find{}
     })
     .catch(() => {
