@@ -38,14 +38,27 @@ router.post("/user/favoriteList", (req, res) => {
   var usrtid = req.body.userID;
   var postid = req.body.postID;
 
+  //------------------------------------------------------------//
+  //--------- select Uer and push the item to its --------------//
+  //-------------------- favorit list --------------------------//
+  //------------------------------------------------------------//
   db.User.updateOne(
     { id: usrtid },
     { $push: { favoriteList: postid } },
     (error, result) => {
+      //----------------------------------------------------------//
+      //--------- cheks if the updating went right ---------------//
+      //----------------------------------------------------------//
       if (error) {
-        console.log("error");
+        res
+          .status(500)
+          .send("An Error Accured during Processing")
+          .end();
       } else {
-        console.log(result);
+        res
+          .status(201)
+          .send("Updated Sucessfuly")
+          .end();
       }
     }
   );
