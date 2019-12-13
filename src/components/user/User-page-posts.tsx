@@ -41,10 +41,9 @@ const UserPagePosts = () => {
   // ----------------------------------------- End Helper Functions----------------------------------------- //
 
   const Element = (post: any, index: any) => {
-    {
-      console.log("index", index);
-    }
     if (counter < 3) {
+      console.log("index", index);
+
       counter++;
       return (
         <Grid.Column>

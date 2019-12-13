@@ -27,6 +27,7 @@ export const login = (userInfo: any, callback: any) => (dispatch: any) => {
       passowrd: userInfo.password.password
     })
     .then(userToken => {
+      console.log("this the user data from login action", userToken);
       dispatch({
         type: SIGN_IN,
         payload: userToken.data
@@ -94,12 +95,14 @@ export const fetchFavorite = () => (dispatch: any) => {
   const userId = localStorage.getItem("userId");
   axios
     .get(`http://localhost:3004/articles/favoriteList?id=${userId}`)
-    .then(posts => {
-      console.log("inside then fav action", posts);
+    .then(favPosts => {
+      // console.log("inside then fav action", Favposts.data);
       dispatch({
         type: FETCH_FAVORITE,
-        payload: posts.data
+        payload: favPosts.data
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {
+      console.log("inside err favorite", err);
+    });
 };

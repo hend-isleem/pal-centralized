@@ -1,5 +1,5 @@
 const initialState = {
-  posts: []
+  favPosts: []
 };
 
 const favoriteReducer = (state = initialState, action: any) => {
@@ -7,7 +7,7 @@ const favoriteReducer = (state = initialState, action: any) => {
     case "FETCH_FAVORITE":
       return {
         ...state,
-        posts: action.payload
+        favPosts: action.payload
       };
     default:
       return state;

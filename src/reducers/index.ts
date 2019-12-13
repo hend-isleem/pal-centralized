@@ -15,7 +15,7 @@ const rootReducer = combineReducers({
   isLogged: isLoggedReducer,
   search: searchReducer,
   signup: signupReducer,
-  favorite: favoriteReducer
+  favoritePosts: favoriteReducer
 });
 
 export default rootReducer;
