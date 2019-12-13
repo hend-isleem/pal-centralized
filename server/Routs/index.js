@@ -6,10 +6,11 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const path = require("path");
 const searchApi = require("../../API/search");
-
+const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const Auth = require("../Auth/Auth");
 const { check, validationResult } = require("express-validator");
+
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
@@ -32,6 +33,23 @@ router.post("/user/upload", (req, res) => {
     console.logo("we have a file");
   }
 });
+//----------------------------------passport Auth ---------------------------------------------------//
+
+router.get(
+  "/user/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile"]
+  })
+);
+
+router.get(
+  "/auth/google/redirect",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  function(req, res) {
+    console.log(res.user);
+    res.redirect("/");
+  }
+);
 
 //---------------------------------Update Favorit List to User-----------------------------------------------------//
 router.post("/user/favoriteList", (req, res) => {
