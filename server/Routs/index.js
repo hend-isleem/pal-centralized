@@ -14,7 +14,84 @@ const { check, validationResult } = require("express-validator");
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-//----------------------------------######3 Processing file and picture #####-----------------------------------------------//
+//----------------------------------passport Auth ---------------------------------------------------//
+
+router.get(
+  "/user/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile"]
+  })
+);
+
+router.get(
+  "/auth/google/redirect",
+  passport.authenticate("google", { failureRedirect: "/login" }),
+  function(req, res) {
+    console.log(res.user);
+    // res.redirect("/");
+  }
+);
+
+//----------------------- Update Company info -------------------------------------------//
+
+router.post("user/updateProfile", (req, res) => {
+  //------------------------------------------------//
+  // ---------------- if type is a user-------------//
+  //------------------------------------------------//
+  if (!req.body.type) {
+    var UserInfo = {
+      gender: req.body.gender,
+      birthDay: req.body.birthDay,
+      address: req.body.address,
+      mobileNumber: req.body.mobileNumber,
+      major: req.body.major,
+      educationLevel: req.body.educationLevel,
+      avatar: req.body.avatar,
+      cv: req.body.cv
+    };
+    db.User.updateOne({ id: req.body.id }, UserInfo)
+      .then(result => {
+        req
+          .status(201)
+          .send("Updated sucessfuly")
+          .end();
+      })
+      .catch(error => {
+        res
+          .status(500)
+          .send("An Error Accured During Processing")
+          .end();
+      });
+  }
+  //---------------------------------------------------//
+  // ---------------- if type is a Company-------------//
+  //---------------------------------------------------//
+  else {
+    var Company = {
+      description: req.body.description,
+      logo: req.body.logo,
+      twitterLink: req.body.twitterLink,
+      linkedinLink: req.body.linkedinLink,
+      otherLink: req.body.otherLink,
+      mobileNumber: req.body.mobileNumber
+    };
+    db.Company.updateOne({ id: req.body.id })
+      .then(reslt => {
+        res
+          .status(201)
+          .send("User Is Saved")
+          .end();
+      })
+      .catch(err => {
+        res
+          .status(201)
+          .send("User Is not Saved")
+          .end();
+      });
+  }
+});
+
+//----------------------------------##### Processing file and picture #####-----------------------------------------------//
 router.post("/user/upload", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
@@ -33,23 +110,6 @@ router.post("/user/upload", (req, res) => {
     console.logo("we have a file");
   }
 });
-//----------------------------------passport Auth ---------------------------------------------------//
-
-router.get(
-  "/user/auth/google",
-  passport.authenticate("google", {
-    scope: ["profile"]
-  })
-);
-
-router.get(
-  "/auth/google/redirect",
-  passport.authenticate("google", { failureRedirect: "/login" }),
-  function(req, res) {
-    console.log(res.user);
-    res.redirect("/");
-  }
-);
 
 //---------------------------------Update Favorit List to User-----------------------------------------------------//
 router.post("/user/favoriteList", (req, res) => {
