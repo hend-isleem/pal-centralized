@@ -3,9 +3,6 @@ const router = express.Router();
 const bcryptjs = require("bcryptjs");
 const db = require("../../DataBase/db");
 const bodyParser = require("body-parser");
-const multer = require("multer");
-const path = require("path");
-const searchApi = require("../../API/search");
 
 const jwt = require("jsonwebtoken");
 const Auth = require("../Auth/Auth");

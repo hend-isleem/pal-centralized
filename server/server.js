@@ -12,6 +12,12 @@ const Auth = require("../Auth/Auth");
 const { check, validationResult } = require("express-validator");
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
+const CR = require("crypto");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
+
+var app = express();
+app.use(cors());
 
 //----------------------------------######3 Processing file and picture #####-----------------------------------------------//
 router.post("/user/upload", (req, res) => {
