@@ -3,7 +3,7 @@ import { Grid, Item, Header } from "semantic-ui-react";
 import "./General.css";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPost } from "../../actions";
-import WarningMessage from "../messages/warning-message";
+import WarningMessage from "../helper/warning-message";
 
 const HomePagePosts = () => {
   const posts: any = useSelector((state: any) => state.posts);

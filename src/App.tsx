@@ -2,6 +2,10 @@ import React, { useEffect, useState } from "react";
 import "semantic-ui-css/semantic.min.css";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 // import { useSelector, useDispatch } from "react-redux";
+import {
+  PrivateRouteLogin,
+  PrivateRouteHeader
+} from "./components/helper/Private-route-login.js";
 
 import SignUpGeneral from "./components/general/Sign-up-general";
 import SignUpCompany from "./components/company/Sign-up-company";
@@ -13,6 +17,7 @@ import MainPagePosts from "./components/general/Home-page-posts";
 import Search from "./components/general/Search";
 import UserPageHeader from "./components/user/User-page-header";
 import SearchResult from "./components/general/Seacrh-result";
+import UserPagePosts from "./components/user/User-page-posts";
 
 // import { logout } from "./actions/index";
 // import { signup } from "./actions/index";
@@ -25,6 +30,31 @@ const App: React.FC = () => {
     setIsLogged(localStorage.getItem("token"));
   }, []);
 
+  // return (
+  //   <Router>
+  //     <div className="App">
+  //       <Switch>
+  //         {/* <PrivateRouteHeader exact path="" component={UserPageHeader} /> */}
+  //         <Route path="/" exact>
+  //           <UserPageHeader />
+  //           <Search />
+  //           <MainPagePosts />
+  //         </Route>
+  //         <Route path="/searchresult">
+  //           <Search />
+  //           <SearchResult />
+  //         </Route>
+  //         <Route path="/signup" exact component={SignUpGeneral} />
+  //         <Route path="/signupcompany" component={SignUpCompany} />
+  //         <Route path="/signupuser" component={SignUpUser} />{" "}
+  //         <Route path="/login" component={Login} />
+  //       </Switch>
+
+  //       <MainPageFooter />
+  //     </div>
+  //   </Router>
+  // );
+
   if (isLogged)
     return (
       <Router>
@@ -34,7 +64,7 @@ const App: React.FC = () => {
           <Switch>
             <Route path="/" exact>
               <Search />
-              <MainPagePosts />
+              <UserPagePosts />
             </Route>
             <Route path="/searchresult">
               <Search />
@@ -45,6 +75,7 @@ const App: React.FC = () => {
             <Route path="/signupuser" component={SignUpUser} />{" "}
             <Route path="/login" component={Login} />
           </Switch>
+
           <MainPageFooter />
         </div>
       </Router>

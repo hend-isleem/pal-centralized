@@ -1,4 +1,4 @@
-import React /*, { useState } */ from "react";
+import React, { useState } from "react";
 import {
   Button,
   Form,
@@ -10,43 +10,47 @@ import {
 } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "../../style.css/form.css";
-// import { useDispatch } from "react-redux";
-// import { signup } from "../../actions";
+import { useDispatch } from "react-redux";
+import { signup } from "../../actions";
 
 // ----------------------------------------- This component not ready yet ---------------------------
 
-const signUpCompany = (props: any) => {
-  // const [userName, setUserName] = useState({ userName: "" });
-  // const [email, setemail] = useState({ email: "" });
-  // const [password, setpassword] = useState({ password: "" });
+const SignUpUser = (props: any) => {
+  const [userName, setUserName] = useState({ userName: "" });
+  const [email, setemail] = useState({ email: "" });
+  const [password, setpassword] = useState({ password: "" });
 
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
   // useEffect(() => {
   //   // dispatch(login());
   // }, []);
 
   const onChangeUserName = (e: any) => {
-    // setUserName({ userName: e.target.value });
+    setUserName({ userName: e.target.value });
   };
   const onChangeEmail = (e: any) => {
-    // setemail({ email: e.target.value });
+    setemail({ email: e.target.value });
   };
 
   const onChangePass = (e: any) => {
-    // setpassword({ password: e.target.value });
+    setpassword({ password: e.target.value });
   };
 
   const onSubmit = (e: any) => {
     e.preventDefault();
-    // dispatch(
-    //   signup(
-    //     { userName: userName, email: email, password: password },
-    //     (userInfo: any) => {
-    //       console.log(userInfo);
-    //     }
-    //   )
-    // );
+
+    // type : to know in the server the type of the user
+    // true : company account
+    // false : user account
+    dispatch(
+      signup(
+        { userName: userName, type: false, email: email, password: password },
+        () => {
+          props.history.push("/login");
+        }
+      )
+    );
   };
 
   return (
@@ -103,4 +107,4 @@ const signUpCompany = (props: any) => {
   );
 };
 
-export default signUpCompany;
+export default SignUpUser;

@@ -3,7 +3,8 @@ import {
   SIGN_IN,
   LOGOUT_SUCCESS,
   IS_LOGGED,
-  SEARCH_START
+  SEARCH_START,
+  SIGN_UP
 } from "./types";
 import axios from "axios";
 
@@ -35,28 +36,21 @@ export const login = (userInfo: any, callback: any) => (dispatch: any) => {
 };
 
 //SIGNUP USER REQUEST
-export const signup = (/*userInfo: any, callback: any */) => (
-  dispatch: any
-) => {
-  console.log("inside sign up action");
-  // console.log(userInfo);
-
+export const signup = (userInfo: any, callback: any) => (dispatch: any) => {
   axios
     .post("http://127.0.0.1:3004/user/signUp", {
-      // userName: userInfo.userName.userName,
-      // email: userInfo.email.email,
-      // passowrd: userInfo.password.password
-      userName: "Mohammad",
-      email: "mohammad@mohammad.com",
-      passowrd: "sleepy"
+      name: userInfo.userName.userName,
+      type: userInfo.type,
+      email: userInfo.email.email,
+      passowrd: userInfo.password.password
     })
     .then(response => {
-      // dispatch({
-      //   type: SIGN_UP,
-      //   payload: userToken.data
-      // });
-      // callback(userToken.data);
-      console.log(response);
+      console.log("inside then sign up action and the res : ", response);
+      dispatch({
+        type: SIGN_UP,
+        payload: response.data
+      });
+      callback(response.data);
     })
     .catch(err => console.log(err));
 };

@@ -33,14 +33,19 @@ const Login = (props: any) => {
     e.preventDefault();
     dispatch(
       login({ email: email, password: password }, (userInfo: any) => {
-        console.log(userInfo);
-        props.history.push("/");
+        //Account type :
+        // -true: company  || -false: user
+
+        // check if its an account user or company user
+        const accountType = userInfo.user.type;
+        if (!accountType) props.history.push("/");
+        else props.history.push("/"); // need to change the route to the right route----- NEED EDIT --
+        window.location.reload();
       })
     );
   };
 
-  if (isLogged) return <Redirect to="/" />;
-
+  if (isLogged) return <Redirect from="/login" to="/" />;
   return (
     <div>
       <Grid

@@ -25,10 +25,11 @@ const UserPageHeader = () => {
   // );
 
   const handleClick = (e: any) => {
-    console.log(e.target.id);
     if (e.target.id === "sign-out") {
       dispatch(logout());
+      window.location.reload();
       return <Redirect to="/" />;
+      // props.history.push("/");
     }
   };
 

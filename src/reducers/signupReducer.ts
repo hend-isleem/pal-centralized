@@ -7,8 +7,7 @@ const initialState = {
 const signupReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case "SIGN_UP":
-      console.log("inside sugnup reducer");
-      console.log(action.payload);
+      console.log("inside sugnup reducer payload :", action.payload.user.id);
 
       return {
         ...state,

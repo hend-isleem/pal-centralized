@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Grid, Item, Header } from "semantic-ui-react";
 import "./General.css";
 import { useSelector } from "react-redux";
-import WarningMessage from "../messages/warning-message";
+import WarningMessage from "../helper/warning-message";
 
 const SearchResult = () => {
   const search: any = useSelector((state: any) => state.search);
