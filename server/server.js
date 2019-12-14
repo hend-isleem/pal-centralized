@@ -6,30 +6,30 @@ const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const expressUploader = require("express-fileupload");
 const passport = require("passport");
-const GoogleConfig = require("./Routs/config")
+const GoogleConfig = require("./Routs/config");
 
-var GoogleStrategy = require("passport-google-oauth20").Strategy;
+var GoogleStrategy = require("passport-google-oauth2").Strategy;
 
 const app = express();
+app.use(passport.initialize());
+app.use(passport.session());
 app.use(cors());
 app.use(expressUploader());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-// app.use(express.json());
 
 passport.use(
   new GoogleStrategy(
     {
-      clientID:GoogleConfig.clientID,
-      clientSecret: GoogleConfig.clientSecret,
-      callbackURL: GoogleConfig.callbackURL
+      clientID: GoogleConfig.GoogleConfig.clientID,
+      clientSecret: GoogleConfig.GoogleConfig.clientSecret,
+      callbackURL: GoogleConfig.GoogleConfig.callbackURL,
+      passReqToCallback: true
     },
-    function(accessToken, refreshToken, profile, cb) {
-      console.log(profile);
-      // User.findOrCreate({ googleId: profile.id }, function (err, user) {
-      //   return cb(err, user);
-      // });
+    (accessToken, refreshToken, profile, cb) => {
+      console.log("inside the call back");
+      console.log(profile.id);
     }
   )
 );
@@ -63,7 +63,7 @@ app.post("*", (res, req) => {
 app.post("/", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
-  res.sen("i am in ");
+  res.sen("hiiiiiiiii");
 });
 
 //------------------------------- open the connection --------------------------------//
