@@ -12,6 +12,7 @@ import "../../style.css/form.css";
 import { useDispatch } from "react-redux";
 import { logout } from "../../actions";
 // import CompanyPost from "../postCompany/postCompany";
+import logo from "../../logo.png";
 
 const CompanyPageHeader = (props: any) => {
   // const userName: any = useSelector((state: any) => state.user.userName);
@@ -94,7 +95,8 @@ const CompanyPageHeader = (props: any) => {
             <Link to="/company">
               <Image
                 size="mini"
-                src="https://image.shutterstock.com/image-vector/education-logo-template-260nw-1075581467.jpg"
+                // src="https://image.shutterstock.com/image-vector/education-logo-template-260nw-1075581467.jpg"
+                src={logo}
               />
             </Link>
           </Menu.Item>

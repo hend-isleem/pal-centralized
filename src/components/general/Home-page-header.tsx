@@ -2,6 +2,7 @@ import React from "react";
 import { Container, Image, Menu, Button } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import "../../style.css/form.css";
+import logo from "../../logo.png";
 
 // const LogoImg = () => (
 //   <Image
@@ -32,7 +33,8 @@ const HomePageHeader = () => {
             <Link to="/">
               <Image
                 size="mini"
-                src="https://image.shutterstock.com/image-vector/education-logo-template-260nw-1075581467.jpg"
+                // src="https://image.shutterstock.com/image-vector/education-logo-template-260nw-1075581467.jpg"
+                src={logo}
               />
             </Link>
           </Menu.Item>

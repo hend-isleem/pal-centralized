@@ -44,6 +44,13 @@ const FavoriteUserList = () => {
       {/*  */}
       <Dropdown className="icon" icon="bookmark">
         <Dropdown.Menu>
+          {/* {postsFavItems.length === 0 ? (
+            console.log(postsFavItems.length)
+          ) : (
+            <Segment>
+              <Header as="h5">Empty Favorite List</Header>
+            </Segment>
+          )} */}
           {postsFavItems.map((post: any) => Element(post))}
         </Dropdown.Menu>
       </Dropdown>

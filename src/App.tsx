@@ -17,7 +17,6 @@ import MainPagePosts from "./components/general/Home-page-posts";
 import Search from "./components/general/Search";
 import UserPageHeader from "./components/user/User-page-header";
 import SearchResult from "./components/general/Seacrh-result";
-// import SearchResultUser from "./components/user/search-result-user";
 
 import UserPagePosts from "./components/user/User-page-posts";
 import CompanyPageHeader from "./components/company/Company-page-header";
@@ -25,6 +24,8 @@ import AboutUs from "./components/general/AboutUs-page";
 import ContactUs from "./components/general/ContactUs-page";
 import CompanyHomePage from "./components/company/Company-home-page";
 import CompanyNewPost from "./components/company/company-new-post";
+import UserProfile from "./components/user/UserProfile-page";
+import CompanyProfile from "./components/company/CompanyProfile-page";
 
 // import { logout } from "./actions/index";
 // import { signup } from "./actions/index";
@@ -54,7 +55,6 @@ const App: React.FC = () => {
             </Route>
             <Route path="/searchresult">
               <UserPageHeader />
-
               <Search />
               <SearchResult />
             </Route>
@@ -70,13 +70,13 @@ const App: React.FC = () => {
             {/* --------------------------------- User Routes ---------------------------------- */}
             <Route path="/useraccount" exact>
               <UserPageHeader />
-              <h1 style={{ margin: "5em auto", width: "75%" }}>
-                User Account Page
-              </h1>
+              <UserProfile />
             </Route>
             <Route path="/edituseraccount" exact>
               <UserPageHeader />
-              <h1 style={{ margin: "5em auto", width: "75%" }}>Edit Page</h1>
+              <h1 style={{ margin: "5em auto", width: "75%" }}>
+                User Edit Page
+              </h1>
             </Route>
             <Route path="/contactus" exact>
               <UserPageHeader />
@@ -97,12 +97,16 @@ const App: React.FC = () => {
             </Route>
             <Route path="/companyaccount" exact>
               <CompanyPageHeader />
+              <CompanyProfile />
             </Route>
             <Route path="/companyarchive" exact>
               <CompanyPageHeader />
             </Route>
             <Route path="/companyeditaccount" exact>
               <CompanyPageHeader />
+              <h1 style={{ margin: "8rem auto", width: "75%" }}>
+                Edit Company Profile Page
+              </h1>
             </Route>
           </Switch>
 

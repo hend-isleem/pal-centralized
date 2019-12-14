@@ -12,6 +12,7 @@ import "../../style.css/form.css";
 import UserFavoriteList from "./Favorite-user-list";
 import { useDispatch } from "react-redux";
 import { logout } from "../../actions";
+import logo from "../../logo.png";
 
 const UserPageHeader = () => {
   // const userName: any = useSelector((state: any) => state.user.userName);
@@ -83,7 +84,8 @@ const UserPageHeader = () => {
             <Link to="/">
               <Image
                 size="mini"
-                src="https://image.shutterstock.com/image-vector/education-logo-template-260nw-1075581467.jpg"
+                // src="https://image.shutterstock.com/image-vector/education-logo-template-260nw-1075581467.jpg"
+                src={logo}
               />
             </Link>
           </Menu.Item>

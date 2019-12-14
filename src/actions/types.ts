@@ -7,3 +7,5 @@ export const SEARCH_START = "SEARCH_START";
 export const FETCH_FAVORITE = "FETCH_FAVORITE";
 export const FETCH_COMPANY_POSTS = "FETCH_COMPANY_POSTS";
 export const NEW_POST = "NEW_POST";
+export const FETCH_COMPANY = "NEW_POST";
+export const FETCH_USERS = "NEW_POST";
