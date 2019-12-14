@@ -10,6 +10,7 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const Auth = require("../Auth/Auth");
 const { check, validationResult } = require("express-validator");
+// const EmailSender = require("../mail");
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -20,15 +21,18 @@ router.get(
   "/user/auth/google",
   passport.authenticate("google", {
     scope: ["profile"]
-  })
+  }),
+  (req, res) => {
+    res.redirect("/");
+  }
 );
 
 router.get(
-  "/auth/google/redirect",
-  passport.authenticate("google", { failureRedirect: "/login" }),
+  "/user/google/redirect",
+  passport.authenticate("google" /*,{ failureRedirect: "/login"}*/),
   function(req, res) {
-    console.log(res.user);
-    // res.redirect("/");
+    // console.log(res.profile);
+    res.send("you are uthonitication know");
   }
 );
 
@@ -38,7 +42,11 @@ router.get(
 //--------------------insert a new post to articals -----------//
 //-------------------------------------------------------------//
 router.post("/articles/addPosts", (req, res) => {
+  //-------------------------------------------------------------------------//
+  //---------- takes object Post as (post and) , company id as (comID) ------//
+  //-------------------------------------------------------------------------//
   var post = res.body.post;
+  var comID = res.body.comID;
   //-------------------------------------------//
   //---------------add an ID to post-----------//
   //-------------------------------------------//
@@ -51,6 +59,11 @@ router.post("/articles/addPosts", (req, res) => {
       //-------------------------------------------------//
       //----------------- if created return 201----------//
       //-------------------------------------------------//
+
+      EmailSender(comID, post);
+      //-------------------------------------------------//
+      //---------Sending Email to all follwers ----------//
+      //-------------------------------------------------//
       res
         .status(201)
         .send("Sucess")
@@ -61,6 +74,7 @@ router.post("/articles/addPosts", (req, res) => {
       //------------- if not created return 201----------//
       //-------------------------------------------------//
       res
+
         .status(500)
         .send("An Error Has Occurred during processing data")
         .end();
