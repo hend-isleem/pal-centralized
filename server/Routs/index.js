@@ -62,9 +62,48 @@ router.post("/articles/addPosts", (req, res) => {
       //-------------------------------------------------//
       res
         .status(500)
-        .send("An Error HaS Accured during procesing data")
+        .send("An Error Has Occurred during processing data")
         .end();
     });
+});
+
+//------------------------------------------Update /Delete - post ------------------------------------------------------//
+
+router.post("/articles/updatePost", (req, res) => {
+  //----------------------------------------//
+  //------------delete operation------------//
+  //----------------------------------------//
+  if (req.body.op === "delete") {
+    db.post
+      .deleteOne({ id: req.body.id })
+      .then(result => {
+        res
+          .status(201)
+          .send("Successfully Deleted")
+          .end();
+      })
+      .catch(error => {
+        res.status(500).send("An Error Has Occurred during processing data");
+      });
+  }
+  //----------------------------------------//
+  //------------update operation------------//
+  //----------------------------------------//
+  if (req.body.op === "update") {
+    db.updateOne({ id })
+      .then(result => {
+        res
+          .status(201)
+          .send("Successfully updated")
+          .end();
+      })
+      .catch(error => {
+        res
+          .status(500)
+          .send("An Error Has Occurred during processing data")
+          .end();
+      });
+  }
 });
 
 //----------------------- Update Company info -------------------------------------------//
