@@ -149,7 +149,6 @@ router.get("/articles/favoriteList", (req, res) => {
   //--------------get the favorite list from ------------//
   //-------------- User Profile -------------------------//
   //-----------------------------------------------------//
-  console.log("inside articles favoriteList", req.query.id);
 
   var userID = req.query.id;
   db.User.findOne({ id: userID })
@@ -206,6 +205,7 @@ router.get("/articles/API", (req, res) => {
 });
 
 //--------------------------------### getting Info by Search #####------------------------------------------------//
+
 router.get("/articles/search", (req, res) => {
   console.log("inside search route");
   var param = req.query;
@@ -305,8 +305,6 @@ router.get("/articles/filtered", (req, res) => {
 });
 //-------------------------------------------##### get all Post Rout Nativ #####------------------------------------------------------------//
 router.get("/articles", (req, res) => {
-  console.log("inside article route");
-
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
   db.Post.find({}, (error, post) => {

@@ -15,6 +15,8 @@ const logouReducer = (state = initialState, action: any) => {
       localStorage.removeItem("userId");
       localStorage.removeItem("userEmail");
       localStorage.removeItem("userName");
+      localStorage.removeItem("userType");
+      localStorage.clear();
 
       return {
         ...state,

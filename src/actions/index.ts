@@ -5,7 +5,8 @@ import {
   IS_LOGGED,
   SEARCH_START,
   SIGN_UP,
-  FETCH_FAVORITE
+  FETCH_FAVORITE,
+  FETCH_COMPANY_POSTS
 } from "./types";
 import axios from "axios";
 
@@ -73,11 +74,27 @@ export const isLogged = () => {
 
 // To get the search result
 export const search = (searchInfo: any) => (dispatch: any) => {
-  console.log(searchInfo);
-  console.log("inside search action");
-
+  var url = [];
+  if (searchInfo.major !== "") {
+    url.push("major=" + searchInfo.major);
+  }
+  if (searchInfo.type !== "") {
+    url.push("type=" + searchInfo.type);
+  }
+  if (searchInfo.enterQuery !== "") {
+    url.push("enterQuery=" + searchInfo.enterQuery);
+  }
+  var URLl = "";
+  for (var i = 0; i < url.length; i++) {
+    if (i === 0) {
+      URLl = "/?" + url[i];
+    } else {
+      URLl += "&&" + url[i];
+    }
+  }
+  console.log(URLl);
   axios
-    .get("http://127.0.0.1:3004/user/articles/search")
+    .get(`http://127.0.0.1:3004/articles/search${URLl}`)
     .then(searchResult => {
       console.log("inside then search action");
       console.log(searchResult);
@@ -86,7 +103,7 @@ export const search = (searchInfo: any) => (dispatch: any) => {
         payload: searchResult.data
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => console.log("inside catch search", err));
 };
 
 // Get the favorite list for the user
@@ -95,6 +112,25 @@ export const fetchFavorite = () => (dispatch: any) => {
   const userId = localStorage.getItem("userId");
   axios
     .get(`http://localhost:3004/articles/favoriteList?id=${userId}`)
+    .then(favPosts => {
+      // console.log("inside then fav action", Favposts.data);
+      dispatch({
+        type: FETCH_FAVORITE,
+        payload: favPosts.data
+      });
+    })
+    .catch(err => {
+      console.log("inside err favorite", err);
+    });
+};
+
+//------------------------------------------ Fetch company posts ---------------------------------------------//
+
+export const fetchCompanyPosts = () => (dispatch: any) => {
+  console.log("ID user from local storage", localStorage.getItem("userId"));
+  const userId = localStorage.getItem("userId");
+  axios
+    .get(`http://localhost:3004/articles/?id=${userId}`)
     .then(favPosts => {
       // console.log("inside then fav action", Favposts.data);
       dispatch({

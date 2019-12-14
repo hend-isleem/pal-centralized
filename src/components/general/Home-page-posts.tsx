@@ -50,7 +50,9 @@ const HomePagePosts = () => {
 
               <Item.Content>
                 <Item.Header>{post.title}</Item.Header>
-                <Item.Meta>by RBK</Item.Meta>
+                <Item.Meta>Category>{post.type}</Item.Meta>
+                <Item.Meta>Major: {post.type}</Item.Meta>{" "}
+                <Item.Meta>opportunity deadline {post.deadLine}</Item.Meta>
                 {checkToken(isLogged) ? (
                   <Item.Description>
                     <p>{post.description}</p>
@@ -58,9 +60,8 @@ const HomePagePosts = () => {
                 ) : (
                   <Item.Description></Item.Description>
                 )}
-
                 <Item.Extra as="a" onClick={showDescreptipn}>
-                  Additional Information
+                  Show more information
                   {showDesc ? <WarningMessage /> : null}
                 </Item.Extra>
               </Item.Content>

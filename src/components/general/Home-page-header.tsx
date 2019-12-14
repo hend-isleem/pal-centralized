@@ -23,7 +23,12 @@ const HomePageHeader = () => {
             </Link>
           </Menu.Item>
 
-          <Menu.Item as="a" header position="right">
+          <Menu.Item
+            as="a"
+            header
+            pointing="top left"
+            style={{ marginLeft: "15rem" }}
+          >
             <Link to="/">
               <Image
                 size="mini"

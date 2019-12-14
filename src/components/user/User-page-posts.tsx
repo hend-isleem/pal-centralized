@@ -40,10 +40,12 @@ const UserPagePosts = () => {
 
   // ----------------------------------------- End Helper Functions----------------------------------------- //
 
+  console.log(postItems);
+
   const Element = (post: any, index: any) => {
     if (counter < 3) {
-      console.log("index", index);
-
+      // console.log("index", index);
+      console.log("Post: ", post);
       counter++;
       return (
         <Grid.Column>
@@ -52,10 +54,16 @@ const UserPagePosts = () => {
               <Item.Image size="tiny" src={post.logo} />
               <Item.Content>
                 <Item.Header>{post.title}</Item.Header>
-                <Item.Meta>by RBK</Item.Meta>
+                <Item.Meta>Major: {post.major}</Item.Meta>
+                <Item.Meta> Category: {post.type}</Item.Meta>
+
                 {checkToken(isLogged) ? (
                   <Item.Description>
                     <p>{post.description}</p>
+                    <p>opportunity deadline {post.deadLine}</p>
+                    <a target="_blank" href={post.link}>
+                      original Link
+                    </a>
                   </Item.Description>
                 ) : (
                   <Item.Description></Item.Description>

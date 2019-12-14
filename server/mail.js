@@ -25,7 +25,7 @@ let transporter = nodemailer.createTransport({
 //         console.log("email is sent !!!!!");
 //     }
 // })
-function sendMail(compID, post) {
+export default function sendMail(compID, post) {
   search.getFollowersE(compID, emails => {
     let mail = {
       from: "weseekps@gmail.com", // sender address
@@ -44,7 +44,6 @@ function sendMail(compID, post) {
     });
   });
 }
-
 
 let pst = {
   id: 1,

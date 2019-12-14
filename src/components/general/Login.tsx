@@ -33,13 +33,14 @@ const Login = (props: any) => {
     e.preventDefault();
     dispatch(
       login({ email: email, password: password }, (userInfo: any) => {
-        //Account type :
+        //Account types :
         // -true: company  || -false: user
-
         // check if its an account user or company user
         const accountType = userInfo.user.type;
+        accountType ? console.log("company") : console.log("user");
         if (!accountType) props.history.push("/");
-        else props.history.push("/"); // need to change the route to the right route----- NEED EDIT --
+        else props.history.push("/company"); // need to change the route to the right route----- NEED EDIT --
+
         window.location.reload();
       })
     );

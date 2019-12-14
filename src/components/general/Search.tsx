@@ -76,7 +76,7 @@ const Search = () => {
 
           <Menu.Item>
             <Dropdown
-              placeholder="choose Type..."
+              placeholder="choose major..."
               fluid
               search
               selection
@@ -88,7 +88,7 @@ const Search = () => {
 
           <Menu.Item>
             <Dropdown
-              placeholder="choose major..."
+              placeholder="choose Category..."
               fluid
               search
               selection

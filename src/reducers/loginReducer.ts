@@ -9,9 +9,9 @@ const initialState = {
 const loginReducer = (state = initialState, action: any) => {
   switch (action.type) {
     case "SIGN_IN":
-      console.log("this is the user id ", action.payload.user.id);
+      console.log("this is the user  ", action.payload.user);
       localStorage.setItem("token", action.payload.acsessToken);
-      localStorage.setItem("userType", action.payload.acsessToken);
+      localStorage.setItem("userType", action.payload.user.type);
       localStorage.setItem("userId", action.payload.user.id);
       localStorage.setItem("userName", action.payload.user.Name);
       localStorage.setItem("userEmail", action.payload.user.email);

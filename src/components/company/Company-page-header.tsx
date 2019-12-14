@@ -9,11 +9,11 @@ import {
 } from "semantic-ui-react";
 import { Link, Redirect } from "react-router-dom";
 import "../../style.css/form.css";
-import UserFavoriteList from "./Favorite-user-list";
 import { useDispatch } from "react-redux";
 import { logout } from "../../actions";
+// import CompanyPost from "../postCompany/postCompany";
 
-const UserPageHeader = () => {
+const CompanyPageHeader = (props: any) => {
   // const userName: any = useSelector((state: any) => state.user.userName);
   let userName: any = localStorage.getItem("userName");
   const dispatch = useDispatch();
@@ -37,7 +37,17 @@ const UserPageHeader = () => {
           <MenuItem>
             <Dropdown trigger={trigger} pointing="top left" icon={null}>
               <Dropdown.Menu>
-                <Link to="/useraccount">
+                <Link to="/newpost">
+                  <Dropdown.Item
+                    id="account"
+                    onClick={handleClick}
+                    style={{ color: "black" }}
+                  >
+                    New Post
+                  </Dropdown.Item>
+                </Link>
+
+                <Link to="/companyaccount">
                   <Dropdown.Item
                     id="account"
                     onClick={handleClick}
@@ -47,7 +57,17 @@ const UserPageHeader = () => {
                   </Dropdown.Item>
                 </Link>
 
-                <Link to="/edituseraccount">
+                <Link to="/companyarchive">
+                  <Dropdown.Item
+                    id="archive"
+                    onClick={handleClick}
+                    style={{ color: "black" }}
+                  >
+                    Archive
+                  </Dropdown.Item>
+                </Link>
+
+                <Link to="/companyeditaccount">
                   <Dropdown.Item
                     id="edit"
                     onClick={handleClick}
@@ -57,7 +77,7 @@ const UserPageHeader = () => {
                   </Dropdown.Item>
                 </Link>
 
-                <Link to="/">
+                <Link to="/user">
                   <Dropdown.Item
                     id="sign-out"
                     onClick={handleClick}
@@ -70,17 +90,8 @@ const UserPageHeader = () => {
             </Dropdown>
           </MenuItem>
 
-          <Menu.Item>
-            <UserFavoriteList />
-          </Menu.Item>
-
-          <Menu.Item
-            as="a"
-            header
-            pointing="middle"
-            style={{ marginLeft: "15rem" }}
-          >
-            <Link to="/">
+          <Menu.Item as="a" header position="right">
+            <Link to="/company">
               <Image
                 size="mini"
                 src="https://image.shutterstock.com/image-vector/education-logo-template-260nw-1075581467.jpg"
@@ -93,4 +104,4 @@ const UserPageHeader = () => {
   );
 };
 
-export default UserPageHeader;
+export default CompanyPageHeader;

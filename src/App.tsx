@@ -18,6 +18,11 @@ import Search from "./components/general/Search";
 import UserPageHeader from "./components/user/User-page-header";
 import SearchResult from "./components/general/Seacrh-result";
 import UserPagePosts from "./components/user/User-page-posts";
+import CompanyPageHeader from "./components/company/Company-page-header";
+import AboutUs from "./components/general/AboutUs-page";
+import ContactUs from "./components/general/ContactUs-page";
+import CompanyHomePage from "./components/company/Company-home-page";
+import CompanyNewPost from "./components/company/company-new-post";
 
 // import { logout } from "./actions/index";
 // import { signup } from "./actions/index";
@@ -25,48 +30,28 @@ import UserPagePosts from "./components/user/User-page-posts";
 const App: React.FC = () => {
   const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
 
+  // let userType = localStorage.getItem("userType");
   // check if there is a user logged or not
   useEffect(() => {
     setIsLogged(localStorage.getItem("token"));
   }, []);
 
-  // return (
-  //   <Router>
-  //     <div className="App">
-  //       <Switch>
-  //         {/* <PrivateRouteHeader exact path="" component={UserPageHeader} /> */}
-  //         <Route path="/" exact>
-  //           <UserPageHeader />
-  //           <Search />
-  //           <MainPagePosts />
-  //         </Route>
-  //         <Route path="/searchresult">
-  //           <Search />
-  //           <SearchResult />
-  //         </Route>
-  //         <Route path="/signup" exact component={SignUpGeneral} />
-  //         <Route path="/signupcompany" component={SignUpCompany} />
-  //         <Route path="/signupuser" component={SignUpUser} />{" "}
-  //         <Route path="/login" component={Login} />
-  //       </Switch>
-
-  //       <MainPageFooter />
-  //     </div>
-  //   </Router>
-  // );
-
   if (isLogged)
     return (
       <Router>
         <div className="App">
-          <UserPageHeader />
-
           <Switch>
             <Route path="/" exact>
+              <UserPageHeader />
               <Search />
               <UserPagePosts />
             </Route>
+            <Route path="/company" exact>
+              <CompanyPageHeader />
+              <CompanyHomePage />
+            </Route>
             <Route path="/searchresult">
+              <UserPageHeader />
               <Search />
               <SearchResult />
             </Route>
@@ -74,6 +59,48 @@ const App: React.FC = () => {
             <Route path="/signupcompany" component={SignUpCompany} />
             <Route path="/signupuser" component={SignUpUser} />{" "}
             <Route path="/login" component={Login} />
+            <Route path="/addpost" component={CompanyNewPost} />
+            <Route path="/aboutus" exact>
+              <UserPageHeader />
+              <AboutUs />
+            </Route>
+            {/* --------------------------------- User Routes ---------------------------------- */}
+            <Route path="/useraccount" exact>
+              <UserPageHeader />
+              <h1 style={{ margin: "5em auto", width: "75%" }}>
+                User Account Page
+              </h1>
+            </Route>
+            <Route path="/edituseraccount" exact>
+              <UserPageHeader />
+              <h1 style={{ margin: "5em auto", width: "75%" }}>Edit Page</h1>
+            </Route>
+            <Route path="/contactus" exact>
+              <UserPageHeader />
+              <ContactUs />
+            </Route>
+            <Route path="/aboutuscompany" exact>
+              <CompanyPageHeader />
+              <AboutUs />
+              {/* --------------------------------- Company Routes ---------------------------------- */}
+            </Route>
+            <Route path="/contactuscompany" exact>
+              <CompanyPageHeader />
+              <ContactUs />
+            </Route>
+            <Route path="/newpost" exact>
+              <CompanyPageHeader />
+              <CompanyNewPost />
+            </Route>
+            <Route path="/companyaccount" exact>
+              <CompanyPageHeader />
+            </Route>
+            <Route path="/companyarchive" exact>
+              <CompanyPageHeader />
+            </Route>
+            <Route path="/companyeditaccount" exact>
+              <CompanyPageHeader />
+            </Route>
           </Switch>
 
           <MainPageFooter />
@@ -98,6 +125,14 @@ const App: React.FC = () => {
             <Route path="/signupcompany" component={SignUpCompany} />
             <Route path="/signupuser" component={SignUpUser} />{" "}
             <Route path="/login" component={Login} />
+            <Route path="/aboutus" exact>
+              <MainPageHeader />
+              <AboutUs />
+            </Route>
+            <Route path="/contactus" exact>
+              <MainPageHeader />
+              <ContactUs />
+            </Route>
           </Switch>
           <MainPageFooter />
         </div>
