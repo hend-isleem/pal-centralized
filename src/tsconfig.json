@@ -10,7 +10,7 @@
     "outDir": "./dist/packages/all",
     "target": "es2015",
     "lib": ["es5", "es2015", "dom"],
-    "types": ["jasmine"],
+    "types": ["node"],
     "baseUrl": ".",
     "paths": {
       "@angular/material": ["./src/lib/public_api.ts"],
