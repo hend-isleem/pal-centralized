@@ -53,19 +53,25 @@ const SearchResult = () => {
                   <a target="_blank" href={post.link}>
                     original Link
                   </a>
+                  <br></br>
+                  {booked ? (
+                    <Button icon onClick={bookmarkHundle}>
+                      <Icon name="bookmark" />
+                    </Button>
+                  ) : (
+                    <Button icon onClick={bookmarkHundle}>
+                      <Icon name="bookmark outline" />
+                    </Button>
+                  )}
                 </Item.Description>
               ) : (
-                <Item.Description></Item.Description>
+                <Item.Extra as="a" onClick={showDescreptipn}>
+                  Show more information
+                  {showDesc ? <WarningMessage /> : null}
+                </Item.Extra>
               )}
-              {booked ? (
-                <Button icon onClick={bookmarkHundle}>
-                  <Icon name="bookmark" />
-                </Button>
-              ) : (
-                <Button icon onClick={bookmarkHundle}>
-                  <Icon name="bookmark outline" />
-                </Button>
-              )}
+
+              {/* {checkToken(isLogged) ? ({}) : ()} */}
             </Item.Content>
           </Item>
         </Item.Group>

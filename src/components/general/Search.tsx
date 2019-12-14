@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button, Menu, Dropdown, Icon, Grid, Input } from "semantic-ui-react";
 import { useDispatch } from "react-redux";
@@ -39,8 +39,20 @@ const Search = () => {
   let [majorQuerySearch, setMajorQuerySearch] = useState("");
   let [typeQuerySearch, setTypeQuerySearch] = useState("");
   let [enteredQuerySearch, setenteredQuerySearch] = useState("");
+  const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
+  const [searchURL, setsearchURL] = useState(localStorage.getItem(""));
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    setIsLogged(localStorage.getItem("token"));
+  }, []);
+
+  // if (isLogged) {
+  //   setsearchURL("/searchresultuser");
+  // } else {
+  //   setsearchURL("/searchresult");
+  // }
 
   // to take the value of dropdowns search by Type ----------------------
   const hundleDropDownChangeByMajor = (e: any) => {
@@ -106,7 +118,7 @@ const Search = () => {
           {/* ------------------------------------ Search Button--------------------------------- */}
           <Menu.Menu position="right">
             <Menu.Item>
-              <Link to="searchresult">
+              <Link to="/searchresult">
                 <Button primary onClick={onSearch}>
                   <Grid columns={2} divided>
                     <Grid.Column>Search</Grid.Column>

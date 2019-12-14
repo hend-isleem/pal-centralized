@@ -17,6 +17,8 @@ import MainPagePosts from "./components/general/Home-page-posts";
 import Search from "./components/general/Search";
 import UserPageHeader from "./components/user/User-page-header";
 import SearchResult from "./components/general/Seacrh-result";
+// import SearchResultUser from "./components/user/search-result-user";
+
 import UserPagePosts from "./components/user/User-page-posts";
 import CompanyPageHeader from "./components/company/Company-page-header";
 import AboutUs from "./components/general/AboutUs-page";
@@ -52,6 +54,7 @@ const App: React.FC = () => {
             </Route>
             <Route path="/searchresult">
               <UserPageHeader />
+
               <Search />
               <SearchResult />
             </Route>

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Grid, Item, Header, Button, Icon } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPost } from "../../actions";
+import WarningMessage from "../helper/warning-message";
 
 const UserPagePosts = () => {
   const posts: any = useSelector((state: any) => state.posts);
