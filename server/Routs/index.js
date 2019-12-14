@@ -32,6 +32,41 @@ router.get(
   }
 );
 
+//----------------------## Create a new Post----------------------------------------------//
+
+//-------------------------------------------------------------//
+//--------------------insert a new post to articals -----------//
+//-------------------------------------------------------------//
+router.post("/articles/addPosts", (req, res) => {
+  var post = res.body.post;
+  //-------------------------------------------//
+  //---------------add an ID to post-----------//
+  //-------------------------------------------//
+  post["id"] = Date.now();
+  //--------------------------------------------//
+  //-------insert the post with its id----------//
+  //--------------------------------------------//
+  db.Post.create(post)
+    .then(result => {
+      //-------------------------------------------------//
+      //----------------- if created return 201----------//
+      //-------------------------------------------------//
+      res
+        .status(201)
+        .send("Sucess")
+        .end();
+    })
+    .catch(error => {
+      //-------------------------------------------------//
+      //------------- if not created return 201----------//
+      //-------------------------------------------------//
+      res
+        .status(500)
+        .send("An Error HaS Accured during procesing data")
+        .end();
+    });
+});
+
 //----------------------- Update Company info -------------------------------------------//
 
 router.post("user/updateProfile", (req, res) => {
@@ -96,7 +131,6 @@ router.post("/user/upload", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
   if (req.body) {
-    console.log(req.body.file);
     var d = req.body;
 
     var base64Data = req.body.file.replace(/^data:image\/png;base64,/, "");
@@ -450,7 +484,7 @@ router.post("/user/signIn", async (req, res) => {
             console.log(user.Name, "name");
             console.log(user.email, "email");
             if (user.type === false) {
-              db.User.create({ id: id }, (error, result) => {
+              db.User.create({ id: user.id }, (error, result) => {
                 if (error) {
                   console.log(error);
                 } else {
