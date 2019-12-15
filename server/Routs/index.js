@@ -10,27 +10,115 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const Auth = require("../Auth/Auth");
 const { check, validationResult } = require("express-validator");
+// const EmailSender = require("../mail");
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
 //----------------------------------passport Auth ---------------------------------------------------//
 
-router.get(
-  "/user/auth/google",
-  passport.authenticate("google", {
-    scope: ["profile"]
-  })
-);
+// router.get(
+//   "/user/auth/google",
+//   passport.authenticate("google", {
+//     scope: ["profile"]
+//   }),
+//   (req, res) => {
+//     res.redirect("/");
+//   }
+// );
 
-router.get(
-  "/auth/google/redirect",
-  passport.authenticate("google", { failureRedirect: "/login" }),
-  function(req, res) {
-    console.log(res.user);
-    // res.redirect("/");
+// router.get(
+//   "/user/google/redirect",
+//   passport.authenticate("google" /*,{ failureRedirect: "/login"}*/),
+//   function(req, res) {
+//     // console.log(res.profile);
+//     res.send("you are uthonitication know");
+//   }
+// );
+
+//----------------------## Create a new Post----------------------------------------------//
+
+//-------------------------------------------------------------//
+//--------------------insert a new post to articals -----------//
+//-------------------------------------------------------------//
+router.post("/articles/addPosts", (req, res) => {
+  //-------------------------------------------------------------------------//
+  //---------- takes object Post as (post and) , company id as (comID) ------//
+  //-------------------------------------------------------------------------//
+  var post = res.body.post;
+  var comID = res.body.comID;
+  //-------------------------------------------//
+  //---------------add an ID to post-----------//
+  //-------------------------------------------//
+  post["id"] = Date.now();
+  //--------------------------------------------//
+  //-------insert the post with its id----------//
+  //--------------------------------------------//
+  db.Post.create(post)
+    .then(result => {
+      //-------------------------------------------------//
+      //----------------- if created return 201----------//
+      //-------------------------------------------------//
+
+      EmailSender(comID, post);
+      //-------------------------------------------------//
+      //---------Sending Email to all follwers ----------//
+      //-------------------------------------------------//
+      res
+        .status(201)
+        .send("Sucess")
+        .end();
+    })
+    .catch(error => {
+      //-------------------------------------------------//
+      //------------- if not created return 201----------//
+      //-------------------------------------------------//
+      res
+
+        .status(500)
+        .send("An Error Has Occurred during processing data")
+        .end();
+    });
+});
+
+//------------------------------------------Update /Delete - post ------------------------------------------------------//
+
+router.post("/articles/updatePost", (req, res) => {
+  //----------------------------------------//
+  //------------delete operation------------//
+  //----------------------------------------//
+  if (req.body.op === "delete") {
+    db.post
+      .deleteOne({ id: req.body.id })
+      .then(result => {
+        res
+          .status(201)
+          .send("Successfully Deleted")
+          .end();
+      })
+      .catch(error => {
+        res.status(500).send("An Error Has Occurred during processing data");
+      });
   }
-);
+  //----------------------------------------//
+  //------------update operation------------//
+  //----------------------------------------//
+  if (req.body.op === "update") {
+    db.updateOne({ id })
+      .then(result => {
+        res
+          .status(201)
+          .send("Successfully updated")
+          .end();
+      })
+      .catch(error => {
+        res
+          .status(500)
+          .send("An Error Has Occurred during processing data")
+          .end();
+      });
+  }
+});
 
 //----------------------- Update Company info -------------------------------------------//
 
@@ -96,7 +184,6 @@ router.post("/user/upload", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
   if (req.body) {
-    console.log(req.body.file);
     var d = req.body;
 
     var base64Data = req.body.file.replace(/^data:image\/png;base64,/, "");
@@ -453,7 +540,7 @@ router.post("/user/signIn", async (req, res) => {
             console.log(user.Name, "name");
             console.log(user.email, "email");
             if (user.type === false) {
-              db.User.create({ id: req.body.id }, (error, result) => {
+              db.User.create({ id: user.id }, (error, result) => {
                 if (error) {
                   console.log(error);
                 } else {

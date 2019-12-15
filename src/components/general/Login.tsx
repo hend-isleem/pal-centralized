@@ -31,6 +31,7 @@ const Login = (props: any) => {
 
   const onSubmit = (e: any) => {
     e.preventDefault();
+    console.log("inside login ");
     dispatch(
       login({ email: email, password: password }, (userInfo: any) => {
         //Account types :
