@@ -1,0 +1,17 @@
+POST  https://localhost:3004/user/signIn
+
+Content-Type: application/json
+{
+    "username":"Kyle",
+    "passowrd":"password"
+}
+
+###
+POST https://localhost:3004
+
+content-type: application/json
+
+{
+    "username": "sample",
+    "time": "Wed, 21 Oct 2015 18:27:50 GMT"
+}

@@ -7,6 +7,8 @@ const cors = require("cors");
 const expressUploader = require("express-fileupload");
 const passport = require("passport");
 const GoogleConfig = require("./Routs/config");
+const db = require("../DataBase/db");
+const bcryptjs = require("bcryptjs");
 
 var GoogleStrategy = require("passport-google-oauth2").Strategy;
 
@@ -19,17 +21,104 @@ app.use(expressUploader());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+//--------------------------------------------------//
+//--------serilayzing user and creating a ----------//
+//--------cookie to return it back to our page------//
+//--------------------------------------------------//
+passport.serializeUser((user, done) => {
+  // console.log("inside serializeUser", user);
+  done(null, user.id);
+});
+
+//---------------------------------------------------//
+//----------getting our user back from --------------//
+//--------- our database to be taken by -------------//
+//------------------- or websit ---------------------//
+//---------------------------------------------------//
+passport.deserializeUser((id, done) => {
+  db.General.findOne({ id: id }).then(resultUser => {
+    done(null, resultUser);
+  });
+});
+//---------------------------------------------------------------//
+//--------------using the strategy of google in express ---------//
+//---------------------------------------------------------------//
 passport.use(
   new GoogleStrategy(
     {
       clientID: GoogleConfig.GoogleConfig.clientID,
       clientSecret: GoogleConfig.GoogleConfig.clientSecret,
-      callbackURL: GoogleConfig.GoogleConfig.callbackURL,
-      passReqToCallback: true
+      callbackURL: GoogleConfig.GoogleConfig.callbackURL
+      // passReqToCallback: true
     },
-    (accessToken, refreshToken, profile, cb) => {
+    (accessToken, refreshToken, profile, done) => {
       console.log("inside the call back");
-      console.log(profile.id);
+      console.log(profile.email);
+      //----------------------------------------------------------------//
+      //---------try to creat a hashed Password for the user -----------//
+      //-----------------------------------------------------------------//
+
+      // console.log("iside try ");
+      bcryptjs.hash(profile.name + Date.now(), 10).then(hashed => {
+        // console.log(hashed, "hashed");
+        var dbUser = {};
+        var hashedPassword = hashed;
+        var GeneralUser = {};
+        var UnhashedPassword =
+          profile.email + profile.name.givenName + profile.name.familyName;
+        db.General.findOne({ email: profile.emails[0].value }).then(user => {
+          GeneralUser = user;
+          //---------------------------------------------------------------//
+          //---------------- if the user is not rigistered ----------------//
+          //---------------------------------------------------------------//
+          console.log(user, "user");
+          if (user === null) {
+            dbUser = {
+              Name: profile.name.givenName + " " + profile.name.familyName,
+              email: profile.emails[0].value,
+              type: true,
+              id: profile.id,
+              password: hashedPassword
+            };
+            //----------------------------------------//
+            //-------puting all valiable info --------//
+            //----------- in our dataBase ------------//
+            //----------------------------------------//
+            db.General.create(dbUser).then(user => {
+              console.log(user, "profile");
+              var dbProfile = {
+                gender: true,
+                id: user.id,
+                birthDay: Date.now,
+                address: "",
+                mobileNumber: "",
+                major: "",
+                educationLevel: "",
+                avatar: profile.picture
+              };
+              db.User.create(dbProfile)
+                .then(result => {
+                  //----------------------------------------------------------//
+                  //------reterning the result to the serlize function -------//
+                  //----------------------------------------------------------//
+                  done(GeneralUser);
+                })
+                .catch(error => {
+                  console.log(error, "not don");
+                });
+            });
+          } else {
+            //----------------------------------------------------------//
+            //------reterning the result to the serlize function -------//
+            //----------------------------------------------------------//
+            done(null, GeneralUser);
+            console.log(" user is registered");
+            //---------------------------------------------------------------//
+            //----------------- if the user is rigistered -------------------//
+            //---------------------------------------------------------------//
+          }
+        });
+      });
     }
   )
 );
