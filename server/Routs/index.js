@@ -15,12 +15,12 @@ const { check, validationResult } = require("express-validator");
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-//----------------------------------passport Auth ---------------------------------------------------//
+//--------------------------------Google passport Auth ---------------------------------------------------//
 
 router.get(
   "/user/auth/google",
   passport.authenticate("google", {
-    scope: ["profile"]
+    scope: ["profile", "email"]
   }),
   (req, res) => {
     res.redirect("/");
@@ -31,8 +31,19 @@ router.get(
   "/user/google/redirect",
   passport.authenticate("google" /*,{ failureRedirect: "/login"}*/),
   function(req, res) {
-    // console.log(res.profile);
-    res.send("you are uthonitication know");
+    console.log(req.user, " redirect rout ");
+
+    const acsessToken = Auth.generateAccessToken({
+      email: req.user.email,
+      name: req.user.Name
+    });
+    UserInfo = {
+      Name: req.user.Name,
+      email: req.user.email,
+      type: req.user.type,
+      id: req.user.id
+    };
+    res.send({ acsessToken: acsessToken, user: UserInfo }).end();
   }
 );
 
