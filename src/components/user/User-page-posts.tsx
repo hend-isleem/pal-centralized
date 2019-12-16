@@ -3,13 +3,13 @@ import { Grid, Item, Header, Button, Icon } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPost } from "../../actions";
 import WarningMessage from "../helper/warning-message";
+import axios from "axios";
 
 const UserPagePosts = () => {
   const posts: any = useSelector((state: any) => state.posts);
   const dispatch = useDispatch();
   let counter = 0;
   const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
-  const [booked, setBooked] = useState(false);
   const [showDesc, setShowDesc] = useState(false);
 
   useEffect(() => {
@@ -35,18 +35,41 @@ const UserPagePosts = () => {
     }
   };
 
-  const bookmarkHundle = () => {
-    setBooked(!booked);
+  const bookmarkHundle = (index: any) => {
+    console.log(index);
+  };
+  const ChangeFavStatus = (postId: any) => {
+    const data = {
+      userId: localStorage.getItem("userId"),
+      postId: postId
+    };
+    console.log(data);
+
+    //------------------------------------------ Add/Remove the favo ---------------------------------------------//
+
+    // ------------------------------ Work to do --------------------------------------------------
+
+    // Send to the server user id & post id
+    // the server : should check the status
+    //             - false : Add to fav list & change the status
+    //             - true : Add from fav list & change the status
+
+    // axios
+    //   .post(`http://localhost:3004/`, {})
+    //   .then(favPosts => {})
+    //   .catch(err => {
+    //     console.log("inside err favorite", err);
+    //   });
   };
 
   // ----------------------------------------- End Helper Functions----------------------------------------- //
 
-  console.log(postItems);
+  // console.log(postItems);
 
   const Element = (post: any, index: any) => {
     if (counter < 3) {
       // console.log("index", index);
-      console.log("Post: ", post);
+      // console.log("Post: ", post);
       counter++;
       return (
         <Grid.Column>
@@ -69,12 +92,24 @@ const UserPagePosts = () => {
                 ) : (
                   <Item.Description></Item.Description>
                 )}
-                {booked ? (
-                  <Button icon onClick={bookmarkHundle}>
+                {post.favoriteStatus ? (
+                  <Button
+                    icon
+                    onClick={e => {
+                      console.log(post.id);
+                      ChangeFavStatus(post.id);
+                    }}
+                  >
                     <Icon name="bookmark" />
                   </Button>
                 ) : (
-                  <Button icon onClick={bookmarkHundle}>
+                  <Button
+                    icon
+                    onClick={e => {
+                      console.log(post.id);
+                      ChangeFavStatus(post.id);
+                    }}
+                  >
                     <Icon name="bookmark outline" />
                   </Button>
                 )}

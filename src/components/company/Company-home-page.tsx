@@ -71,9 +71,8 @@ const CompanyHome = (props: any) => {
           <Button.Group size="large">
             <Button>Edit</Button>
             <Button.Or />
-            <Button>Delete</Button>
+            <Button>Archive</Button>
           </Button.Group>
-          <Checkbox label="Archived" disabled />
         </Item.Group>
       </Grid.Column>
     );

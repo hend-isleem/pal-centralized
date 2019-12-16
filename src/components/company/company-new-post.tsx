@@ -1,25 +1,34 @@
 import React, { useEffect, useState } from "react";
+import Calendar from "react-calendar";
 import "semantic-ui-css/semantic.min.css";
 import { Button, Dropdown, Form } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import axios from "axios";
 
-const options = [
-  { key: 1, text: "Choice 1", value: 1 },
-  { key: 2, text: "Choice 2", value: 2 },
-  { key: 3, text: "Choice 3", value: 3 }
-];
+// Import the Sucess & fail Messages
+import MessageSuccess from "../helper/Message-Success";
+import MessageNegative from "../helper/Message-Negative";
+
+// Import the options for type & major for the post
+import { typesOptions, majorOptions } from "../general/Search";
+
 const CompanyNewPost = (props: any) => {
   const users: any = useSelector((state: any) => state.users);
   const dispatch = useDispatch();
 
   let [title, settitle] = useState("");
   let [description, setdescription] = useState("");
-  let [deadline, setdeadline] = useState("");
-  let [applyLink, setapplyLink] = useState("");
-  let [tags, settags] = useState([]);
+  let [deadline, setdeadline] = useState(new Date());
+  let [major, setMajor] = useState("");
+  let [type, setType] = useState("");
+  let [msgFlag, setmsgFlag] = useState("normal");
 
+  // to show/hide the Messages
+
+  let [applyLink, setapplyLink] = useState("");
   useEffect(() => {});
+
+  // ----------------------------------- Start of helper functions -----------------------------------------//
 
   // to take the value from input  field --------------------------
   const hundleChange = (e: any) => {
@@ -27,37 +36,62 @@ const CompanyNewPost = (props: any) => {
     switch (e.target.name) {
       case "title":
         settitle(e.target.value);
+        break;
       case "description":
         setdescription(e.target.value);
+        break;
       case "applyLink":
         setapplyLink(e.target.value);
-
         break;
     }
   };
 
-  const hundleSubmite = (e: any) => {
-    var date = new Date();
-    date.setMonth(date.getMonth() + 8);
-    // console.log("inside submite", date);
+  const hundleChangeCalendar = (date: any) => {
+    console.log(date);
+    setdeadline(date);
+  };
 
+  // to take the value of dropdowns search by Type ----------------------
+  const hundleDropDownChangeByMajor = (e: any) => {
+    setMajor(e.target.textContent);
+  };
+
+  // to take the value of dropdowns search by Type ----------------------
+  const hundleDropDownChangeByType = (e: any) => {
+    setType(e.target.textContent);
+  };
+
+  const hundleSubmite = (e: any) => {
     const newPost = {
+      comID: localStorage.getItem("userId"),
       title: title,
       description: description,
-      deadLine: date,
-      link: applyLink,
-      tags: ["test tag 1", "test tag 2"]
+      deadLine: deadline,
+      major: major,
+      type: type,
+      link: applyLink
     };
-    console.log(newPost);
-    axios
-      .post("http://localhost:3004/userProfile?id=3", newPost) // -----**** Need to edit the URL **** -------
-      .then(response => {
-        console.log("Saved Succesfully");
-      })
-      .catch(error => {
-        console.log(error);
-      });
+    // --------------------------------------- Code to modify --------------------------------------------??
+
+    // put this in then axios
+    // setmsgFlag("positive");
+
+    // put this in catch axios
+    setmsgFlag("negative");
+
+    console.log(newPost, "msg flag: ", msgFlag);
+
+    // axios
+    //   .post("http://localhost:3004/userProfile?id=3", newPost) // -----**** Need to edit the URL **** -------
+    //   .then(response => {
+    //     console.log("Saved Succesfully");
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   };
+
+  // ----------------------------------- End of helper functions -----------------------------------------//
 
   return (
     <div style={{ margin: "0rem auto", marginTop: "7em", width: "75%" }}>
@@ -75,29 +109,47 @@ const CompanyNewPost = (props: any) => {
           />
         </Form.Field>
         <Form.Field>
-          <label>DeadLine</label>
-          <Dropdown clearable options={options} selection />
-          <br></br>
-          <br></br>
-          <br></br>
+          <label>Dead Line</label>
+          <Calendar onChange={hundleChangeCalendar} value={deadline} />
         </Form.Field>
+
+        {/* ------------------------------------ Search Dropdown--------------------------------- */}
+        <Form.Field>
+          <Dropdown
+            placeholder="choose major..."
+            fluid
+            search
+            selection
+            options={majorOptions}
+            onChange={hundleDropDownChangeByMajor}
+          />
+        </Form.Field>
+
+        {/* ------------------------------------ Search Dropdown--------------------------------- */}
+
+        <Form.Field>
+          <Dropdown
+            placeholder="choose Category..."
+            fluid
+            search
+            selection
+            options={typesOptions}
+            onChange={hundleDropDownChangeByType}
+          />
+        </Form.Field>
+
         <Form.Field>
           <label>Apply Link</label>
           <input name="applyLink" onChange={hundleChange} />
         </Form.Field>
-        <Form.Field>
-          <label>Tags</label>
-          <Dropdown clearable options={options} selection />
-          <br></br>
-          <br></br>
-          <br></br>
-          <input />
-        </Form.Field>
+
         <br></br>
         <br></br>
         <br></br>
         <Button type="submit">Post</Button>
       </Form>
+      {msgFlag === "positive" ? <MessageSuccess /> : null}
+      {msgFlag === "negative" ? <MessageNegative /> : null}{" "}
     </div>
   );
 };
