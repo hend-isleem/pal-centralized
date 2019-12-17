@@ -3,7 +3,7 @@ const router = express.Router();
 const bcryptjs = require("bcryptjs");
 const db = require("../../DataBase/db");
 const bodyParser = require("body-parser");
-const multer = require("multer");
+// const multer = require("multer");
 const path = require("path");
 const searchApi = require("../../API/search");
 const passport = require("passport");
@@ -11,30 +11,61 @@ const jwt = require("jsonwebtoken");
 const Auth = require("../Auth/Auth");
 const { check, validationResult } = require("express-validator");
 // const EmailSender = require("../mail");
+// const formidableMiddleware = require("express-formidable");
+// app.use(formidableMiddleware());
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-//----------------------------------passport Auth ---------------------------------------------------//
+// const Storage = multer.diskStorage({
+//   destination(req, file, callback) {
+//     console.log(req.body, "file");
+//     callback(null, "./upload/");
+//   },
+//   filename(req, file, callback) {
+//     console.log(file, "fil2e");
 
-// router.get(
-//   "/user/auth/google",
-//   passport.authenticate("google", {
-//     scope: ["profile"]
-//   }),
-//   (req, res) => {
-//     res.redirect("/");
+//     callback(null, Date.now() + file.originalname);
 //   }
-// );
+// });
 
-// router.get(
-//   "/user/google/redirect",
-//   passport.authenticate("google" /*,{ failureRedirect: "/login"}*/),
-//   function(req, res) {
-//     // console.log(res.profile);
-//     res.send("you are uthonitication know");
-//   }
-// );
+// const upload = multer({ storage: Storage });
+
+//--------------------------------Google passport Auth ---------------------------------------------------//
+
+router.get(
+  "/user/auth/google",
+  passport.authenticate("google", {
+    scope: ["profile", "email"]
+  }),
+  (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
+    res.redirect("/");
+  }
+);
+
+router.get(
+  "/user/google/redirect",
+  passport.authenticate("google" /*,{ failureRedirect: "/login"}*/),
+  function(req, res) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "*");
+    console.log(req.user, " redirect rout ");
+
+    const acsessToken = Auth.generateAccessToken({
+      email: req.user.email,
+      name: req.user.Name
+    });
+    var UserInfo = {
+      Name: req.user.Name,
+      email: req.user.email,
+      type: req.user.type,
+      id: req.user.id
+    };
+    res.send({ acsessToken: acsessToken, user: UserInfo }).end();
+  }
+);
 
 //----------------------## Create a new Post----------------------------------------------//
 
@@ -60,7 +91,7 @@ router.post("/articles/addPosts", (req, res) => {
       //----------------- if created return 201----------//
       //-------------------------------------------------//
 
-      // EmailSender(comID, post);
+      EmailSender(comID, post);
       //-------------------------------------------------//
       //---------Sending Email to all follwers ----------//
       //-------------------------------------------------//
@@ -123,6 +154,8 @@ router.post("/articles/updatePost", (req, res) => {
 //----------------------- Update Company info -------------------------------------------//
 
 router.post("user/updateProfile", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
   //------------------------------------------------//
   // ---------------- if type is a user-------------//
   //------------------------------------------------//
@@ -181,26 +214,32 @@ router.post("user/updateProfile", (req, res) => {
 
 //----------------------------------##### Processing file and picture #####-----------------------------------------------//
 router.post("/user/upload", (req, res) => {
+  console.log(req.file, "jjjj");
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
+
   if (req.body) {
-    var d = req.body;
+    // var d = req.body;
+    console.log(req.files, "file111");
+    console.log(req.body, "file111");
+    console.log(req.body.photo, "file111");
 
-    var base64Data = req.body.file.replace(/^data:image\/png;base64,/, "");
+    // var base64Data = req.body.image.replace(/^data:image\/png;base64,/, "");
 
-    require("fs").writeFile("out.jpeg", base64Data, "base64", function(err) {
-      console.log(err);
-    });
-    console.log("no file Uploaded");
-    console.log(req.body.fileType, "hiiii");
-  } else {
-    console.logo("we have a file");
+    //   require("fs").writeFile("out.jpeg", base64Data, "base64", function(err) {
+    //     console.log(err);
+    //   });
+    //   console.log("no file Uploaded");
+    //   // console.log(req.body.fileType, "hiiii");
+    // } else {
+    //   console.logo("we have a file");
   }
 });
 
 //---------------------------------Update Favorit List to User-----------------------------------------------------//
-//input : post id
 router.post("/user/favoriteList", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
   var usrtid = req.body.userID;
   var postid = req.body.postID;
 
@@ -230,8 +269,10 @@ router.post("/user/favoriteList", (req, res) => {
   );
 });
 //------------------------------------ get Favorite -------------------------------------------------------------//
-// Input: User Id
+
 router.get("/articles/favoriteList", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
   //-----------------------------------------------------//
   //--------------get the favorite list from ------------//
   //-------------- User Profile -------------------------//
@@ -285,16 +326,23 @@ router.get("/articles/favoriteList", (req, res) => {
 });
 //---------------------------Get API Values ----------------------------------------------------------------------//
 router.get("/articles/API", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  console.log(searchApi.EducationalLevel);
   res
-    .send({ Major: searchApi.majors, Types: searchApi.types })
+    .send({
+      Major: searchApi.majors,
+      Types: searchApi.types,
+      EducationalLevel: searchApi.EducationalLevel
+    })
     .status(2001)
     .end();
 });
 
 //--------------------------------### getting Info by Search #####------------------------------------------------//
-
 router.get("/articles/search", (req, res) => {
-  console.log("inside search route");
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
   var param = req.query;
   var keys = Object.keys(param);
   //---------------------------------------- Search using all avaliable options---------------------------//

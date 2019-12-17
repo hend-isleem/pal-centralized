@@ -27,6 +27,7 @@ import CompanyNewPost from "./components/company/company-new-post";
 import UserProfile from "./components/user/UserProfile-page";
 import CompanyProfile from "./components/company/CompanyProfile-page";
 import CompanyEditPost from "./components/company/Company-edit-post";
+import CompanyArchiveList from "./components/company/Company-avrhive-list";
 
 // import { logout } from "./actions/index";
 // import { signup } from "./actions/index";
@@ -106,8 +107,9 @@ const App: React.FC = () => {
             </Route>
             <Route path="/companyarchive" exact>
               <CompanyPageHeader />
+              <CompanyArchiveList />
             </Route>
-            <Route path="/companyeditaccount" exact>
+            <Route path="/companyarchive" exact>
               <CompanyPageHeader />
               <h1 style={{ margin: "8rem auto", width: "75%" }}>
                 Edit Company Profile Page

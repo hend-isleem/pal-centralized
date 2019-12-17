@@ -79,7 +79,7 @@ const CompanyNewPost = (props: any) => {
     // put this in catch axios
     setmsgFlag("negative");
 
-    console.log(newPost, "msg flag: ", msgFlag);
+    console.log("Type of Data is: ", newPost.deadLine);
 
     // axios
     //   .post("http://localhost:3004/userProfile?id=3", newPost) // -----**** Need to edit the URL **** -------

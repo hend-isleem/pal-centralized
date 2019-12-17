@@ -3,7 +3,6 @@ import "./CSS/Company-home-page.css";
 import "semantic-ui-css/semantic.min.css";
 import {
   Item,
-  Checkbox,
   Container,
   Header,
   Button,
@@ -12,12 +11,10 @@ import {
   GridRow
 } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchCompanyPosts, fetchPost, archivePost } from "../../actions";
+import { fetchCompanyPosts, fetchPost } from "../../actions";
 import { Link } from "react-router-dom";
 
-import CompanyEditPost from "./Company-edit-post";
-
-const CompanyHome = (props: any) => {
+const CompanyArchiveList = (props: any) => {
   const users: any = useSelector((state: any) => state.users);
 
   // const posts: any = useSelector((state: any) => state.posts);
@@ -53,10 +50,10 @@ const CompanyHome = (props: any) => {
     }
   };
 
-  const Element = (post: any, index: any) => {
+  const Element = (post: any) => {
     // console.log(post);
     return (
-      <Grid celled key={index}>
+      <Grid celled>
         <GridColumn width={3}>
           <Item.Image size="medium" src={post.logo} />
         </GridColumn>
@@ -92,25 +89,7 @@ const CompanyHome = (props: any) => {
             <Item.Description></Item.Description>
           )}
           <GridRow className="grid-row">
-            <Button.Group size="large">
-              <Link
-                to={{
-                  pathname: "/editpost",
-                  search: `?query=${post.id}`
-                }}
-              >
-                <Button>Edit</Button>
-              </Link>
-              <Button.Or />
-              <Button
-                onClick={(e: any) => {
-                  console.log(post.id);
-                  dispatch(archivePost(post.id));
-                }}
-              >
-                Archive
-              </Button>
-            </Button.Group>
+            <Header as="h6">Archived</Header>
           </GridRow>
         </GridColumn>
       </Grid>
@@ -123,28 +102,18 @@ const CompanyHome = (props: any) => {
         style={{ margin: "4rem auto", marginTop: "8rem", width: "75%" }}
       >
         <Header as="h1" style={{ fontSize: "3.2em" }}>
-          Latest Posts
+          Archived Posts
         </Header>
 
         <Header as="h3" style={{ fontSize: "2em" }}>
-          {postItems ? postItems.length : 0} Posts Found
+          {postItems ? postItems.length : 0} Posts Archived
         </Header>
         <Grid columns={1}>
-          <Grid.Row>
-            {postItems.map((post: any, index: any) => Element(post, index))}
-          </Grid.Row>
+          <Grid.Row>{postItems.map((post: any) => Element(post))}</Grid.Row>
         </Grid>
       </Container>
-      <div style={{ margin: "4rem auto", width: "25%" }}>
-        <Link to="/newpost">
-          <Button positive>Add new post</Button>
-        </Link>
-        <Link to="/companyarchive">
-          <Button negative>Archive List</Button>
-        </Link>
-      </div>
     </div>
   );
 };
 
-export default CompanyHome;
+export default CompanyArchiveList;
