@@ -3,19 +3,191 @@ const router = express.Router();
 const bcryptjs = require("bcryptjs");
 const db = require("../../DataBase/db");
 const bodyParser = require("body-parser");
+<<<<<<< HEAD
 
+=======
+const multer = require("multer");
+const path = require("path");
+const searchApi = require("../../API/search");
+const passport = require("passport");
+>>>>>>> ddc13a9a3599622a3c952b35303ec87d16305ce7
 const jwt = require("jsonwebtoken");
 const Auth = require("../Auth/Auth");
 const { check, validationResult } = require("express-validator");
+// const EmailSender = require("../mail");
+
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-//----------------------------------######3 Processing file and picture #####-----------------------------------------------//
+//----------------------------------passport Auth ---------------------------------------------------//
+
+// router.get(
+//   "/user/auth/google",
+//   passport.authenticate("google", {
+//     scope: ["profile"]
+//   }),
+//   (req, res) => {
+//     res.redirect("/");
+//   }
+// );
+
+// router.get(
+//   "/user/google/redirect",
+//   passport.authenticate("google" /*,{ failureRedirect: "/login"}*/),
+//   function(req, res) {
+//     // console.log(res.profile);
+//     res.send("you are uthonitication know");
+//   }
+// );
+
+//----------------------## Create a new Post----------------------------------------------//
+
+//-------------------------------------------------------------//
+//--------------------insert a new post to articals -----------//
+//-------------------------------------------------------------//
+router.post("/articles/addPosts", (req, res) => {
+  //-------------------------------------------------------------------------//
+  //---------- takes object Post as (post and) , company id as (comID) ------//
+  //-------------------------------------------------------------------------//
+  var post = res.body.post;
+  var comID = res.body.comID;
+  //-------------------------------------------//
+  //---------------add an ID to post-----------//
+  //-------------------------------------------//
+  post["id"] = Date.now();
+  //--------------------------------------------//
+  //-------insert the post with its id----------//
+  //--------------------------------------------//
+  db.Post.create(post)
+    .then(result => {
+      //-------------------------------------------------//
+      //----------------- if created return 201----------//
+      //-------------------------------------------------//
+
+      // EmailSender(comID, post);
+      //-------------------------------------------------//
+      //---------Sending Email to all follwers ----------//
+      //-------------------------------------------------//
+      res
+        .status(201)
+        .send("Sucess")
+        .end();
+    })
+    .catch(error => {
+      //-------------------------------------------------//
+      //------------- if not created return 201----------//
+      //-------------------------------------------------//
+      res
+
+        .status(500)
+        .send("An Error Has Occurred during processing data")
+        .end();
+    });
+});
+
+//------------------------------------------Update /Delete - post ------------------------------------------------------//
+
+router.post("/articles/updatePost", (req, res) => {
+  //----------------------------------------//
+  //------------delete operation------------//
+  //----------------------------------------//
+  if (req.body.op === "delete") {
+    db.post
+      .deleteOne({ id: req.body.id })
+      .then(result => {
+        res
+          .status(201)
+          .send("Successfully Deleted")
+          .end();
+      })
+      .catch(error => {
+        res.status(500).send("An Error Has Occurred during processing data");
+      });
+  }
+  //----------------------------------------//
+  //------------update operation------------//
+  //----------------------------------------//
+  if (req.body.op === "update") {
+    db.updateOne({ id })
+      .then(result => {
+        res
+          .status(201)
+          .send("Successfully updated")
+          .end();
+      })
+      .catch(error => {
+        res
+          .status(500)
+          .send("An Error Has Occurred during processing data")
+          .end();
+      });
+  }
+});
+
+//----------------------- Update Company info -------------------------------------------//
+
+router.post("user/updateProfile", (req, res) => {
+  //------------------------------------------------//
+  // ---------------- if type is a user-------------//
+  //------------------------------------------------//
+  if (!req.body.type) {
+    var UserInfo = {
+      gender: req.body.gender,
+      birthDay: req.body.birthDay,
+      address: req.body.address,
+      mobileNumber: req.body.mobileNumber,
+      major: req.body.major,
+      educationLevel: req.body.educationLevel,
+      avatar: req.body.avatar,
+      cv: req.body.cv
+    };
+    db.User.updateOne({ id: req.body.id }, UserInfo)
+      .then(result => {
+        req
+          .status(201)
+          .send("Updated sucessfuly")
+          .end();
+      })
+      .catch(error => {
+        res
+          .status(500)
+          .send("An Error Accured During Processing")
+          .end();
+      });
+  }
+  //---------------------------------------------------//
+  // ---------------- if type is a Company-------------//
+  //---------------------------------------------------//
+  else {
+    var Company = {
+      description: req.body.description,
+      logo: req.body.logo,
+      twitterLink: req.body.twitterLink,
+      linkedinLink: req.body.linkedinLink,
+      otherLink: req.body.otherLink,
+      mobileNumber: req.body.mobileNumber
+    };
+    db.Company.updateOne({ id: req.body.id })
+      .then(reslt => {
+        res
+          .status(201)
+          .send("User Is Saved")
+          .end();
+      })
+      .catch(err => {
+        res
+          .status(201)
+          .send("User Is not Saved")
+          .end();
+      });
+  }
+});
+
+//----------------------------------##### Processing file and picture #####-----------------------------------------------//
 router.post("/user/upload", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
   if (req.body) {
-    console.log(req.body.file);
     var d = req.body;
 
     var base64Data = req.body.file.replace(/^data:image\/png;base64,/, "");
@@ -29,15 +201,90 @@ router.post("/user/upload", (req, res) => {
     console.logo("we have a file");
   }
 });
-//------------------------------------ get Favorite -------------------------------------------------------------//
 
+//---------------------------------Update Favorit List to User-----------------------------------------------------//
+//input : post id
+router.post("/user/favoriteList", (req, res) => {
+  var usrtid = req.body.userID;
+  var postid = req.body.postID;
+
+  //------------------------------------------------------------//
+  //--------- select Uer and push the item to its --------------//
+  //-------------------- favorit list --------------------------//
+  //------------------------------------------------------------//
+  db.User.updateOne(
+    { id: usrtid },
+    { $push: { favoriteList: postid } },
+    (error, result) => {
+      //----------------------------------------------------------//
+      //--------- cheks if the updating went right ---------------//
+      //----------------------------------------------------------//
+      if (error) {
+        res
+          .status(500)
+          .send("An Error Accured during Processing")
+          .end();
+      } else {
+        res
+          .status(201)
+          .send("Updated Sucessfuly")
+          .end();
+      }
+    }
+  );
+});
+//------------------------------------ get Favorite -------------------------------------------------------------//
+// Input: User Id
 router.get("/articles/favoriteList", (req, res) => {
+  //-----------------------------------------------------//
+  //--------------get the favorite list from ------------//
+  //-------------- User Profile -------------------------//
+  //-----------------------------------------------------//
+
   var userID = req.query.id;
   db.User.findOne({ id: userID })
     .select("favoriteList")
     .then(result => {
-      console.log(result);
+      //-----------------------------------------------------//
+      //---find the user and the return the list ------------//
+      //-----------------------------------------------------//
+      //-----------------------------------------------------//
+      db.Post.find(
+        {
+          id: {
+            $in: result.favoriteList
+          }
+        },
+        (error, posts) => {
+          if (error) {
+            //----------------------------------------------------------//
+            //--------------- rong data access respnds with error--------//
+            //----------------------------------------------------------//
+            res
+              .status(500)
+              .send("an Error Accured While Processing Data")
+              .end();
+          } else {
+            //----------------------------------------------------------//
+            //--------------- return all favirot post info--------------//
+            //----------------------------------------------------------//
+            res
+              .status(201)
+              .send(posts)
+              .end();
+          }
+        }
+      ).select("id link deadLine title logo  major");
       // db.Post.find{}
+    })
+    .catch(() => {
+      //----------------------------------------------------------------------------//
+      //-------------------------if somthing went rong in getting user info --------//
+      //----------------------------------------------------------------------------//
+      res
+        .status(500)
+        .send("an Error Accured While Proccessing Data")
+        .end();
     });
 });
 //---------------------------Get API Values ----------------------------------------------------------------------//
@@ -49,7 +296,9 @@ router.get("/articles/API", (req, res) => {
 });
 
 //--------------------------------### getting Info by Search #####------------------------------------------------//
+
 router.get("/articles/search", (req, res) => {
+  console.log("inside search route");
   var param = req.query;
   var keys = Object.keys(param);
   //---------------------------------------- Search using all avaliable options---------------------------//
@@ -295,7 +544,7 @@ router.post("/user/signIn", async (req, res) => {
             console.log(user.Name, "name");
             console.log(user.email, "email");
             if (user.type === false) {
-              db.User.create({ id: id }, (error, result) => {
+              db.User.create({ id: user.id }, (error, result) => {
                 if (error) {
                   console.log(error);
                 } else {

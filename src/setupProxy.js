@@ -4,7 +4,7 @@ module.exports = function(app) {
     // ["/articles/*", "/users/login", "/users/signup", "/users/user"],
     ["/articles/*", "/users/*", "/companies/*"],
     proxy({
-      target: "https://localhost:3004",
+      target: "http://localhost:3004",
       changeOrigin: true
     })
   );
