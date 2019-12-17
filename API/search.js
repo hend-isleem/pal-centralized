@@ -1,5 +1,6 @@
 let db = require("../DataBase/db.js");
 const bcryptjs = require("bcryptjs");
+const fetch = require("node-fetch");
 
 // --------------------- searching by type --------------------- \\
 const searchType = function(type, cb) {
@@ -34,15 +35,7 @@ const majors = [
 ];
 const types = ["scholarShip", "jop", "training"];
 
-const seatchTitleArr = function(posts, str) {
-  let result = [];
-  for (let i = 0; i < posts.length; i++) {
-    if (posts[i].title.includes(str)) {
-      result.push(posts[i]);
-    }
-  }
-  return result;
-};
+
 // searchType("scholarShip", (posts) => {console.log(posts.length)});
 // for (let i=0; i<db.types.length; i++) {
 //   searchType(db.types[i], (posts) => {console.log(db.types[i], ': ', posts.length)});
@@ -238,6 +231,33 @@ const search = function(type, major, cb, str) {
 // }
 // haha();
 
+// --------------------- for updating theimages from an api --------------------- \\
+
+//  Images from Unsplash Api
+
+// function getUnsplashAPI() {
+//   let clientId =
+//     '31b27323229fa7a779c5a1a397f14665b5f8741c4487e6a915460ce741dcfa03';
+//   let q = 'work';
+//   let url = `https://api.unsplash.com/search/photos/?query=${q}&per_page=100&client_id=${clientId}`;
+//   fetch(url)
+//     .then((data) => {
+//       return data.json();
+//     })
+//     .then(async (data) => {
+//       console.log( data.results.length);
+//       for (let i = 31 ; i <= 50; i++) {
+//         await db.Post.findOneAndUpdate(
+//           {id: i}, 
+//           {logo: data.results[i-30].urls.regular}
+//         )
+//         console.log("hoho ", i)
+//       }
+//     });
+// }
+// getUnsplashAPI();
+
+
 module.exports.searchType = searchType;
 module.exports.seatchTitleArr = seatchTitleArr;
 
@@ -246,54 +266,3 @@ module.exports.seatchTitle = seatchTitle;
 module.exports.getFollowersE = getFollowersE;
 module.exports.search = search;
 module.exports.seatchTitleArr = seatchTitleArr;
-
-// x("BairWInkwHp46TI");
-// x("JULLGEGHtzF70F0");
-// x("uhfUCXugiJR2X6f");
-// x("UtoueLCTurVl_Pb");
-// x("auqez2bL1SIxTzp");
-// x("bJ_dvvf979uAcxd");
-// x("P8dUvWByzZrpoq1");
-// x("Fviv_TZwlPwPiUm");
-// x("qDCiAn8qSW9shIO");
-// x("lJdsOgPXW8knE25");
-// x("JXTogBYiNDhfVpT");
-// x("wXX5Pw2jkqsxXWm");
-// x("bxgk4M_MXE9e_zy");
-// x("LQl7642hTAe1NEE");
-// x("5bUXH8DP4gCMH7s");
-// x("lU2WeBmkxaV3M3Z");
-// x("lgfsPbV5V_7VaEb");
-// x("DNY4B3m1u6QLpW6");
-// x("zJw08OMoerlVkkf");
-// x("ZWYbJr6KxYnZHbv");
-// x("xLYOlVRRp_42zXg");
-// x("bZRbevbeOGLHWyT");
-// x("IvwVk59w8Q911zQ");
-// x("KaFRZxKROBnwvrY");
-// x("6UUzdFz7mZGACzc");
-// x("XUWYym57PmxasLB");
-// x("iAISKysC55js8mJ");
-// x("H3f4BWS8wlbJLYL");
-// x("hZULiA9sWgyVsiB");
-// x("V4Nfot1TwYSaPu5");
-// x("TSpSO_VkZXDrQov");
-// x("0YGsRNyQjFRq9Qo");
-// x("JgEzHZJXbMXpIp1");
-// x("YdkYwB8pBEPfqGC");
-// x("BF14ifugSkJivbz");
-// x("mKwJDhv3qL0mboe");
-// x("AhbUWGr4Wqk1MFc");
-// x("JzGc7LcY7Q40q59");
-// x("TOcYo1aEYYOS8DA");
-// x("dUaKYYvJFFyJ9Od");
-// x("D_kDAEf4FFQckMk");
-// x("3oRujdOglEXy81R");
-// x("K_KM8BqDzXfS5Qq");
-// x("4NXbmWCg9Lyjlfo");
-// x("PwAcC5eBHdifjER");
-// x("08270tzx1EvI4f1");
-// x("dHyYR8FirDXlBbI");
-// x("IXMfFoMd8aaNid8");
-// x("duZeAhxREAszRDF");
-// x("pbUcWa075qq3mb3");
