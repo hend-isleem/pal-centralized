@@ -15,9 +15,9 @@ const HomePagePosts = () => {
 
   const dispatch = useDispatch();
   let counter = 0;
-  const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
+  const [postIdShown, setpostIdShown] = useState(-1);
 
-  const [showDesc, setShowDesc] = useState(false);
+  const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
     // const dispatch = useDispatch();
@@ -39,13 +39,6 @@ const HomePagePosts = () => {
 
   const checkToken = (isLogged: any) => {
     return isLogged ? true : false;
-  };
-
-  const showDescreptipn = () => {
-    if (!isLogged) {
-      console.log("log in please");
-      setShowDesc(!showDesc);
-    }
   };
 
   // ----------------------------------------- End Helper Functions----------------------------------------- //
@@ -71,9 +64,16 @@ const HomePagePosts = () => {
                 ) : (
                   <Item.Description></Item.Description>
                 )}
-                <Item.Extra as="a" onClick={showDescreptipn}>
-                  Show more information
-                  {showDesc ? <WarningMessage /> : null}
+                <Item.Extra>
+                  <p
+                    onClick={(e: any) => {
+                      console.log(post.id);
+                      setpostIdShown(post.id);
+                    }}
+                  >
+                    <a>Show more information</a>
+                  </p>
+                  {postIdShown === post.id ? <WarningMessage /> : null}
                 </Item.Extra>
               </Item.Content>
             </Item>
