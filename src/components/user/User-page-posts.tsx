@@ -7,6 +7,13 @@ import axios from "axios";
 
 const UserPagePosts = () => {
   const posts: any = useSelector((state: any) => state.posts);
+
+  const scholarshipPosts: any = useSelector(
+    (state: any) => state.posts.scholarship
+  );
+  const jobPosts: any = useSelector((state: any) => state.posts.job);
+  const trainingPosts: any = useSelector((state: any) => state.posts.training);
+
   const dispatch = useDispatch();
   let counter = 0;
   const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
@@ -19,7 +26,9 @@ const UserPagePosts = () => {
   }, []);
 
   const postItems = posts.items ? posts.items : "";
-
+  const postItemsScholarship = scholarshipPosts ? scholarshipPosts : "";
+  const postItemsJob = jobPosts ? jobPosts : "";
+  const postItemsTraining = trainingPosts ? trainingPosts : "";
   // ----------------------------------------- Start Helper Functions----------------------------------------- //
   const resetCounter = () => {
     counter = 0;
@@ -67,7 +76,7 @@ const UserPagePosts = () => {
   // console.log(postItems);
 
   const Element = (post: any, index: any) => {
-    if (counter < 3) {
+    if (counter < 5) {
       // console.log("index", index);
       // console.log("Post: ", post);
       counter++;
@@ -75,7 +84,7 @@ const UserPagePosts = () => {
         <Grid.Column>
           <Item.Group className="post-home-page">
             <Item style={{ padding: "2rem 2rem" }}>
-              <Item.Image size="tiny" src={post.logo} />
+              <Item.Image size="medium" src={post.logo} />
               <Item.Content>
                 <Item.Header>{post.title}</Item.Header>
                 <Item.Meta>Major: {post.major}</Item.Meta>
@@ -124,27 +133,29 @@ const UserPagePosts = () => {
   return (
     <div style={{ margin: "4rem auto", width: "75%" }}>
       <Header as="h1">Scholarship</Header>
-      <Grid columns={3}>
+      <Grid columns={1}>
         <Grid.Row>
-          {postItems.map((post: any, index: any) => Element(post, index))}
+          {postItemsScholarship.map((post: any, index: any) =>
+            Element(post, index)
+          )}
         </Grid.Row>
       </Grid>
 
       {resetCounter()}
       <Header as="h1">Jobs</Header>
-      <Grid columns={3}>
+      <Grid columns={1}>
         <Grid.Row>
-          {" "}
-          {postItems.map((post: any, index: any) => Element(post, index))}
+          {postItemsJob.map((post: any, index: any) => Element(post, index))}
         </Grid.Row>
       </Grid>
       {resetCounter()}
 
       <Header as="h1">Training</Header>
-      <Grid columns={3}>
+      <Grid columns={1}>
         <Grid.Row>
-          {" "}
-          {postItems.map((post: any, index: any) => Element(post, index))}
+          {postItemsTraining.map((post: any, index: any) =>
+            Element(post, index)
+          )}
         </Grid.Row>
       </Grid>
     </div>

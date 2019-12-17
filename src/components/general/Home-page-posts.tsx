@@ -7,6 +7,12 @@ import WarningMessage from "../helper/warning-message";
 
 const HomePagePosts = () => {
   const posts: any = useSelector((state: any) => state.posts);
+  const scholarshipPosts: any = useSelector(
+    (state: any) => state.posts.scholarship
+  );
+  const jobPosts: any = useSelector((state: any) => state.posts.job);
+  const trainingPosts: any = useSelector((state: any) => state.posts.training);
+
   const dispatch = useDispatch();
   let counter = 0;
   const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
@@ -20,6 +26,11 @@ const HomePagePosts = () => {
   }, []);
 
   const postItems = posts.items ? posts.items : "";
+  const postItemsScholarship = scholarshipPosts ? scholarshipPosts : "";
+  const postItemsJob = jobPosts ? jobPosts : "";
+  const postItemsTraining = trainingPosts ? trainingPosts : "";
+
+  // console.log(postItems, scholarshipPosts, jobPosts, trainingPosts);
 
   // ----------------------------------------- Start Helper Functions----------------------------------------- //
   const resetCounter = () => {
@@ -40,13 +51,13 @@ const HomePagePosts = () => {
   // ----------------------------------------- End Helper Functions----------------------------------------- //
 
   const Element = (post: any) => {
-    if (counter < 3) {
+    if (counter < 5) {
       counter++;
       return (
         <Grid.Column>
           <Item.Group className="post-home-page">
             <Item style={{ padding: "2rem 2rem" }}>
-              <Item.Image size="tiny" src={post.logo} />
+              <Item.Image size="medium" src={post.logo} />
 
               <Item.Content>
                 <Item.Header>{post.title}</Item.Header>
@@ -75,20 +86,24 @@ const HomePagePosts = () => {
   return (
     <div style={{ margin: "4rem auto", width: "75%" }}>
       <Header as="h1">Scholarship</Header>
-      <Grid columns={3}>
-        <Grid.Row>{postItems.map((post: any) => Element(post))}</Grid.Row>
+      <Grid columns={1}>
+        <Grid.Row>
+          {postItemsScholarship.map((post: any) => Element(post))}
+        </Grid.Row>
       </Grid>
 
       {resetCounter()}
       <Header as="h1">Jobs</Header>
-      <Grid columns={3}>
-        <Grid.Row>{postItems.map((post: any) => Element(post))}</Grid.Row>
+      <Grid columns={1}>
+        <Grid.Row>{postItemsJob.map((post: any) => Element(post))}</Grid.Row>
       </Grid>
       {resetCounter()}
 
       <Header as="h1">Training</Header>
-      <Grid columns={3}>
-        <Grid.Row>{postItems.map((post: any) => Element(post))}</Grid.Row>
+      <Grid columns={1}>
+        <Grid.Row>
+          {postItemsTraining.map((post: any) => Element(post))}
+        </Grid.Row>
       </Grid>
     </div>
   );

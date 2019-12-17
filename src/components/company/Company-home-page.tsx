@@ -7,7 +7,9 @@ import {
   Container,
   Header,
   Button,
-  Grid
+  Grid,
+  GridColumn,
+  GridRow
 } from "semantic-ui-react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchPost } from "../../actions";
@@ -49,32 +51,75 @@ const CompanyHome = (props: any) => {
 
   const Element = (post: any) => {
     return (
-      <Grid.Column>
-        <Item.Group className="post-home-page">
-          <Item style={{ padding: "2rem 2rem" }}>
-            <Item.Image size="tiny" src={post.logo} />
+      // <Grid.Column>
 
-            <Item.Content>
-              <Item.Header>{post.title}</Item.Header>
-              <Item.Meta>Category>{post.type}</Item.Meta>
-              <Item.Meta>Major: {post.type}</Item.Meta>{" "}
-              <Item.Meta>opportunity deadline {post.deadLine}</Item.Meta>
-              {checkToken(isLogged) ? (
-                <Item.Description>
-                  <p>{post.description}</p>
-                </Item.Description>
-              ) : (
-                <Item.Description></Item.Description>
-              )}
-            </Item.Content>
-          </Item>
-          <Button.Group size="large">
-            <Button>Edit</Button>
-            <Button.Or />
-            <Button>Archive</Button>
-          </Button.Group>
-        </Item.Group>
-      </Grid.Column>
+      //   <Item.Group className="post-home-page">
+      //     <Item style={{ padding: "2rem 2rem" }}>
+      //       <Item.Image size="medium" src={post.logo} />
+
+      //       <Item.Content>
+      //         <Item.Header>{post.title}</Item.Header>
+      //         <Item.Meta>Category>{post.type}</Item.Meta>
+      //         <Item.Meta>Major: {post.type}</Item.Meta>{" "}
+      //         <Item.Meta>opportunity deadline {post.deadLine}</Item.Meta>
+      //         {checkToken(isLogged) ? (
+      //           <Item.Description>
+      //             <p>{post.description}</p>
+      //           </Item.Description>
+      //         ) : (
+      //           <Item.Description></Item.Description>
+      //         )}
+      //       </Item.Content>
+      //     </Item>
+      //     <Button.Group size="large">
+      //       <Button>Edit</Button>
+      //       <Button.Or />
+      //       <Button>Archive</Button>
+      //     </Button.Group>
+      //   </Item.Group>
+      // </Grid.Column>
+
+      <Grid celled>
+        <GridColumn width={3}>
+          <Item.Image size="medium" src={post.logo} />
+        </GridColumn>
+        <GridColumn width={7}>
+          <GridRow className="grid-row">
+            <Item.Header>{post.title}</Item.Header>
+          </GridRow>
+          <GridRow className="grid-row">
+            <Item.Meta style={{ fontWeight: "700" }}>
+              Category>{post.type}
+            </Item.Meta>
+          </GridRow>
+          <GridRow className="grid-row">
+            <Item.Meta style={{ fontWeight: "700" }}>
+              Major: {post.type}
+            </Item.Meta>
+          </GridRow>
+          <GridRow className="grid-row">
+            <Item.Meta style={{ fontWeight: "650" }}>
+              opportunity deadline {post.deadLine}
+            </Item.Meta>
+          </GridRow>
+          {checkToken(isLogged) ? (
+            <GridRow className="grid-row">
+              <Item.Description>
+                <p>{post.description}</p>
+              </Item.Description>
+            </GridRow>
+          ) : (
+            <Item.Description></Item.Description>
+          )}
+          <GridRow className="grid-row">
+            <Button.Group size="large">
+              <Button>Edit</Button>
+              <Button.Or />
+              <Button>Archive</Button>
+            </Button.Group>
+          </GridRow>
+        </GridColumn>
+      </Grid>
     );
   };
 
@@ -83,8 +128,14 @@ const CompanyHome = (props: any) => {
       <Container
         style={{ margin: "4rem auto", marginTop: "8rem", width: "75%" }}
       >
-        <Header as="h1">Latest</Header>
-        <Grid columns={3}>
+        <Header as="h1" style={{ fontSize: "3.2em" }}>
+          Latest Posts
+        </Header>
+
+        <Header as="h3" style={{ fontSize: "2em" }}>
+          {postItems ? postItems.length : 0} Posts Found
+        </Header>
+        <Grid columns={1}>
           <Grid.Row>{postItems.map((post: any) => Element(post))}</Grid.Row>
         </Grid>
       </Container>

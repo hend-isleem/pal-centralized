@@ -40,7 +40,7 @@ const SearchResult = () => {
       <Grid.Column>
         <Item.Group className="post-home-page">
           <Item style={{ padding: "2rem 2rem" }}>
-            <Item.Image size="tiny" src={post.logo} />
+            <Item.Image size="medium" src={post.logo} />
             <Item.Content>
               <Item.Header>{post.title}</Item.Header>
               <Item.Meta>Major: {post.major}</Item.Meta>
@@ -82,7 +82,7 @@ const SearchResult = () => {
   return (
     <div style={{ margin: "4rem auto", width: "75%" }}>
       <Header as="h1">{postItems.length} Result found</Header>
-      <Grid columns={3}>
+      <Grid columns={1}>
         <Grid.Row>{postItems.map((post: any) => Element(post))}</Grid.Row>
       </Grid>
     </div>
