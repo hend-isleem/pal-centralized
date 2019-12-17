@@ -15,6 +15,8 @@ import { useSelector, useDispatch } from "react-redux";
 import { fetchPost } from "../../actions";
 import { Link } from "react-router-dom";
 
+import CompanyEditPost from "./Company-edit-post";
+
 const CompanyHome = (props: any) => {
   const users: any = useSelector((state: any) => state.users);
 
@@ -50,35 +52,8 @@ const CompanyHome = (props: any) => {
   };
 
   const Element = (post: any) => {
+    // console.log(post);
     return (
-      // <Grid.Column>
-
-      //   <Item.Group className="post-home-page">
-      //     <Item style={{ padding: "2rem 2rem" }}>
-      //       <Item.Image size="medium" src={post.logo} />
-
-      //       <Item.Content>
-      //         <Item.Header>{post.title}</Item.Header>
-      //         <Item.Meta>Category>{post.type}</Item.Meta>
-      //         <Item.Meta>Major: {post.type}</Item.Meta>{" "}
-      //         <Item.Meta>opportunity deadline {post.deadLine}</Item.Meta>
-      //         {checkToken(isLogged) ? (
-      //           <Item.Description>
-      //             <p>{post.description}</p>
-      //           </Item.Description>
-      //         ) : (
-      //           <Item.Description></Item.Description>
-      //         )}
-      //       </Item.Content>
-      //     </Item>
-      //     <Button.Group size="large">
-      //       <Button>Edit</Button>
-      //       <Button.Or />
-      //       <Button>Archive</Button>
-      //     </Button.Group>
-      //   </Item.Group>
-      // </Grid.Column>
-
       <Grid celled>
         <GridColumn width={3}>
           <Item.Image size="medium" src={post.logo} />
@@ -104,8 +79,11 @@ const CompanyHome = (props: any) => {
           </GridRow>
           {checkToken(isLogged) ? (
             <GridRow className="grid-row">
-              <Item.Description>
-                <p>{post.description}</p>
+              <Item.Description className="grid-row">
+                <p>Description: {post.description}</p>
+              </Item.Description>
+              <Item.Description className="grid-row">
+                <p>Apply link: {post.link}</p>
               </Item.Description>
             </GridRow>
           ) : (
@@ -113,7 +91,14 @@ const CompanyHome = (props: any) => {
           )}
           <GridRow className="grid-row">
             <Button.Group size="large">
-              <Button>Edit</Button>
+              <Link
+                to={{
+                  pathname: "/editpost",
+                  search: `?query=${post.id}`
+                }}
+              >
+                <Button>Edit</Button>
+              </Link>
               <Button.Or />
               <Button>Archive</Button>
             </Button.Group>
