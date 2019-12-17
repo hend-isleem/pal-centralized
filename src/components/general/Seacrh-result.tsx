@@ -9,6 +9,8 @@ const SearchResult = () => {
   const [isLogged, setIsLogged] = useState(localStorage.getItem("token"));
   const [booked, setBooked] = useState(false);
 
+  const [postIdShown, setpostIdShown] = useState(-1);
+
   const [showDesc, setShowDesc] = useState(false);
 
   useEffect(() => {
@@ -65,9 +67,16 @@ const SearchResult = () => {
                   )}
                 </Item.Description>
               ) : (
-                <Item.Extra as="a" onClick={showDescreptipn}>
-                  Show more information
-                  {showDesc ? <WarningMessage /> : null}
+                <Item.Extra>
+                  <p
+                    onClick={(e: any) => {
+                      console.log(post.id);
+                      setpostIdShown(post.id);
+                    }}
+                  >
+                    <a>Show more information</a>
+                  </p>
+                  {postIdShown === post.id ? <WarningMessage /> : null}
                 </Item.Extra>
               )}
 
