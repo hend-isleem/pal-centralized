@@ -16,6 +16,8 @@ const app = express();
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(cors());
+app.use(cors({ origin: "http://192.168.68.110:19006" }));
+
 app.use(expressUploader());
 
 app.use(bodyParser.json());
