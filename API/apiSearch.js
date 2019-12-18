@@ -1,5 +1,4 @@
-////// this is just a try for an api
-const creatServer = require("http").createServer;
+const creatServer = require("https").createServer;
 const url = require("url");
 const axios = require("axios");
 const chalk = require("chalk");
@@ -18,6 +17,6 @@ const decodeParams = serarchParams =>
   );
 
 const server = creatServer((req, res) => {
-    const requestURL = url.parse(req.url);
-    const decodeParams = decodeParams(new URLSearchParams(requestURL.search));
-})
+  const requestURL = url.parse(req.url);
+  const decodeParams = decodeParams(new URLSearchParams(requestURL.search));
+});

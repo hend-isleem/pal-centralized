@@ -10,26 +10,11 @@ const passport = require("passport");
 const jwt = require("jsonwebtoken");
 const Auth = require("../Auth/Auth");
 const { check, validationResult } = require("express-validator");
-// const EmailSender = require("../mail");
-// const formidableMiddleware = require("express-formidable");
-// app.use(formidableMiddleware());
+
 
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: true }));
 
-// const Storage = multer.diskStorage({
-//   destination(req, file, callback) {
-//     console.log(req.body, "file");
-//     callback(null, "./upload/");
-//   },
-//   filename(req, file, callback) {
-//     console.log(file, "fil2e");
-
-//     callback(null, Date.now() + file.originalname);
-//   }
-// });
-
-// const upload = multer({ storage: Storage });
 
 //--------------------------------Google passport Auth ---------------------------------------------------//
 
@@ -41,7 +26,7 @@ router.get(
   (req, res) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "*");
-    res.redirect("/");
+    // res.redirect("/");
   }
 );
 
@@ -57,7 +42,7 @@ router.get(
       email: req.user.email,
       name: req.user.Name
     });
-    var UserInfo = {
+    UserInfo = {
       Name: req.user.Name,
       email: req.user.email,
       type: req.user.type,
@@ -73,6 +58,8 @@ router.get(
 //--------------------insert a new post to articals -----------//
 //-------------------------------------------------------------//
 router.post("/articles/addPosts", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
   //-------------------------------------------------------------------------//
   //---------- takes object Post as (post and) , company id as (comID) ------//
   //-------------------------------------------------------------------------//
@@ -115,6 +102,8 @@ router.post("/articles/addPosts", (req, res) => {
 //------------------------------------------Update /Delete - post ------------------------------------------------------//
 
 router.post("/articles/updatePost", (req, res) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
   //----------------------------------------//
   //------------delete operation------------//
   //----------------------------------------//
@@ -590,7 +579,7 @@ router.post("/user/signIn", async (req, res) => {
             if (user.type === false) {
               db.User.create({ id: user.id }, (error, result) => {
                 if (error) {
-                  console.log(error);
+                  console.log("log in ", error);
                 } else {
                   console.log(result);
                 }

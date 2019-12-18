@@ -9,17 +9,14 @@ const passport = require("passport");
 const GoogleConfig = require("./Routs/config");
 const db = require("../DataBase/db");
 const bcryptjs = require("bcryptjs");
-
 var GoogleStrategy = require("passport-google-oauth2").Strategy;
 
+
+
 const app = express();
-app.use(passport.initialize());
-app.use(passport.session());
 app.use(cors());
 app.use(cors({ origin: "http://192.168.68.110:19006" }));
-
 app.use(expressUploader());
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
