@@ -579,7 +579,7 @@ router.post("/user/signIn", async (req, res) => {
             if (user.type === false) {
               db.User.create({ id: user.id }, (error, result) => {
                 if (error) {
-                  console.log(error);
+                  console.log("log in ", error);
                 } else {
                   console.log(result);
                 }
