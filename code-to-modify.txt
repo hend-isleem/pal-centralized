@@ -6,3 +6,29 @@ Work in server :
 
     - modify the url post request 
     
+-------------------------------------
+Last Day Work :
+
+- Add new post :
+                - its ready but need to modify the req. link 
+                - and should I senf the user id or not ? I think of course yes
+                - What the struture for the post server need ?
+
+- Archive List : 
+                - I will send the user id & post id 
+                - should add the post to the archive list  
+                - expected to return the new active posts to renerder the page 
+
+
+
+Bugs: 
+
+-Case 1:
+
+problem: in company home page, the server return all the Posts in the database
+should do : return just the company posts 
+client side : send the user id succesfully 
+expect : company posts BUT the server return all the posts 
+And : We need to be an active post list & archive post list || I should make something in the client
+        becs we need to check if the post in the archive or not before show it in the home posts company page
+Sol: return the array of posts id for the archive and check if the original array don't have this post in the archive put it in the new array and if exist don't then show the new array ( return it from the action or reducer)

@@ -7,26 +7,29 @@ import {
   SIGN_UP,
   FETCH_FAVORITE,
   FETCH_COMPANY_POSTS,
-  FETCH_COMPANY,
+  FETCH_COMPANY_PROFILE,
   FETCH_USERS,
-  CHANGE_FAV_STATUS
+  CHANGE_FAV_STATUS,
+  GOOGLE_SIGN_IN,
+  ARCHIVE_POST
 } from "./types";
 import axios from "axios";
 
 // FETCH THE POSTS
 export const fetchPost = () => (dispatch: any) => {
-  axios.get(`http://localhost:3004/articles`).then(posts => {
-    dispatch({
-      type: FETCH_POSTS,
-      payload: posts.data
-    });
-  });
+  axios
+    .get(`http://localhost:3004/articles`)
+    .then(posts => {
+      dispatch({
+        type: FETCH_POSTS,
+        payload: posts.data
+      });
+    })
+    .catch(err => console.log(err));
 };
 
 ////---------------------------retriving User Profile-------------------------------////
 export const fetchUser = (id: any) => (dispatch: any) => {
-  console.log("Helooooooooooo");
-
   axios
     .get(`http://localhost:3004/user?id=${id}`)
     .then(users => {
@@ -39,15 +42,13 @@ export const fetchUser = (id: any) => (dispatch: any) => {
     .catch(err => console.log(err));
 };
 ////---------------------------retriving Company Profile-------------------------------////
-export const fetchCompany = (id: any) => (dispatch: any) => {
-  console.log("Hy");
-
+export const fetchCompanyProfile = (id: any) => (dispatch: any) => {
   axios
     .get(`http://localhost:3004/user?id=${id}`)
     .then(company => {
       console.log(company.data.user);
       dispatch({
-        type: FETCH_COMPANY,
+        type: FETCH_COMPANY_PROFILE,
         payload: company.data ////
       });
     })
@@ -56,6 +57,8 @@ export const fetchCompany = (id: any) => (dispatch: any) => {
 
 //LOGIN USER REQUEST
 export const login = (userInfo: any, callback: any) => (dispatch: any) => {
+  console.log("inside Login action");
+
   axios
     .post("http://127.0.0.1:3004/user/signIn", {
       email: userInfo.email.email,
@@ -68,6 +71,23 @@ export const login = (userInfo: any, callback: any) => (dispatch: any) => {
         payload: userToken.data
       });
       callback(userToken.data);
+    })
+    .catch(err => console.log(err));
+};
+
+// Google Login
+
+export const googleLogin = () => (dispatch: any) => {
+  console.log("inside google action");
+  axios
+    .get("http://127.0.0.1:3004/user/auth/google")
+    .then(userToken => {
+      console.log("this the user data from login action", userToken);
+      dispatch({
+        type: GOOGLE_SIGN_IN,
+        payload: userToken.data
+      });
+      // callback(userToken.data);
     })
     .catch(err => console.log(err));
 };
@@ -147,7 +167,7 @@ export const fetchFavorite = () => (dispatch: any) => {
   axios
     .get(`http://localhost:3004/articles/favoriteList?id=${userId}`)
     .then(favPosts => {
-      // console.log("inside then fav action", Favposts.data);
+      console.log("inside then fav action", favPosts.data);
       dispatch({
         type: FETCH_FAVORITE,
         payload: favPosts.data
@@ -165,14 +185,39 @@ export const fetchCompanyPosts = () => (dispatch: any) => {
   const userId = localStorage.getItem("userId");
   axios
     .get(`http://localhost:3004/articles/?id=${userId}`)
-    .then(favPosts => {
-      // console.log("inside then fav action", Favposts.data);
+    .then(Posts => {
+      console.log("inside then company action", Posts.data);
       dispatch({
-        type: FETCH_FAVORITE,
-        payload: favPosts.data
+        type: FETCH_COMPANY_POSTS,
+        payload: Posts.data
       });
     })
     .catch(err => {
       console.log("inside err favorite", err);
     });
+};
+
+//------------------------------------------ Archive Post ---------------------------------------------//
+
+export const archivePost = (postId: any) => (dispatch: any) => {
+  console.log(localStorage.getItem("userId"));
+  const userId = localStorage.getItem("userId");
+
+  const data = {
+    postId: postId,
+    userId: userId
+  };
+  // axios
+  //   .get(`http://localhost:3004/articles`) // Need to Edit
+  //   .then(Posts => {
+  //     console.log("inside then company action", Posts.data);
+  //     dispatch({
+  //       type: FETCH_COMPANY_POSTS, // this is right not wrong I need to yupdate the state
+  //                                 //  of the company posts value to rerender the page and remove the post
+  //       payload: Posts.data
+  //     });
+  //   })
+  //   .catch(err => {
+  //     console.log("inside err favorite", err);
+  //   });
 };

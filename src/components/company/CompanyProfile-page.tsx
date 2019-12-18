@@ -4,7 +4,7 @@ import "semantic-ui-css/semantic.min.css";
 import { Button, Card, Image, Container, Statistic } from "semantic-ui-react";
 import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import { fetchCompany } from "../../actions";
+import { fetchCompanyProfile } from "../../actions";
 import { useSelector, useDispatch } from "react-redux";
 
 // import PropTypes from 'prop-types';
@@ -13,7 +13,7 @@ const CompanyProfile = (props: any) => {
   const company: any = useSelector((state: any) => state.companyProfile);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchCompany(localStorage.getItem("userId")));
+    dispatch(fetchCompanyProfile(localStorage.getItem("userId")));
   }, []);
 
   const companys = company.items.user ? company.items.user[0] : "";

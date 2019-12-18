@@ -11,7 +11,7 @@ import {
 import { Link, Redirect } from "react-router-dom";
 import "../../style.css/form.css";
 import { useSelector, useDispatch } from "react-redux";
-import { login } from "../../actions";
+import { login, googleLogin } from "../../actions";
 
 const Login = (props: any) => {
   const dispatch = useDispatch();
@@ -27,6 +27,10 @@ const Login = (props: any) => {
 
   const onChangePass = (e: any) => {
     setpassword({ password: e.target.value });
+  };
+
+  const hundleGoogleLogin = () => {
+    dispatch(googleLogin());
   };
 
   const onSubmit = (e: any) => {
@@ -59,11 +63,15 @@ const Login = (props: any) => {
           <Header as="h2" color="teal" textAlign="center">
             Log-in to your account
           </Header>
+          <Button
+            color="google plus"
+            style={{ marginBottom: "2rem" }}
+            onClick={hundleGoogleLogin}
+          >
+            <Icon name="google" /> Login using Google
+          </Button>
           <Form size="large" onSubmit={onSubmit}>
             <Segment stacked>
-              <Button color="google plus" style={{ marginBottom: "2rem" }}>
-                <Icon name="google" /> Login using Google
-              </Button>
               <Form.Input
                 fluid
                 icon="user"
