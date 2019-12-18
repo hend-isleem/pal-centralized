@@ -1,27 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "1e8336e7e4ab97c9bfed4eed825775c0",
+    "revision": "ffd409dfbbb2e5bd54181ee36e9d7c93",
     "url": "/pal-centralized/index.html"
   },
   {
-    "revision": "272150cdcebe41cca109",
-    "url": "/pal-centralized/static/css/2.4f292196.chunk.css"
+    "revision": "df27c892f0d4971210fa",
+    "url": "/pal-centralized/static/css/2.4fe78c9b.chunk.css"
   },
   {
-    "revision": "233e576018e0d267a098",
-    "url": "/pal-centralized/static/css/main.8574f058.chunk.css"
+    "revision": "c90bc224ef7e853f2731",
+    "url": "/pal-centralized/static/css/main.4f493139.chunk.css"
   },
   {
-    "revision": "272150cdcebe41cca109",
-    "url": "/pal-centralized/static/js/2.3e9ed62d.chunk.js"
+    "revision": "df27c892f0d4971210fa",
+    "url": "/pal-centralized/static/js/2.039d874b.chunk.js"
   },
   {
-    "revision": "233e576018e0d267a098",
-    "url": "/pal-centralized/static/js/main.ca580660.chunk.js"
+    "revision": "c90bc224ef7e853f2731",
+    "url": "/pal-centralized/static/js/main.eef494fb.chunk.js"
   },
   {
-    "revision": "03032c42c2bc03d5ad22",
-    "url": "/pal-centralized/static/js/runtime-main.0f13b6b1.js"
+    "revision": "a73386c2464c3392d00b",
+    "url": "/pal-centralized/static/js/runtime-main.f90fda6b.js"
   },
   {
     "revision": "13db00b7a34fee4d819ab7f9838cc428",
@@ -66,6 +66,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "faff92145777a3cbaf8e7367b4807987",
     "url": "/pal-centralized/static/media/icons.faff9214.woff"
+  },
+  {
+    "revision": "4bb9b11342b616461636372ca939f1be",
+    "url": "/pal-centralized/static/media/logo.4bb9b113.png"
   },
   {
     "revision": "701ae6abd4719e9c2ada3535a497b341",
