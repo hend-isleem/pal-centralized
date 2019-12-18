@@ -438,13 +438,23 @@ router.get("/articles/filtered", (req, res) => {
 router.get("/articles", (req, res) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
-  db.Post.find({}, (error, post) => {
-    if (error) {
-      res.status(500).send("an error accured while connecting to data");
-    }
-  }).then(post => {
-    res.status(201).send(post);
-  });
+  if (Object.keys(req.query).length !== 0) {
+    db.Post.find({ comId: req.query.id }, (error, post) => {
+      if (error) {
+        res.status(500).send("an error accured while connecting to data");
+      }
+    }).then(post => {
+      res.status(201).send(post);
+    });
+  } else  {
+    db.Post.find({}, (error, post) => {
+      if (error) {
+        res.status(500).send("an error accured while connecting to data");
+      }
+    }).then(post => {
+      res.status(201).send(post);
+    });
+  }
 });
 
 //--------------------------------------------#### get User Rout forNative #####------------------------------------------------------------//
@@ -641,7 +651,7 @@ router.post(
     //-------------------------  "param": "username"--------//
     //---------------------- }]-----------------------------//
     //---------------------}--------------------------------//
-
+    const idm = Date.now();
     if (!errors.isEmpty()) {
       console.log("inside if error are not empty ");
       return res
@@ -651,7 +661,7 @@ router.post(
     }
 
     const hashpassword = "";
-    const id = Date.now();
+
     // console.log(id);
     try {
       //-------------------------------//
@@ -684,22 +694,24 @@ router.post(
             console.log("user  exist");
             res.status(404).send("user email is already exist ");
           } else {
-            console.log(hassedPass, "hassedPass");
-
+            console.log("adding user to data base ");
             db.General.create(
               {
                 Name: req.body.name,
-                id: id,
+                id: idm,
                 type: req.body.type,
                 email: req.body.email,
                 password: hassedPass
               },
               (error, result) => {
+                console.log("did add the user ");
+
                 //--------------------------------------------------//
                 //----------------- If User did not saved ----------//
                 //----------------- then error message -------------//
                 //--------------------------------------------------//
                 if (error) {
+                  console.log(error);
                   res
                     .status(500)
                     .send("User is Not Saved .. PLZ Try again Later");
@@ -710,26 +722,32 @@ router.post(
                   //--------------- ADD USER PROFILR REDCORD-------------//
                   //-----------------------------------------------------//
                   if (!result.type) {
-                    db.User.create({ id: id });
+                    console.log(result, "result");
+                    db.User.create({ id: result["id"] }).then(() => {
+                      console.log("added ");
+                      const acsessToken = Auth.generateAccessToken({
+                        email: result["email"],
+                        name: result["Name"]
+                      });
+
+                      return res
+                        .status(201)
+                        .send({
+                          acsessToken: acsessToken,
+                          user: {
+                            id: idm,
+                            Name: result["Name"],
+                            email: result["email"],
+                            type: result["type"]
+                          }
+                        })
+                        .end();
+                    });
                   } else {
-                    db.Company.create({ id: id });
+                    console.log("inside try result2");
+
+                    db.Company.create({ id: result["id"] });
                   }
-                  const acsessToken = Auth.generateAccessToken({
-                    email: req.body.email,
-                    name: req.body.Name
-                  });
-                  return res
-                    .status(201)
-                    .send({
-                      acsessToken: acsessToken,
-                      user: {
-                        id: id,
-                        Name: req.body.Name,
-                        email: req.body.email,
-                        type: req.body.type
-                      }
-                    })
-                    .end();
                 }
               }
             );
