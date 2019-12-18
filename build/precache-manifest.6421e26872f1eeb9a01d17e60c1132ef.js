@@ -1,31 +1,27 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "8568a1b097e3378e16efc0ff19fe4021",
+    "revision": "ffd409dfbbb2e5bd54181ee36e9d7c93",
     "url": "/pal-centralized/index.html"
   },
   {
-    "revision": "118ee54c05b33758a0a2",
-    "url": "/pal-centralized/static/css/2.4f292196.chunk.css"
+    "revision": "df27c892f0d4971210fa",
+    "url": "/pal-centralized/static/css/2.4fe78c9b.chunk.css"
   },
   {
-    "revision": "2f54957111fab42d919f",
-    "url": "/pal-centralized/static/css/main.8f3c78f6.chunk.css"
+    "revision": "c90bc224ef7e853f2731",
+    "url": "/pal-centralized/static/css/main.4f493139.chunk.css"
   },
   {
-    "revision": "118ee54c05b33758a0a2",
-    "url": "/pal-centralized/static/js/2.b0cf49c0.chunk.js"
+    "revision": "df27c892f0d4971210fa",
+    "url": "/pal-centralized/static/js/2.039d874b.chunk.js"
   },
   {
-    "revision": "3d9880ee0da2a100dc4a6223e0aed39a",
-    "url": "/pal-centralized/static/js/2.b0cf49c0.chunk.js.LICENSE"
+    "revision": "c90bc224ef7e853f2731",
+    "url": "/pal-centralized/static/js/main.eef494fb.chunk.js"
   },
   {
-    "revision": "2f54957111fab42d919f",
-    "url": "/pal-centralized/static/js/main.bde33727.chunk.js"
-  },
-  {
-    "revision": "27f74f998b413af74db7",
-    "url": "/pal-centralized/static/js/runtime-main.fdea3163.js"
+    "revision": "a73386c2464c3392d00b",
+    "url": "/pal-centralized/static/js/runtime-main.f90fda6b.js"
   },
   {
     "revision": "13db00b7a34fee4d819ab7f9838cc428",
@@ -70,6 +66,10 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
     "revision": "faff92145777a3cbaf8e7367b4807987",
     "url": "/pal-centralized/static/media/icons.faff9214.woff"
+  },
+  {
+    "revision": "4bb9b11342b616461636372ca939f1be",
+    "url": "/pal-centralized/static/media/logo.4bb9b113.png"
   },
   {
     "revision": "701ae6abd4719e9c2ada3535a497b341",
