@@ -24,9 +24,22 @@ router.get(
     scope: ["profile", "email"]
   }),
   (req, res) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "*");
-    // res.redirect("/");
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    // Request methods you wish to allow
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+    );
+    // Request headers you wish to allow
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+    );
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
+    res.redirect("/");
   }
 );
 
@@ -34,10 +47,21 @@ router.get(
   "/user/google/redirect",
   passport.authenticate("google" /*,{ failureRedirect: "/login"}*/),
   function(req, res) {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "*");
-    console.log(req.user, " redirect rout ");
-
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    // Request methods you wish to allow
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+    );
+    // Request headers you wish to allow
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+    );
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
     const acsessToken = Auth.generateAccessToken({
       email: req.user.email,
       name: req.user.Name
@@ -58,13 +82,35 @@ router.get(
 //--------------------insert a new post to articals -----------//
 //-------------------------------------------------------------//
 router.post("/articles/addPosts", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  // const newPost = {
+  //   comID: localStorage.getItem("userId"),
+  //   title: title,
+  //   description: description,
+  //   deadLine: deadline,
+  //   major: major,
+  //   type: type,
+  //   link: applyLink
+  // };
   //-------------------------------------------------------------------------//
   //---------- takes object Post as (post and) , company id as (comID) ------//
   //-------------------------------------------------------------------------//
-  var post = res.body.post;
-  var comID = res.body.comID;
+  var post = req.body.newPost;
+  var comID = req.body.newPost["comID"];
   //-------------------------------------------//
   //---------------add an ID to post-----------//
   //-------------------------------------------//
@@ -102,8 +148,21 @@ router.post("/articles/addPosts", (req, res) => {
 //------------------------------------------Update /Delete - post ------------------------------------------------------//
 
 router.post("/articles/updatePost", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   //----------------------------------------//
   //------------delete operation------------//
   //----------------------------------------//
@@ -124,7 +183,23 @@ router.post("/articles/updatePost", (req, res) => {
   //------------update operation------------//
   //----------------------------------------//
   if (req.body.op === "update") {
-    db.updateOne({ id })
+    db.Post.updateOne({ id: req.body.id })
+      .then(result => {
+        res
+          .status(201)
+          .send("Successfully updated")
+          .end();
+      })
+      .catch(error => {
+        res
+          .status(500)
+          .send("An Error Has Occurred during processing data")
+          .end();
+      });
+  }
+
+  if (req.body.op === "archive") {
+    db.Post.create(req.body.Obj)
       .then(result => {
         res
           .status(201)
@@ -143,8 +218,21 @@ router.post("/articles/updatePost", (req, res) => {
 //----------------------- Update Company info -------------------------------------------//
 
 router.post("user/updateProfile", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   //------------------------------------------------//
   // ---------------- if type is a user-------------//
   //------------------------------------------------//
@@ -203,6 +291,21 @@ router.post("user/updateProfile", (req, res) => {
 
 //----------------------------------##### Processing file and picture #####-----------------------------------------------//
 router.post("/user/upload", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   console.log(req.file, "jjjj");
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "*");
@@ -227,8 +330,21 @@ router.post("/user/upload", (req, res) => {
 
 //---------------------------------Update Favorit List to User-----------------------------------------------------//
 router.post("/user/favoriteList", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   var usrtid = req.body.userID;
   var postid = req.body.postID;
 
@@ -315,8 +431,21 @@ router.get("/articles/favoriteList", (req, res) => {
 });
 //---------------------------Get API Values ----------------------------------------------------------------------//
 router.get("/articles/API", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   console.log(searchApi.EducationalLevel);
   res
     .send({
@@ -330,8 +459,21 @@ router.get("/articles/API", (req, res) => {
 
 //--------------------------------### getting Info by Search #####------------------------------------------------//
 router.get("/articles/search", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   var param = req.query;
   var keys = Object.keys(param);
   //---------------------------------------- Search using all avaliable options---------------------------//
@@ -416,10 +558,25 @@ router.get("/articles/search", (req, res) => {
 
 //-------------------------------------#### get filtered Articals ## -------------------------------------------------
 router.get("/articles/filtered", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
   console.log("req", req.query);
-  db.Post.find(req.query, (error, post) => {
+  var fiter = req.query;
+  fiter["archived"] = false;
+  db.Post.find(fiter, (error, post) => {
     if (error) {
       res.status(500).send("an error accured while connecting to data");
     }
@@ -429,21 +586,60 @@ router.get("/articles/filtered", (req, res) => {
 });
 //-------------------------------------------##### get all Post Rout Nativ #####------------------------------------------------------------//
 router.get("/articles", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
-  db.Post.find({}, (error, post) => {
-    if (error) {
-      res.status(500).send("an error accured while connecting to data");
-    }
-  }).then(post => {
-    res.status(201).send(post);
-  });
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  var fiter = req.query;
+  if (Object.keys(req.query).length !== 0) {
+    fiter["archived"] = false;
+    db.Post.find({ comId: req.query.id }, (error, post) => {
+      if (error) {
+        res.status(500).send("an error accured while connecting to data");
+      }
+    }).then(post => {
+      res.status(201).send(post);
+    });
+  } else {
+    fiter["archived"] = false;
+    db.Post.find(fiter, (error, post) => {
+      if (error) {
+        res.status(500).send("an error accured while connecting to data");
+      }
+    }).then(post => {
+      res.status(201).send(post);
+    });
+  }
 });
 
 //--------------------------------------------#### get User Rout forNative #####------------------------------------------------------------//
 router.get("/user", (req, res) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
 
   //------------------------------------------//
   //----------- getting data for one user ----//
@@ -524,8 +720,21 @@ router.get("/user", (req, res) => {
 router.post("/user/signIn", async (req, res) => {
   console.log("email", req.body.email, req.body.passowrd, "password");
   console.log("n the rout ", req.body.mail, req.body.passowrd);
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
 
   // -----------------------------------------//
   // ----here we get the user from database ----//
@@ -619,9 +828,21 @@ router.post(
   "/user/signUp",
   [check("email").isEmail(), check("passowrd").isLength({ min: 6 })],
   async (req, res, next) => {
-    console.log(req.body.email, req.body.passowrd);
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "*");
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    // Request methods you wish to allow
+    res.setHeader(
+      "Access-Control-Allow-Methods",
+      "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+    );
+    // Request headers you wish to allow
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+    );
+    res.header(
+      "Access-Control-Allow-Headers",
+      "Origin, X-Requested-With, Content-Type, Accept"
+    );
     const errors = validationResult(req);
 
     //------------------------------------------------------//
@@ -634,7 +855,7 @@ router.post(
     //-------------------------  "param": "username"--------//
     //---------------------- }]-----------------------------//
     //---------------------}--------------------------------//
-
+    const idm = Date.now();
     if (!errors.isEmpty()) {
       console.log("inside if error are not empty ");
       return res
@@ -644,7 +865,7 @@ router.post(
     }
 
     const hashpassword = "";
-    const id = Date.now();
+
     // console.log(id);
     try {
       //-------------------------------//
@@ -677,22 +898,24 @@ router.post(
             console.log("user  exist");
             res.status(404).send("user email is already exist ");
           } else {
-            console.log(hassedPass, "hassedPass");
-
+            console.log("adding user to data base ");
             db.General.create(
               {
                 Name: req.body.name,
-                id: id,
+                id: idm,
                 type: req.body.type,
                 email: req.body.email,
                 password: hassedPass
               },
               (error, result) => {
+                console.log("did add the user ");
+
                 //--------------------------------------------------//
                 //----------------- If User did not saved ----------//
                 //----------------- then error message -------------//
                 //--------------------------------------------------//
                 if (error) {
+                  console.log(error);
                   res
                     .status(500)
                     .send("User is Not Saved .. PLZ Try again Later");
@@ -703,26 +926,32 @@ router.post(
                   //--------------- ADD USER PROFILR REDCORD-------------//
                   //-----------------------------------------------------//
                   if (!result.type) {
-                    db.User.create({ id: id });
+                    console.log(result, "result");
+                    db.User.create({ id: result["id"] }).then(() => {
+                      console.log("added ");
+                      const acsessToken = Auth.generateAccessToken({
+                        email: result["email"],
+                        name: result["Name"]
+                      });
+
+                      return res
+                        .status(201)
+                        .send({
+                          acsessToken: acsessToken,
+                          user: {
+                            id: idm,
+                            Name: result["Name"],
+                            email: result["email"],
+                            type: result["type"]
+                          }
+                        })
+                        .end();
+                    });
                   } else {
-                    db.Company.create({ id: id });
+                    console.log("inside try result2");
+
+                    db.Company.create({ id: result["id"] });
                   }
-                  const acsessToken = Auth.generateAccessToken({
-                    email: req.body.email,
-                    name: req.body.Name
-                  });
-                  return res
-                    .status(201)
-                    .send({
-                      acsessToken: acsessToken,
-                      user: {
-                        id: id,
-                        Name: req.body.Name,
-                        email: req.body.email,
-                        type: req.body.type
-                      }
-                    })
-                    .end();
                 }
               }
             );
