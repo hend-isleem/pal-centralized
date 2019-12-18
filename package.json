@@ -71,7 +71,8 @@
     "watcht": "tsc -p . -w",
     "test:tsc": "tsc -p tsconfig.json -w",
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "gh-pages -d build",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install && react-scripts build"
   },
   "eslintConfig": {
     "extends": "react-app"
