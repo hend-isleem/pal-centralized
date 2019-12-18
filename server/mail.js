@@ -9,7 +9,7 @@ let transporter = nodemailer.createTransport({
     pass: process.env.PASSWORD
   }
 });
-console.log("hahaha>>> : ", process.env.PASSWORD, ">>> ",  process.env.EMAIL);
+// console.log("hahaha>>> : ", process.env.PASSWORD, ">>> ",  process.env.EMAIL);
 
 // let mail = {
 // from: 'weseekps@gmail.com', // sender address
@@ -31,10 +31,9 @@ function sendMail(compID, post) {
     let mail = {
       from: "weseekps@gmail.com", // sender address
       to: emails + ", hendisleem@gmail.com", // list of receivers
-      subject: "FINALLY posted ✔ ", // Subject line
-      text: "a new post has been added! grab the chance ^_^", // plain text body
-      html: `<h3>${post.description} >>>>> ${post.link}</h3>` // html body
-      //   attachments: [{filename: 'me.jpg', path: '../me.jpg'}]
+      subject: "new Post ✔ ", // Subject line
+      text: "A new post has been added! grab the chance ^_^", // plain text body
+      html: `<h2>A new post has been added! grab the chance ^_^</h2><br><h3>${post.description} TO APPLY >> ${post.link}</h3>` // html body
     };
     transporter.sendMail(mail, (err, mail) => {
       if (err) {
@@ -60,15 +59,15 @@ let pst = {
   read: true,
   link: "https://www.google.com/"
 };
-// sendMail(8, pst);
+sendMail(8, pst);
 
-function sendMsg(tit, msg) {
+function sendMsg(name , email, msg) {
   let mail = {
       from: "weseekps@gmail.com",
       to: "weseekps@gmail.com"+ ", hendisleem@gmail.com",
-      subject: tit + " ✔ ",
+      subject: name,
       text: msg,
-      html: `<h4>${msg}</h4>`
+      html: `<h4>${msg}<br> to contact me back > Email: ${email} <br><br> ${name}</h4>`
   };
   transporter.sendMail(mail, (err, mail) => {
       if (err) {
@@ -79,7 +78,7 @@ function sendMsg(tit, msg) {
   });
 }
 
-// sendMsg("haha", "hahhahahahhahahahahahha");
+sendMsg("haha","hoho@hotmail.com", "hahhahahahhahahahahahha");
 
 module.exports.sendMail = sendMail;
 module.exports.sendMsg = sendMsg;
