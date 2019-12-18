@@ -9,6 +9,7 @@ let transporter = nodemailer.createTransport({
     pass: process.env.PASSWORD
   }
 });
+console.log("hahaha>>> : ", process.env.PASSWORD, ">>> ",  process.env.EMAIL);
 
 // let mail = {
 // from: 'weseekps@gmail.com', // sender address
@@ -25,7 +26,7 @@ let transporter = nodemailer.createTransport({
 //         console.log("email is sent !!!!!");
 //     }
 // })
-export default function sendMail(compID, post) {
+function sendMail(compID, post) {
   search.getFollowersE(compID, emails => {
     let mail = {
       from: "weseekps@gmail.com", // sender address
@@ -59,4 +60,26 @@ let pst = {
   read: true,
   link: "https://www.google.com/"
 };
-sendMail(8, pst);
+// sendMail(8, pst);
+
+function sendMsg(tit, msg) {
+  let mail = {
+      from: "weseekps@gmail.com",
+      to: "weseekps@gmail.com"+ ", hendisleem@gmail.com",
+      subject: tit + " ✔ ",
+      text: msg,
+      html: `<h4>${msg}</h4>`
+  };
+  transporter.sendMail(mail, (err, mail) => {
+      if (err) {
+      console.log("err in sending email >>>>>>>>>>> ", err);
+      } else {
+      console.log("email is sent wow !!!!!");
+      }
+  });
+}
+
+// sendMsg("haha", "hahhahahahhahahahahahha");
+
+module.exports.sendMail = sendMail;
+module.exports.sendMsg = sendMsg;
