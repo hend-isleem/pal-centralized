@@ -15,13 +15,13 @@ var GoogleStrategy = require("passport-google-oauth2").Strategy;
 
 const app = express();
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("build"));
-  const path = require("path");
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "build", "index.html"));
-  });
-}
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static("build"));
+//   const path = require("path");
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "build", "index.html"));
+//   });
+// }
 
 app.use(cors());
 app.use(cors({ origin: "http://192.168.68.110:19006" }));

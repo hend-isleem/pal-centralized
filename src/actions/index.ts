@@ -60,7 +60,7 @@ export const login = (userInfo: any, callback: any) => (dispatch: any) => {
   console.log("inside Login action");
 
   axios
-    .post("http://127.0.0.1:3004/user/signIn", {
+    .post("https://seek-ps.herokuapp.com/user/signIn", {
       email: userInfo.email.email,
       passowrd: userInfo.password.password
     })
@@ -80,7 +80,7 @@ export const login = (userInfo: any, callback: any) => (dispatch: any) => {
 export const googleLogin = () => (dispatch: any) => {
   console.log("inside google action");
   axios
-    .get("http://127.0.0.1:3004/user/auth/google")
+    .get("https://seek-ps.herokuapp.com/user/auth/google")
     .then(userToken => {
       console.log("this the user data from login action", userToken);
       dispatch({
@@ -95,7 +95,7 @@ export const googleLogin = () => (dispatch: any) => {
 //SIGNUP USER REQUEST
 export const signup = (userInfo: any, callback: any) => (dispatch: any) => {
   axios
-    .post("http://127.0.0.1:3004/user/signUp", {
+    .post("https://seek-ps.herokuapp.com/user/signUp", {
       name: userInfo.userName.userName,
       type: userInfo.type,
       email: userInfo.email.email,
@@ -148,7 +148,7 @@ export const search = (searchInfo: any) => (dispatch: any) => {
   }
   console.log(URLl);
   axios
-    .get(`http://127.0.0.1:3004/articles/search${URLl}`)
+    .get(`https://seek-ps.herokuapp.com/articles/search${URLl}`)
     .then(searchResult => {
       console.log("inside then search action");
       console.log(searchResult);
