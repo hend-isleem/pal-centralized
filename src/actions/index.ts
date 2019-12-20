@@ -31,7 +31,7 @@ export const fetchPost = () => (dispatch: any) => {
 ////---------------------------retriving User Profile-------------------------------////
 export const fetchUser = (id: any) => (dispatch: any) => {
   axios
-    .get(`https://seek-ps.herokuapp.com/user?id=${id}`)
+    .get(`https://boiling-journey-53136.herokuapp.com/user?id=${id}`)
     .then(users => {
       console.log(users);
       dispatch({
@@ -44,7 +44,7 @@ export const fetchUser = (id: any) => (dispatch: any) => {
 ////---------------------------retriving Company Profile-------------------------------////
 export const fetchCompanyProfile = (id: any) => (dispatch: any) => {
   axios
-    .get(`https://seek-ps.herokuapp.com/user?id=${id}`)
+    .get(`https://boiling-journey-53136.herokuapp.com/user?id=${id}`)
     .then(company => {
       console.log(company.data.user);
       dispatch({
@@ -60,7 +60,7 @@ export const login = (userInfo: any, callback: any) => (dispatch: any) => {
   console.log("inside Login action");
 
   axios
-    .post("https://seek-ps.herokuapp.com/user/signIn", {
+    .post("https://boiling-journey-53136.herokuapp.com/user/signIn", {
       email: userInfo.email.email,
       passowrd: userInfo.password.password
     })
@@ -80,7 +80,7 @@ export const login = (userInfo: any, callback: any) => (dispatch: any) => {
 export const googleLogin = () => (dispatch: any) => {
   console.log("inside google action");
   axios
-    .get("https://seek-ps.herokuapp.com/user/auth/google")
+    .get("https://boiling-journey-53136.herokuapp.com/user/auth/google")
     .then(userToken => {
       console.log("this the user data from login action", userToken);
       dispatch({
@@ -95,7 +95,7 @@ export const googleLogin = () => (dispatch: any) => {
 //SIGNUP USER REQUEST
 export const signup = (userInfo: any, callback: any) => (dispatch: any) => {
   axios
-    .post("https://seek-ps.herokuapp.com/user/signUp", {
+    .post("https://boiling-journey-53136.herokuapp.com/user/signUp", {
       name: userInfo.userName.userName,
       type: userInfo.type,
       email: userInfo.email.email,
@@ -148,7 +148,7 @@ export const search = (searchInfo: any) => (dispatch: any) => {
   }
   console.log(URLl);
   axios
-    .get(`https://seek-ps.herokuapp.com/articles/search${URLl}`)
+    .get(`https://boiling-journey-53136.herokuapp.com/articles/search${URLl}`)
     .then(searchResult => {
       console.log("inside then search action");
       console.log(searchResult);
@@ -165,7 +165,7 @@ export const fetchFavorite = () => (dispatch: any) => {
   console.log("ID user from local storage", localStorage.getItem("userId"));
   const userId = localStorage.getItem("userId");
   axios
-    .get(`https://seek-ps.herokuapp.com/articles/favoriteList?id=${userId}`)
+    .get(`https://boiling-journey-53136.herokuapp.com/articles/favoriteList?id=${userId}`)
     .then(favPosts => {
       console.log("inside then fav action", favPosts.data);
       dispatch({
@@ -184,7 +184,7 @@ export const fetchCompanyPosts = () => (dispatch: any) => {
   console.log("ID user from local storage", localStorage.getItem("userId"));
   const userId = localStorage.getItem("userId");
   axios
-    .get(`https://seek-ps.herokuapp.com/articles/?id=${userId}`)
+    .get(`https://boiling-journey-53136.herokuapp.com/articles/?id=${userId}`)
     .then(Posts => {
       console.log("inside then company action", Posts.data);
       dispatch({
@@ -208,7 +208,7 @@ export const archivePost = (postId: any) => (dispatch: any) => {
     userId: userId
   };
   // axios
-  //   .get(`https://seek-ps.herokuapp.com/articles`) // Need to Edit
+  //   .get(`https://boiling-journey-53136.herokuapp.com/articles`) // Need to Edit
   //   .then(Posts => {
   //     console.log("inside then company action", Posts.data);
   //     dispatch({
