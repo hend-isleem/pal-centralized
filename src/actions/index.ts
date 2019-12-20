@@ -18,7 +18,7 @@ import axios from "axios";
 // FETCH THE POSTS
 export const fetchPost = () => (dispatch: any) => {
   axios
-    .get(`http://localhost:3004/articles`)
+    .get(`https://seek-ps.herokuapp.com/articles`)
     .then(posts => {
       dispatch({
         type: FETCH_POSTS,
@@ -31,7 +31,7 @@ export const fetchPost = () => (dispatch: any) => {
 ////---------------------------retriving User Profile-------------------------------////
 export const fetchUser = (id: any) => (dispatch: any) => {
   axios
-    .get(`http://localhost:3004/user?id=${id}`)
+    .get(`https://seek-ps.herokuapp.com/user?id=${id}`)
     .then(users => {
       console.log(users);
       dispatch({
@@ -44,7 +44,7 @@ export const fetchUser = (id: any) => (dispatch: any) => {
 ////---------------------------retriving Company Profile-------------------------------////
 export const fetchCompanyProfile = (id: any) => (dispatch: any) => {
   axios
-    .get(`http://localhost:3004/user?id=${id}`)
+    .get(`https://seek-ps.herokuapp.com/user?id=${id}`)
     .then(company => {
       console.log(company.data.user);
       dispatch({
@@ -165,7 +165,7 @@ export const fetchFavorite = () => (dispatch: any) => {
   console.log("ID user from local storage", localStorage.getItem("userId"));
   const userId = localStorage.getItem("userId");
   axios
-    .get(`http://localhost:3004/articles/favoriteList?id=${userId}`)
+    .get(`https://seek-ps.herokuapp.com/articles/favoriteList?id=${userId}`)
     .then(favPosts => {
       console.log("inside then fav action", favPosts.data);
       dispatch({
@@ -184,7 +184,7 @@ export const fetchCompanyPosts = () => (dispatch: any) => {
   console.log("ID user from local storage", localStorage.getItem("userId"));
   const userId = localStorage.getItem("userId");
   axios
-    .get(`http://localhost:3004/articles/?id=${userId}`)
+    .get(`https://seek-ps.herokuapp.com/articles/?id=${userId}`)
     .then(Posts => {
       console.log("inside then company action", Posts.data);
       dispatch({
@@ -208,7 +208,7 @@ export const archivePost = (postId: any) => (dispatch: any) => {
     userId: userId
   };
   // axios
-  //   .get(`http://localhost:3004/articles`) // Need to Edit
+  //   .get(`https://seek-ps.herokuapp.com/articles`) // Need to Edit
   //   .then(Posts => {
   //     console.log("inside then company action", Posts.data);
   //     dispatch({
