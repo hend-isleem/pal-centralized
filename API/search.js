@@ -121,9 +121,62 @@ const search = function(type, major, cb, str) {
   });
 };
 
+// ------------------------- adding the link to the post schema
+// const haha = async function() {
+//   for (let i = 1 ; i <= 50; i++) {
+//     await db.Post.findOneAndUpdate(
+//       {id: i},  //filter
+//       {link: "https://www.google.com/"}, //data to update
+//       { //options
+//         returnNewDocument: true,
+//         new: true,
+//         strict: false
+//       }
+//     )
+//     console.log("hoho ", i)
+//   }
+// }
+// haha();
+
+// ------------------------- adding the company name to the post schema
+// const haha = async function() {
+//   await db.Post.find({}, (err, posts) => {
+//     if (err) {
+//       console.log("an err in fetching posts")
+//     } else {
+//       posts.forEach(async (post)=> {
+//         let comp = post.comId;
+//         await getName(comp, async (name) => {
+//           await db.Post.findOneAndUpdate(
+//             {id: post.id},  //filter
+//             {compName: name}, //data to update
+//             { //options
+//               returnNewDocument: true,
+//               new: true,
+//               strict: false
+//             }
+//           )
+//           console.log("updated");
+//         });
+//       })
+//     }
+//   });
+// }
+// haha();
+
+// const getName = async function(comId, cb) {
+//   await db.General.findOne({ id: comId}, (err, res) => {
+//     if (err) {
+//       console.log("eroor in finding a company title ", err);
+//     } else {
+//       cb(res.Name);
+//     }
+//   })
+// }
+// getName(4, (res) => {console.log(res)});
+
 module.exports.searchType = searchType;
 module.exports.seatchTitleArr = seatchTitleArr;
-
 module.exports.searchMajor = searchMajor;
 module.exports.seatchTitle = seatchTitle;
 module.exports.getFollowersE = getFollowersE;
