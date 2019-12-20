@@ -18,7 +18,7 @@ import axios from "axios";
 // FETCH THE POSTS
 export const fetchPost = () => (dispatch: any) => {
   axios
-    .get(`https://seek-ps.herokuapp.com/articles`)
+    .get(`https://boiling-journey-53136.herokuapp.com/articles`)
     .then(posts => {
       dispatch({
         type: FETCH_POSTS,
@@ -184,7 +184,7 @@ export const fetchCompanyPosts = () => (dispatch: any) => {
   console.log("ID user from local storage", localStorage.getItem("userId"));
   const userId = localStorage.getItem("userId");
   axios
-    .get(`https://boiling-journey-53136.herokuapp.com/articles/?id=${userId}`)
+    .get(`https://seek-ps.herokuapp.com/articles/?id=${userId}`)
     .then(Posts => {
       console.log("inside then company action", Posts.data);
       dispatch({
