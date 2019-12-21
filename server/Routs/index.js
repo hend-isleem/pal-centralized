@@ -623,6 +623,45 @@ router.get("/articles", (req, res) => {
   }
 });
 
+
+//-------------------------------------------##### add to the following and followers lists #####------------------------------------------------------------//
+router.get("/follow", (req, res) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  // Request methods you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
+  );
+  // Request headers you wish to allow
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers,X-Access-Token,XKey,Authorization"
+  );
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  if (Object.keys(req.query).length !== 0) {
+    db.User.find({ id: req.query.userId }, (error, user) => {
+      if (error) {
+        res.status(500).send("an error accured while connecting to data");
+      }
+    }).then(user => {
+      db.Company.find({id: eq.query.compId}, (err, company) => {
+        if (error) {
+          res.status(500).send("an error accured while connecting to data");
+        }
+      }).then(company => {
+        company.followersList.push(user.id);
+        user.followingList.push(company.id);
+        res.status(201).send(post);
+      })
+    });
+  }
+});
+
+
+
 //--------------------------------------------#### get User Rout forNative #####------------------------------------------------------------//
 router.get("/user", (req, res) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
